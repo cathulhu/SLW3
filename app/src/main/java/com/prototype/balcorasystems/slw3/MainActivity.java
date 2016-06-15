@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             UI_Fragment_Info fragmentInfo = new UI_Fragment_Info();
             fragmentTransaction.replace(R.id.main_fragment_box, fragmentInfo);
-            if (2 != 0){
-
-        }
             fragmentTransaction.commit();
 
         } else if (id == R.id.navDrawer_loan) {
