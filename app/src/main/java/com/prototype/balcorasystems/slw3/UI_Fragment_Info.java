@@ -11,29 +11,113 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 //may want to add arguments to class so fragment knows whether its been spawned to edit or create new object
 //for now store results of input in gloabl variables, later hookup dynamic object creation.
 public class UI_Fragment_Info extends Fragment {
+
+    public boolean check_info_ready () {
+        boolean result = false;
+
+        if (familysizeInput != -5 && incomeValue != -5 && spouseIncomeValue != -5 && taxState != null && name!= null)
+        {
+            result=true;
+        }
+
+        return result;
+    }
+
+    public Object_Profile getLast ()
+    {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        Object_Profile profile=dataSource.getLastProfileDbEntry();
+
+        return profile;
+    }
+
+    public ArrayList<Object_Profile> getData () {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
+        ArrayList<Object_Profile> resultsArrayList = new ArrayList<>();
+        resultsArrayList = dataSource.readAllProfiles();
+        Toast toast = Toast.makeText(getContext(), resultsArrayList.size() + " SQL entries found", Toast.LENGTH_SHORT);
+        toast.show();
+        return resultsArrayList;
+    }
+
+    public void saveData (Object_Profile profile) {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
+        dataSource.createProfileDbEntry(profile);
+        Toast toast = Toast.makeText(getContext(), "populating profile object and saving to SQL", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void clearData() {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
+        dataSource.deleteAllProfiles();
+        Toast toast = Toast.makeText(getContext(), "sql cleared", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public boolean isSqlEmpty () {
+        boolean result = true;
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        int count = dataSource.getEntryCount();
+        if (count > 0)
+        {
+            result=false;
+        }
+        return result;
+
+    }
+
+    Object_Profile profile = new Object_Profile();
+    ArrayList<Object_Profile> profileList = new ArrayList<>();
 
     String[] stateList = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI",
             "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT",
             "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC",
             "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
 
-    String taxStatus;
-    int familysizeInput;
-    int incomeValue;
-    int spouseIncomeValue;
+    String taxStatus= "SINGLE";
+    int familysizeInput = -5;
+    float incomeValue = -5;
+    float spouseIncomeValue = -5;
     String taxState;
     String name;
+//    boolean profileExists = false;
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (check_info_ready()==true)
+        {
+            Object_Profile profile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
+             saveData(profile);
+
+
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+//        clearData();
+
+        profileList = getData();
 
         View view = inflater.inflate(R.layout.info, container, false);
 
@@ -41,6 +125,23 @@ public class UI_Fragment_Info extends Fragment {
         final EditText familysizeField = (EditText) view.findViewById(R.id.familySizeInput);
         final EditText incomeInput = (EditText) view.findViewById(R.id.incomeInput);
         final EditText spouseIncomeInput = (EditText) view.findViewById(R.id.spouseIncomeInput);
+
+        if (isSqlEmpty()== false)
+        {
+            profile = getLast();
+            profileName.setText(profile.getProfileName());
+            familysizeField.setText( String.valueOf(profile.getFamilySize()) );
+            incomeInput.setText( String.valueOf(profile.getGrossIncome()) );
+            spouseIncomeInput.setText( String.valueOf(profile.getSpouseIncome()) );
+        }
+
+
+
+
+
+
+//        final ListView profileList = (ListView) view.findViewById(R.id.listView2);
+//        profileList.setAdapter(new ArrayAdapter<String>(), );
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -66,10 +167,6 @@ public class UI_Fragment_Info extends Fragment {
                 {
                     name = input0;
                 }
-                else
-                {
-                    familysizeInput = 0;
-                }
 
                 if (input1.equals("") == false)
                 {
@@ -77,25 +174,25 @@ public class UI_Fragment_Info extends Fragment {
                 }
                 else
                 {
-                    familysizeInput = 0;
+                    familysizeInput = -5;
                 }
 
                 if (input2.equals("") == false)
                 {
-                    incomeValue = Integer.parseInt(incomeInput.getText().toString());
+                    incomeValue = Float.parseFloat(incomeInput.getText().toString());
                 }
                 else
                 {
-                    incomeValue=0;
+                    incomeValue= -5;
                 }
 
                 if (input3.equals("") == false)
                 {
-                    spouseIncomeValue = Integer.parseInt(spouseIncomeInput.getText().toString());
+                    spouseIncomeValue = Float.parseFloat(spouseIncomeInput.getText().toString());
                 }
                 else
                 {
-                    spouseIncomeValue=0;
+                    spouseIncomeValue= -5;
                 }
 
             }
@@ -105,6 +202,7 @@ public class UI_Fragment_Info extends Fragment {
         familysizeField.addTextChangedListener(watcher);
         incomeInput.addTextChangedListener(watcher);
         spouseIncomeInput.addTextChangedListener(watcher);
+        profileName.addTextChangedListener(watcher);
 
         final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
         taxStatusRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -124,7 +222,6 @@ public class UI_Fragment_Info extends Fragment {
 
                 String[] taxFilingOptions = {"SINGLE", "MARRIED_FILING_SINGLY", "MARRIED_FILING_JOINTLY", "HEAD_OF_HOUSEHOLD"};
                 taxStatus = taxFilingOptions[value];
-                Log.d("Checked Button ID is: ", taxStatus);
             }
 
         });
@@ -142,14 +239,16 @@ public class UI_Fragment_Info extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         taxState = stateList[which];
+
                     }
                 });
                 AlertDialog dialog = stateBuilder.create();
                 dialog.show();
             }
 
-
         });
+
+
 
 
         return view;

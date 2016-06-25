@@ -7,13 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -57,7 +55,7 @@ public class UI_Fragment_Loan extends Fragment {
 
     String loanChoiceCategory;
     String loanChoiceCode;
-    float loanPrinicipal;
+    float loanPrincipal;
     float apr;
 
     @Nullable
@@ -90,11 +88,11 @@ public class UI_Fragment_Loan extends Fragment {
 
                 if (input0.equals("") == false)
                 {
-                    loanPrinicipal = Float.parseFloat(input0);
+                    loanPrincipal = Float.parseFloat(input0);
                 }
                 else
                 {
-                    loanPrinicipal = 0;
+                    loanPrincipal = 0;
                 }
 
                 if (input1.equals("") == false)

@@ -12,7 +12,7 @@
         android:padding="10dp"
         android:layout_marginLeft="0dp"
         android:layout_below="@+id/profileAssoc"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentEnd="true">
 
 
         <TextView
@@ -20,36 +20,41 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Tax Filing Status"
-            android:id="@+id/textView" />
+            android:id="@+id/textView"
+            android:textSize="14dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Single"
             android:id="@+id/singleRadio"
-            android:textSize="12dp"
-            android:checked="true" />
+            android:textSize="14dp"
+            android:checked="true"
+            android:layout_marginBottom="5dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Married - Filing Seperately"
+            android:text="Married - Filing Seperate"
             android:id="@+id/marriedSepRadio"
-            android:textSize="12dp" />
+            android:textSize="14dp"
+            android:layout_marginBottom="5dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Married - Filing Jointly"
             android:id="@+id/marriedTogRadio"
-            android:textSize="12dp" />
+            android:textSize="14dp"
+            android:layout_marginBottom="5dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Head of Household"
             android:id="@+id/headRadio"
-            android:textSize="12dp" />
+            android:textSize="14dp"
+            android:layout_marginBottom="5dp" />
 
     </RadioGroup>
 
@@ -62,9 +67,9 @@
         android:hint="Family Size"
         android:textAlignment="center"
         android:layout_column="0"
-        android:layout_marginLeft="0dp"
-        android:layout_alignTop="@+id/taxInput"
-        android:layout_toEndOf="@+id/taxInput" />
+        android:layout_below="@+id/spouseIncomeInput"
+        android:layout_alignStart="@+id/spouseIncomeInput"
+        android:layout_alignEnd="@+id/spouseIncomeInput" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -75,11 +80,9 @@
         android:hint="Gross Income"
         android:textAlignment="center"
         android:layout_column="0"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="0dp"
-        android:layout_below="@+id/familySizeInput"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/taxInput" />
+        android:layout_alignTop="@+id/taxInput"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/taxInput" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -90,11 +93,9 @@
         android:hint="Spouse Income"
         android:textAlignment="center"
         android:layout_column="0"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="0dp"
         android:layout_below="@+id/incomeInput"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/taxInput" />
+        android:layout_alignStart="@+id/incomeInput"
+        android:layout_alignEnd="@+id/incomeInput" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -104,8 +105,9 @@
         android:id="@+id/stateButton"
         android:layout_column="0"
         android:layout_marginLeft="0dp"
-        android:layout_below="@+id/spouseIncomeInput"
-        android:layout_alignEnd="@+id/spouseIncomeInput" />
+        android:layout_below="@+id/familySizeInput"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/taxInput" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -119,5 +121,12 @@
         android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_below="@+id/taxInput"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
