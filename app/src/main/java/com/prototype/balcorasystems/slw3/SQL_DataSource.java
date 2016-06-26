@@ -71,7 +71,7 @@ public class SQL_DataSource {
 
     public void updateDbEntry (Object_Profile profile) {
         SQLiteDatabase db = open();
-        db.beginTransaction();
+//        db.beginTransaction();
 
         ContentValues profileValues = new ContentValues();
         profileValues.put(storageHandler.FAMILY_SIZE, profile.getFamilySize());
@@ -80,14 +80,24 @@ public class SQL_DataSource {
         profileValues.put(storageHandler.FILING_STATUS, profile.getFilingStatus());
         profileValues.put(storageHandler.FILING_STATE, profile.getFilingState());
         profileValues.put(storageHandler.PROFILE_NAME, profile.getProfileName());
-        Log.d("newname ", profile.getProfileName());
 
-        String sqlIDString = Integer.toString(profile.getSqlID());
+        String condition = storageHandler.PROFILE_NAME + "= ?";
+        String[] args ={profile.getProfileName()};
 
-        db.update(storageHandler.TABLE_PROFILE, profileValues, sqlIDString, null);
+        Object_Profile testBefore = getLastProfileDbEntry();
 
-        db.endTransaction();
-        close(db);
+        db.update(storageHandler.TABLE_PROFILE, profileValues, condition, args);
+
+        Object_Profile testAfter = getLastProfileDbEntry();
+
+        // CRAZY ERROR WHERE DATABASE CHANGES DISSAPEAR IF I CLOSE?! PROBLEM ON SIMULATOR AND REAL PHONES?! IS IT MODIFYING SOME OTHER DB FILE?? IS IT NOT SAVING/COMMITING CHANGES? NEEDS TO BE ASYNC(thread issue?!)
+//        db.endTransaction();
+//        close(db);
+//        db.close();
+
+        Object_Profile checkResult = getLastProfileDbEntry();
+
+
     }
 
     public int getEntryCount ()
@@ -105,6 +115,29 @@ public class SQL_DataSource {
         db.endTransaction();
         db.close();
         return count;
+    }
+
+    public boolean isNameUnique (Object_Profile profileToCheck)
+    {
+        int count;
+        boolean unique=false;
+        SQLiteDatabase db = open();
+        String query = "SELECT COUNT(*) FROM " + storageHandler.TABLE_PROFILE + " WHERE " + storageHandler.PROFILE_NAME + "=" + "\"" + profileToCheck.getProfileName() + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        db.beginTransaction();
+        cursor.moveToFirst();
+        count=Integer.parseInt(cursor.getString(0));
+
+        if (count == 0)
+        {
+            unique=true;
+        }
+
+        db.endTransaction();
+        db.close();
+        return unique;
+
     }
 
 

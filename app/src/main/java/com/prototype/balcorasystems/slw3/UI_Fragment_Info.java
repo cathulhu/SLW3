@@ -41,9 +41,9 @@ public class UI_Fragment_Info extends Fragment {
     public Object_Profile getLast ()
     {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
-        Object_Profile profile=dataSource.getLastProfileDbEntry();
+        Object_Profile lastProfile=dataSource.getLastProfileDbEntry();
 
-        return profile;
+        return lastProfile;
     }
 
     public ArrayList<Object_Profile> getData () {
@@ -60,6 +60,18 @@ public class UI_Fragment_Info extends Fragment {
         dataSource.createProfileDbEntry(profile);
         Toast toast = Toast.makeText(getContext(), "populating profile object and saving to SQL", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public void updateData (Object_Profile updatedProfile)
+    {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
+        dataSource.updateDbEntry(updatedProfile);
+
+
+        Toast toast = Toast.makeText(getContext(), "tried to edit " + updatedProfile.getProfileName(), Toast.LENGTH_SHORT);
+        toast.show();
+
+        Object_Profile postUpdateCheck = getLast();
     }
 
     public void clearData() {
@@ -81,8 +93,17 @@ public class UI_Fragment_Info extends Fragment {
 
     }
 
-    Object_Profile profile = new Object_Profile();
-    ArrayList<Object_Profile> profileList = new ArrayList<>();
+    public boolean isUniqueName (Object_Profile profileToCheck) {
+        boolean result = false; //false means it already exists which means edit rather than save new version
+
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        result=dataSource.isNameUnique(profileToCheck);
+
+        return result;
+    }
+
+//    Object_Profile profile = new Object_Profile();
+//    ArrayList<Object_Profile> profileList = new ArrayList<>();
 
     String[] stateList = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI",
             "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT",
@@ -104,10 +125,16 @@ public class UI_Fragment_Info extends Fragment {
         super.onDestroyView();
         if (check_info_ready()==true)
         {
-            Object_Profile profile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
-             saveData(profile);
+            Object_Profile updatedProfile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
 
-
+            if (isUniqueName(updatedProfile)==false)
+            {
+                updateData(updatedProfile);
+            }
+            else
+            {
+                saveData(updatedProfile);
+            }
         }
     }
 
@@ -116,8 +143,6 @@ public class UI_Fragment_Info extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 //        clearData();
-
-        profileList = getData();
 
         View view = inflater.inflate(R.layout.info, container, false);
 
@@ -128,11 +153,11 @@ public class UI_Fragment_Info extends Fragment {
 
         if (isSqlEmpty()== false)
         {
-            profile = getLast();
-            profileName.setText(profile.getProfileName());
-            familysizeField.setText( String.valueOf(profile.getFamilySize()) );
-            incomeInput.setText( String.valueOf(profile.getGrossIncome()) );
-            spouseIncomeInput.setText( String.valueOf(profile.getSpouseIncome()) );
+            Object_Profile freshProfile = getLast();
+            profileName.setText(freshProfile.getProfileName());
+            familysizeField.setText( String.valueOf(freshProfile.getFamilySize()) );
+            incomeInput.setText( String.valueOf(freshProfile.getGrossIncome()) );
+            spouseIncomeInput.setText( String.valueOf(freshProfile.getSpouseIncome()) );
         }
 
 
