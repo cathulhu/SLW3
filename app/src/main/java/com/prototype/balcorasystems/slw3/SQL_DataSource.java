@@ -84,16 +84,13 @@ public class SQL_DataSource {
         String condition = storageHandler.PROFILE_NAME + "= ?";
         String[] args ={profile.getProfileName()};
 
-        Object_Profile testBefore = getLastProfileDbEntry();
-
         db.update(storageHandler.TABLE_PROFILE, profileValues, condition, args);
-
-        Object_Profile testAfter = getLastProfileDbEntry();
 
         // CRAZY ERROR WHERE DATABASE CHANGES DISSAPEAR IF I CLOSE?! PROBLEM ON SIMULATOR AND REAL PHONES?! IS IT MODIFYING SOME OTHER DB FILE?? IS IT NOT SAVING/COMMITING CHANGES? NEEDS TO BE ASYNC(thread issue?!)
 //        db.endTransaction();
 //        close(db);
 //        db.close();
+
 
         Object_Profile checkResult = getLastProfileDbEntry();
 
@@ -111,7 +108,7 @@ public class SQL_DataSource {
         cursor.moveToFirst();
         count=Integer.parseInt(cursor.getString(0));
 
-
+        cursor.close();
         db.endTransaction();
         db.close();
         return count;
@@ -134,6 +131,7 @@ public class SQL_DataSource {
             unique=true;
         }
 
+        cursor.close();
         db.endTransaction();
         db.close();
         return unique;
@@ -161,9 +159,9 @@ public class SQL_DataSource {
                 storedProfile.setFilingStatus(cursor.getString(4));
                 storedProfile.setFilingState(cursor.getString(5));
                 storedProfile.setProfileName(cursor.getString(6));
-
+        cursor.close();
         db.endTransaction();
-
+//        close(db);
         return storedProfile;
     }
 
@@ -184,7 +182,7 @@ public class SQL_DataSource {
 
         ContentValues sqlIDresult;
         String selectionQuery = "SELECT MAX ("  + storageHandler.PROFILE_KEY_ID + ") FROM " + storageHandler.TABLE_PROFILE;
-        Cursor cursor = db.rawQuery(selectionQuery, null);;
+        Cursor cursor = db.rawQuery(selectionQuery, null);
         cursor.moveToFirst();
         int id = Integer.parseInt(cursor.getString(0));
         cursor.close();
@@ -193,7 +191,7 @@ public class SQL_DataSource {
 
         db.setTransactionSuccessful();
         db.endTransaction();
-        close(db);
+        close(db);                                  //for some reason close works ok for inserting rows
 
     }
 

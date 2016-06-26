@@ -21,20 +21,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-//may want to add arguments to class so fragment knows whether its been spawned to edit or create new object
-//for now store results of input in gloabl variables, later hookup dynamic object creation.
 public class UI_Fragment_Info extends Fragment {
 
-    public boolean check_info_ready () {
+    public boolean check_info_ready ()
+    {
         boolean result = false;
 
         if (familysizeInput != -5 && incomeValue != -5 && spouseIncomeValue != -5 && taxState != null && name!= null)
         {
             result=true;
         }
-
         return result;
     }
 
@@ -46,7 +42,8 @@ public class UI_Fragment_Info extends Fragment {
         return lastProfile;
     }
 
-    public ArrayList<Object_Profile> getData () {
+    public ArrayList<Object_Profile> getData ()
+    {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
         ArrayList<Object_Profile> resultsArrayList = new ArrayList<>();
         resultsArrayList = dataSource.readAllProfiles();
@@ -74,7 +71,8 @@ public class UI_Fragment_Info extends Fragment {
         Object_Profile postUpdateCheck = getLast();
     }
 
-    public void clearData() {
+    public void clearData()
+    {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
         dataSource.deleteAllProfiles();
         Toast toast = Toast.makeText(getContext(), "sql cleared", Toast.LENGTH_SHORT);
@@ -93,7 +91,8 @@ public class UI_Fragment_Info extends Fragment {
 
     }
 
-    public boolean isUniqueName (Object_Profile profileToCheck) {
+    public boolean isUniqueName (Object_Profile profileToCheck)
+    {
         boolean result = false; //false means it already exists which means edit rather than save new version
 
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
@@ -102,23 +101,18 @@ public class UI_Fragment_Info extends Fragment {
         return result;
     }
 
-//    Object_Profile profile = new Object_Profile();
-//    ArrayList<Object_Profile> profileList = new ArrayList<>();
-
     String[] stateList = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI",
             "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT",
             "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC",
             "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
 
+    //could make a special object to hold these values but as far as global variables go these are pretty safe
     String taxStatus= "SINGLE";
     int familysizeInput = -5;
     float incomeValue = -5;
     float spouseIncomeValue = -5;
     String taxState;
     String name;
-//    boolean profileExists = false;
-
-
 
     @Override
     public void onDestroyView() {
