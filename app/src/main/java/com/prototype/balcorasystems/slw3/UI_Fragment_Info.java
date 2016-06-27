@@ -7,19 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UI_Fragment_Info extends Fragment {
 
@@ -62,7 +58,7 @@ public class UI_Fragment_Info extends Fragment {
     public void updateData (Object_Profile updatedProfile)
     {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
-        dataSource.updateDbEntry(updatedProfile);
+        dataSource.updateProfileEntry(updatedProfile);
 
 
         Toast toast = Toast.makeText(getContext(), "tried to edit " + updatedProfile.getProfileName(), Toast.LENGTH_SHORT);
@@ -82,7 +78,7 @@ public class UI_Fragment_Info extends Fragment {
     public boolean isSqlEmpty () {
         boolean result = true;
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
-        int count = dataSource.getEntryCount();
+        int count = dataSource.getProfileCount();
         if (count > 0)
         {
             result=false;
@@ -96,7 +92,7 @@ public class UI_Fragment_Info extends Fragment {
         boolean result = false; //false means it already exists which means edit rather than save new version
 
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
-        result=dataSource.isNameUnique(profileToCheck);
+        result=dataSource.isProfileNameUnique(profileToCheck);
 
         return result;
     }

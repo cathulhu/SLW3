@@ -69,7 +69,7 @@ public class SQL_DataSource {
         close(db);
     }
 
-    public void updateDbEntry (Object_Profile profile) {
+    public void updateProfileEntry(Object_Profile profile) {
         SQLiteDatabase db = open();
 //        db.beginTransaction();
 
@@ -90,14 +90,14 @@ public class SQL_DataSource {
 //        db.endTransaction();
 //        close(db);
 //        db.close();
-
-
-        Object_Profile checkResult = getLastProfileDbEntry();
+//
+//
+//        Object_Profile checkResult = getLastProfileDbEntry();
 
 
     }
 
-    public int getEntryCount ()
+    public int getProfileCount()
     {
         int count;
         SQLiteDatabase db = open();
@@ -114,7 +114,7 @@ public class SQL_DataSource {
         return count;
     }
 
-    public boolean isNameUnique (Object_Profile profileToCheck)
+    public boolean isProfileNameUnique(Object_Profile profileToCheck)
     {
         int count;
         boolean unique=false;
@@ -196,23 +196,85 @@ public class SQL_DataSource {
     }
 
 
-//    public void createLoan (Object_Loan loan) {
-//        SQLiteDatabase db = open();
-//        db.beginTransaction();
-//
-//        ContentValues loanValues = new ContentValues();
-//        loanValues.put(storageHandler.LOAN_CHOICE_CATEGORY, loan.getLoanType());
-//        loanValues.put(storageHandler.LOAN_CHOICE_CODE, loan.getLoanCode());
-//        loanValues.put(storageHandler.LOAN_PRINCIPAL, loan.getLoanPrincipal());
-//        loanValues.put(storageHandler.LOAN_APR, loan.getLoanAPR());
-//        loanValues.put(storageHandler.LOAN_OWNER, loan.getLoanOwner());
-//        db.insert(SQL_LocalStorageHandler.TABLE_LOAN, null, loanValues);
-//
-//
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
+
+
+
+
+
+
+
+
+    public void createLoanDbEntry (Object_Loan loan) {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+
+        ContentValues loanValues = new ContentValues();
+        loanValues.put(storageHandler.LOAN_CHOICE_CATEGORY, loan.getLoanType());
+        loanValues.put(storageHandler.LOAN_CHOICE_CODE, loan.getLoanCode());
+        loanValues.put(storageHandler.LOAN_PRINCIPAL, loan.getLoanPrincipal());
+        loanValues.put(storageHandler.LOAN_APR, loan.getLoanAPR());
+        loanValues.put(storageHandler.LOAN_OWNER, loan.getLoanOwner());
+        loanValues.put(storageHandler.LOAN_BALANCE, loan.getLoanBalance());
+        db.insert(SQL_LocalStorageHandler.TABLE_LOAN, null, loanValues);
+
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+    }
+
+    public Object_Loan getLastLoanDbEntry () {
+
+        SQLiteDatabase db = open();
+        String selectionQuery = "SELECT * FROM "  + storageHandler.TABLE_LOAN + " ORDER BY " + storageHandler.LOAN_KEY_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(selectionQuery, null);
+        Object_Loan storedLoan = new Object_Loan();
+
+        db.beginTransaction();
+        ContentValues profileValues = new ContentValues();
+
+        cursor.moveToFirst();
+
+        storedLoan.setSqlID(Integer.parseInt(cursor.getString(0)));
+        storedLoan.setLoanOwner(cursor.getString(1));
+        storedLoan.setLoanType(cursor.getString(2));
+        storedLoan.setLoanCode(cursor.getString(3));
+        storedLoan.setLoanPrincipal(Float.parseFloat(cursor.getString(4)));
+        storedLoan.setLoanAPR(Float.parseFloat(cursor.getString(5)));
+        storedLoan.setLoanBalance(Float.parseFloat(cursor.getString(6)));
+
+        cursor.close();
+        db.endTransaction();
 //        close(db);
-//    }
+        return storedLoan;
+    }
+
+    public int getLoanCount()
+    {
+        int count;
+        SQLiteDatabase db = open();
+        String query = "SELECT COUNT(*) FROM " + storageHandler.TABLE_LOAN;
+        Cursor cursor = db.rawQuery(query, null);
+
+        db.beginTransaction();
+        cursor.moveToFirst();
+        count=Integer.parseInt(cursor.getString(0));
+
+        cursor.close();
+        db.endTransaction();
+        db.close();
+        return count;
+    }
+
+    public void deleteAllLoans() {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+        db.delete(storageHandler.TABLE_LOAN, null, null);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+    }
+
 
 
 }

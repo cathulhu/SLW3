@@ -24,7 +24,7 @@ public class SQL_LocalStorageHandler extends SQLiteOpenHelper{
     public static String PROFILE_NAME = "profileName";
 
     //loan table columns
-    public static String LOAN_ID = "loanID";
+    public static String LOAN_KEY_ID = "loanID";
 
     public static String LOAN_OWNER = "loanOwner";
     public static String LOAN_CHOICE_CATEGORY = "loanChoiceCategory";
@@ -44,7 +44,7 @@ public class SQL_LocalStorageHandler extends SQLiteOpenHelper{
         String CREATE_PROFILE_TABLE = "CREATE TABLE " + TABLE_PROFILE + " (" + PROFILE_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + FAMILY_SIZE + " INTEGER," + GROSS_INCOME + " REAL,"
                                     + SPOUSE_INCOME + " REAL," + FILING_STATUS + " TEXT," + FILING_STATE + " TEXT," + PROFILE_NAME + " TEXT" + ")";
 
-        String CREATE_LOAN_TABLE = "CREATE TABLE " + TABLE_LOAN + " (" + LOAN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + LOAN_OWNER + " TEXT," + LOAN_CHOICE_CATEGORY + " TEXT," + LOAN_CHOICE_CODE + " TEXT,"
+        String CREATE_LOAN_TABLE = "CREATE TABLE " + TABLE_LOAN + " (" + LOAN_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + LOAN_OWNER + " TEXT," + LOAN_CHOICE_CATEGORY + " TEXT," + LOAN_CHOICE_CODE + " TEXT,"
                                     + LOAN_PRINCIPAL + " REAL," + LOAN_APR + " REAL," + LOAN_BALANCE + " REAL" +")";
 
         db.execSQL(CREATE_PROFILE_TABLE);

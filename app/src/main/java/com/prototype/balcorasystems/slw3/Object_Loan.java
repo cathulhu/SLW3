@@ -5,30 +5,36 @@ package com.prototype.balcorasystems.slw3;
 public class Object_Loan {
 
     private float loanPrincipal;
-    private float loanAPR;
     private float loanBalance;
+    private float loanAPR;
     private String loanCode;
     private String loanType;
     private String loanOwner;
     private String prettyName;
+    private boolean inDefault;
+    private boolean isPrivateLoan;
+    private boolean inGracePeriod;
+    private int repaymentMonth;
     private int sqlID;
 
+    //many of these variables not implemented in SQLdb yet
 
-    public Object_Loan(float principal, float apr, float balance, String code, String name, String type, String owner) {
+    public Object_Loan(float principal, float apr, String type, String code, String owner) {
 
-        loanPrincipal= principal;
-        loanAPR=apr;
-        loanBalance=balance;
+        loanPrincipal = principal;
+        loanAPR = apr;
+        loanBalance = principal;
         loanCode = code;
         loanType = type;
         loanOwner = owner;
-        prettyName = name;
+
 
     }
 
-    public Object_Loan () {
+    public Object_Loan() {
 
     }
+
 
     public float getLoanPrincipal() {
         return loanPrincipal;
@@ -38,20 +44,20 @@ public class Object_Loan {
         this.loanPrincipal = loanPrincipal;
     }
 
-    public float getLoanAPR() {
-        return loanAPR;
-    }
-
-    public void setLoanAPR(float loanAPR) {
-        this.loanAPR = loanAPR;
-    }
-
     public float getLoanBalance() {
         return loanBalance;
     }
 
     public void setLoanBalance(float loanBalance) {
         this.loanBalance = loanBalance;
+    }
+
+    public float getLoanAPR() {
+        return loanAPR;
+    }
+
+    public void setLoanAPR(float loanAPR) {
+        this.loanAPR = loanAPR;
     }
 
     public String getLoanCode() {
@@ -84,6 +90,38 @@ public class Object_Loan {
 
     public void setPrettyName(String prettyName) {
         this.prettyName = prettyName;
+    }
+
+    public boolean isInDefault() {
+        return inDefault;
+    }
+
+    public void setInDefault(boolean inDefault) {
+        this.inDefault = inDefault;
+    }
+
+    public boolean isPrivateLoan() {
+        return isPrivateLoan;
+    }
+
+    public void setPrivateLoan(boolean privateLoan) {
+        isPrivateLoan = privateLoan;
+    }
+
+    public boolean isInGracePeriod() {
+        return inGracePeriod;
+    }
+
+    public void setInGracePeriod(boolean inGracePeriod) {
+        this.inGracePeriod = inGracePeriod;
+    }
+
+    public int getRepaymentMonth() {
+        return repaymentMonth;
+    }
+
+    public void setRepaymentMonth(int repaymentMonth) {
+        this.repaymentMonth = repaymentMonth;
     }
 
     public int getSqlID() {
