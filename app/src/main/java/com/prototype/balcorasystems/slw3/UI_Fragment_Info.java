@@ -1,5 +1,6 @@
 package com.prototype.balcorasystems.slw3;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,24 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class UI_Fragment_Info extends Fragment {
+
+    public interface profileActivityLoader {
+        public void sendProfile (Object_Profile outBoundProfile);
+    }
+
+    profileActivityLoader mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (profileActivityLoader) context;        //not sure if this is just a test or necessary for callback to work, will find out.
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement profileActivityLoader");
+        }
+
+    }
 
     public boolean check_info_ready ()
     {
@@ -109,11 +128,13 @@ public class UI_Fragment_Info extends Fragment {
     float spouseIncomeValue = -5;
     String taxState;
     String name;
+//    profileActivityLoader loader;
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (check_info_ready()==true)
+
+        if (check_info_ready()==true)   //when i put in a list view of different profiles ill need a trigger for updating data on selected profile changed also
         {
             Object_Profile updatedProfile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
 
@@ -125,6 +146,9 @@ public class UI_Fragment_Info extends Fragment {
             {
                 saveData(updatedProfile);
             }
+
+            mCallback.sendProfile(updatedProfile);
+
         }
     }
 

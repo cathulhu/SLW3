@@ -15,9 +15,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.prototype.balcorasystems.slw3.MainActivity;
 
 
 public class UI_Fragment_Loan extends Fragment {
+
+//    public static void loadProfile (Object_Profile inputProfile){
+//        selectedProfile = inputProfile;
+//    }
+
 
     public boolean check_info_ready ()
     {
@@ -118,6 +124,7 @@ public class UI_Fragment_Loan extends Fragment {
     float loanPrincipal =-5;
     float apr =-5;
     boolean currentlyEditing=false;
+    static Object_Profile selectedProfile;
 
 
 
@@ -129,9 +136,12 @@ public class UI_Fragment_Loan extends Fragment {
 
 //        clearData();
 
+        selectedProfile = MainActivity.storedProfile;
+        TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);
+        nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
+
         final EditText loanInput = (EditText) view.findViewById(R.id.debtInput);
         final EditText aprInput = (EditText) view.findViewById(R.id.aprInput);
-        TextView profileAssociation = (TextView) view.findViewById(R.id.profileAssoc);
 
         Object_Loan fetchedLoan = new Object_Loan();
 
@@ -215,7 +225,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                 if (check_info_ready())
                 {
-                    Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, "TestOwner");
+                    Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName());
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
                     if (currentlyEditing==true)   //will put condition here to detect if entry is being edited or added but for now just do new loan functionality

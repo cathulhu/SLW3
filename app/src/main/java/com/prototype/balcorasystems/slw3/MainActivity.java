@@ -11,11 +11,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, UI_Fragment_Info.profileActivityLoader {
 
-        implements NavigationView.OnNavigationItemSelectedListener {
-//      check if backstack = 0, if so we don't want to add fragment to backstack, set flag to 1 after first fragment added.
-//    int backstackCount = getSupportFragmentManager().getBackStackEntryCount();
+
+    @Override
+    public void sendProfile(Object_Profile inBoundProfile) {
+        storedProfile = inBoundProfile;
+
+    }
+
+    public static Object_Profile storedProfile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +120,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
+
         } else if (id == R.id.navDrawer_repayment) {
 
         } else if (id == R.id.navDrawer_analysis) {
@@ -130,4 +137,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
