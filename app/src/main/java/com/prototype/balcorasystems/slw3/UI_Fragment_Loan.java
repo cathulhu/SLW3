@@ -155,7 +155,7 @@ public class UI_Fragment_Loan extends Fragment {
 
         selectedProfile = MainActivity.storedProfile;
         TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);
-        nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
+
 
         final TextView loanSelection = (TextView) view.findViewById(R.id.loanTypeField);
         final EditText loanInput = (EditText) view.findViewById(R.id.debtInput);
@@ -166,6 +166,12 @@ public class UI_Fragment_Loan extends Fragment {
 
         if (isSqlEmpty()==false)
         {
+
+            if (selectedProfile!=null)
+            {
+                nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
+            }
+
             fetchedLoan = getLast();
             loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
             aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));

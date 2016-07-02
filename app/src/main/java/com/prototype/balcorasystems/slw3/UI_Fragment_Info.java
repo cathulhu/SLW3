@@ -171,14 +171,41 @@ public class UI_Fragment_Info extends Fragment {
         final EditText familysizeField = (EditText) view.findViewById(R.id.familySizeInput);
         final EditText incomeInput = (EditText) view.findViewById(R.id.incomeInput);
         final EditText spouseIncomeInput = (EditText) view.findViewById(R.id.spouseIncomeInput);
+        final Button stateButton = (Button) view.findViewById(R.id.stateButton);
+        final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
 
         if (isSqlEmpty()== false)
         {
             Object_Profile freshProfile = getLast();
             profileName.setText(freshProfile.getProfileName());
+            name = freshProfile.getProfileName();
             familysizeField.setText( String.valueOf(freshProfile.getFamilySize()) );
+            familysizeInput = freshProfile.getFamilySize();
             incomeInput.setText( String.valueOf(freshProfile.getGrossIncome()) );
+            incomeValue = freshProfile.getGrossIncome();
             spouseIncomeInput.setText( String.valueOf(freshProfile.getSpouseIncome()) );
+            spouseIncomeValue = freshProfile.getSpouseIncome();
+            stateButton.setText("Tax Filing State: " + freshProfile.getFilingState());
+            taxState=freshProfile.getFilingState();
+
+            if (freshProfile.getFilingStatus().equals("SINGLE") )
+            {
+                taxStatusRadio.check(R.id.singleRadio);
+            }
+            else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_SINGLY"))
+            {
+                taxStatusRadio.check(R.id.marriedSepRadio);
+            }
+            else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_JOINTLY"))
+            {
+                taxStatusRadio.check(R.id.marriedTogRadio);
+            }
+            else
+            {
+                taxStatusRadio.check(R.id.headRadio);
+            }
+            taxStatus=freshProfile.getFilingStatus();
+
         }
 
 
@@ -250,7 +277,7 @@ public class UI_Fragment_Info extends Fragment {
         spouseIncomeInput.addTextChangedListener(watcher);
         profileName.addTextChangedListener(watcher);
 
-        final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
+
         taxStatusRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -273,7 +300,7 @@ public class UI_Fragment_Info extends Fragment {
         });
 
 
-        Button stateButton = (Button) view.findViewById(R.id.stateButton);
+
         stateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -285,6 +312,7 @@ public class UI_Fragment_Info extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         taxState = stateList[which];
+                        stateButton.setText("Tax Filing State: " + taxState);
 
                     }
                 });
