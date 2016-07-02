@@ -27,6 +27,12 @@ public class SQL_DataSource {
         activeDB.close();
     }
 
+    public void deleteDbFile(Context context)
+    {
+        context.deleteDatabase("localData.db");
+
+    }
+
 
     public ArrayList<Object_Profile> readAllProfiles() {
 
@@ -215,6 +221,8 @@ public class SQL_DataSource {
         loanValues.put(storageHandler.LOAN_APR, loan.getLoanAPR());
         loanValues.put(storageHandler.LOAN_OWNER, loan.getLoanOwner());
         loanValues.put(storageHandler.LOAN_BALANCE, loan.getLoanBalance());
+        loanValues.put(storageHandler.LOAN_STATUS, loan.getLoanStatus());
+        loanValues.put(storageHandler.LOAN_NICE_NAME, loan.getPrettyName());
         db.insert(SQL_LocalStorageHandler.TABLE_LOAN, null, loanValues);
 
 
@@ -242,6 +250,8 @@ public class SQL_DataSource {
         storedLoan.setLoanPrincipal(Float.parseFloat(cursor.getString(4)));
         storedLoan.setLoanAPR(Float.parseFloat(cursor.getString(5)));
         storedLoan.setLoanBalance(Float.parseFloat(cursor.getString(6)));
+        storedLoan.setLoanStatus(cursor.getString(7));
+        storedLoan.setPrettyName(cursor.getString(9));
 
         cursor.close();
         db.endTransaction();

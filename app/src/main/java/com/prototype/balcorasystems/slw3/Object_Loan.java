@@ -7,6 +7,7 @@ public class Object_Loan {
     private float loanPrincipal;
     private float loanBalance;
     private float loanAPR;
+    private String loanStatus;
     private String loanCode;
     private String loanType;
     private String loanOwner;
@@ -15,11 +16,12 @@ public class Object_Loan {
     private boolean isPrivateLoan;
     private boolean inGracePeriod;
     private int repaymentMonth;
+    private int statusElapsedDays;
     private int sqlID;
 
     //many of these variables not implemented in SQLdb yet
 
-    public Object_Loan(float principal, float apr, String type, String code, String owner) {
+    public Object_Loan(float principal, float apr, String type, String code, String owner, String niceName, String status) {
 
         loanPrincipal = principal;
         loanAPR = apr;
@@ -27,6 +29,8 @@ public class Object_Loan {
         loanCode = code;
         loanType = type;
         loanOwner = owner;
+        prettyName = niceName;
+        loanStatus = status;
 
 
     }
@@ -126,6 +130,22 @@ public class Object_Loan {
 
     public int getSqlID() {
         return sqlID;
+    }
+
+    public String getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(String loanStatus) {
+        this.loanStatus = loanStatus;
+    }
+
+    public int getStatusElapsedDays() {
+        return statusElapsedDays;
+    }
+
+    public void setStatusElapsedDays(int statusElapsedDays) {
+        this.statusElapsedDays = statusElapsedDays;
     }
 
     public void setSqlID(int sqlID) {

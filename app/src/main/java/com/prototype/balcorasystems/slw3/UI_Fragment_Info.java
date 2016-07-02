@@ -49,6 +49,12 @@ public class UI_Fragment_Info extends Fragment {
         return result;
     }
 
+    public void deleteWholeDb (Context context)
+    {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        dataSource.deleteDbFile(context);
+    }
+
     public Object_Profile getLast ()
     {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
@@ -157,6 +163,7 @@ public class UI_Fragment_Info extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 //        clearData();
+//        deleteWholeDb(getContext());
 
         View view = inflater.inflate(R.layout.info, container, false);
 
