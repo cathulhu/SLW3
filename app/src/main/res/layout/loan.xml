@@ -54,10 +54,11 @@
         android:id="@+id/loanSelectbutton"
         android:layout_row="3"
         android:layout_column="0"
-        android:layout_below="@+id/aprInput"
+        android:textSize="12dp"
+        android:layout_below="@+id/editText"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/loanStatusButton"
-        android:textSize="12dp" />
+        android:layout_above="@+id/loanStatusButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,10 +78,10 @@
         android:textAlignment="center"
         android:editable="false"
         android:inputType="none"
-        android:layout_above="@+id/loanStatusButton"
+        android:textSize="13dp"
+        android:layout_below="@+id/editText"
         android:layout_alignStart="@+id/aprInput"
-        android:layout_alignEnd="@+id/aprInput"
-        android:textSize="13dp" />
+        android:layout_alignEnd="@+id/aprInput" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,7 +89,7 @@
         android:id="@+id/editText2"
         android:text="APR Rate %"
         android:textSize="12dp"
-        android:layout_above="@+id/loanSelectbutton"
+        android:layout_alignBottom="@+id/aprInput"
         android:layout_alignEnd="@+id/loanSelectbutton" />
 
     <TextView
@@ -106,21 +107,46 @@
         android:layout_height="wrap_content"
         android:text="Loan Status"
         android:id="@+id/loanStatusButton"
-        android:layout_below="@+id/loanSelectbutton"
         android:layout_alignParentStart="true"
-        android:textSize="12dp" />
+        android:textSize="12dp"
+        android:layout_below="@+id/loanTypeField"
+        android:layout_alignBottom="@+id/loanStatusField" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/loanStatusField"
-        android:layout_alignBottom="@+id/loanStatusButton"
-        android:layout_alignStart="@+id/loanTypeField"
-        android:layout_alignEnd="@+id/loanTypeField"
         android:hint="Current Loan Status"
         android:textAlignment="center"
         android:inputType="none"
-        android:textSize="13dp" />
+        android:textSize="13dp"
+        android:layout_below="@+id/loanTypeField"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/loanTypeField" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:textAlignment="center"
+        android:hint="LOAN DATE NOTYET IMPLIMENTED"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:textSize="13dp"
+        android:layout_below="@+id/aprInput"
+        android:layout_alignStart="@+id/aprInput"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView18"
+        android:text="Loan Issue Date"
+        android:textSize="12dp"
+        android:layout_above="@+id/loanSelectbutton"
+        android:layout_alignEnd="@+id/loanSelectbutton" />
 
 
 </RelativeLayout>

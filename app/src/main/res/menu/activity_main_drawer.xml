@@ -13,19 +13,23 @@
         <item
             android:id="@+id/navDrawer_repayment"
             android:icon="@drawable/multchoice"
-            android:title="Repayment Scenarios" />
+            android:title="Background" />
         <item
             android:id="@+id/navDrawer_analysis"
             android:icon="@drawable/stocks"
-            android:title="Debt Analysis" />
+            android:title="Analysis" />
+        <item
+            android:id="@+id/navDrawer_recommendations"
+            android:icon="@drawable/workflow"
+            android:title="Repayment Plan" />
     </group>
 
-    <!--<item android:title="Communicate">-->
+    <!--<item android:title="Detailed Analysis">-->
         <!--<menu>-->
             <!--<item-->
                 <!--android:id="@+id/nav_share"-->
                 <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
+                <!--android:title="Detailed Analysis" />-->
             <!--<item-->
                 <!--android:id="@+id/nav_send"-->
                 <!--android:icon="@drawable/ic_menu_send"-->

@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            UI_Fragment_Repayment UIFragmentRepayment = new UI_Fragment_Repayment();
+            UI_Fragment_Background UIFragmentRepayment = new UI_Fragment_Background();
             fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentRepayment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();

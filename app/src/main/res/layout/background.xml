@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Repayment Scenarios"
+        android:text="Background Details"
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="171dp"
@@ -241,7 +241,7 @@
         android:id="@+id/textView17"
         android:singleLine="false"
         android:textSize="12dp"
-        android:text="For Parent PLUS loans, has the child for this loan died?"
+        android:text="For Parent PLUS loans, has the child for this loan deceased?"
         android:layout_below="@+id/textView14"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/radioGroup4" />

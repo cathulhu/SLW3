@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class UI_Fragment_Repayment extends Fragment{
+public class UI_Fragment_Background extends Fragment{
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.scenarios, container, false);
+        View view = inflater.inflate(R.layout.background, container, false);
 
 
         final Spinner raiseSpinner = (Spinner) view.findViewById(R.id.spinner2);
