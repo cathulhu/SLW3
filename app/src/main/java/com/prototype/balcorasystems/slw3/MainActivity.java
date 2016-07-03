@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, UI_Fragment_Info.profileActivityLoader {
 
+    String[] TaxOptions = {"Single", "Married Filing Jointly", "Married Filing Separately", "Head of Household"};
 
     @Override
     public void sendProfile(Object_Profile inBoundProfile) {

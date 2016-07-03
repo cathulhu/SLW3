@@ -11,9 +11,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -127,6 +131,8 @@ public class UI_Fragment_Info extends Fragment {
             "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC",
             "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
 
+    String[] taxFilingOptions = {"SINGLE", "MARRIED_FILING_SINGLY", "MARRIED_FILING_JOINTLY", "HEAD_OF_HOUSEHOLD"};
+
     //could make a special object to hold these values but as far as global variables go these are pretty safe
     String taxStatus= "SINGLE";
     int familysizeInput = -5;
@@ -142,6 +148,12 @@ public class UI_Fragment_Info extends Fragment {
 
         if (check_info_ready()==true)   //when i put in a list view of different profiles ill need a trigger for updating data on selected profile changed also
         {
+            if (taxStatus.equals("SINGLE"))
+            {
+                spouseIncomeValue=0;
+                familysizeInput=0;
+            }
+
             Object_Profile updatedProfile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
 
             if (isUniqueName(updatedProfile)==false)
@@ -172,15 +184,38 @@ public class UI_Fragment_Info extends Fragment {
         final EditText incomeInput = (EditText) view.findViewById(R.id.incomeInput);
         final EditText spouseIncomeInput = (EditText) view.findViewById(R.id.spouseIncomeInput);
         final Button stateButton = (Button) view.findViewById(R.id.stateButton);
-        final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
+
+        final TextView houseSizeLabel = (TextView) view.findViewById(R.id.householdSizeLabel);
+        final TextView spouseIncomeLabel = (TextView) view.findViewById(R.id.spouseIncomeLabel);
+
+        houseSizeLabel.setVisibility(View.INVISIBLE);
+        spouseIncomeLabel.setVisibility(View.INVISIBLE);
+        spouseIncomeInput.setVisibility(View.INVISIBLE);
+        familysizeField.setVisibility(View.INVISIBLE);
+
+        final Spinner taxSpinner = (Spinner) view.findViewById(R.id.spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.tax_status_array, android.R.layout.simple_spinner_dropdown_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        taxSpinner.setAdapter(adapter);
+
+//        final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
+
+
+
 
         if (isSqlEmpty()== false)
         {
             Object_Profile freshProfile = getLast();
+
             profileName.setText(freshProfile.getProfileName());
             name = freshProfile.getProfileName();
+
             familysizeField.setText( String.valueOf(freshProfile.getFamilySize()) );
             familysizeInput = freshProfile.getFamilySize();
+
             incomeInput.setText( String.valueOf(freshProfile.getGrossIncome()) );
             incomeValue = freshProfile.getGrossIncome();
             spouseIncomeInput.setText( String.valueOf(freshProfile.getSpouseIncome()) );
@@ -190,20 +225,21 @@ public class UI_Fragment_Info extends Fragment {
 
             if (freshProfile.getFilingStatus().equals("SINGLE") )
             {
-                taxStatusRadio.check(R.id.singleRadio);
+                taxSpinner.setSelection(0);
             }
             else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_SINGLY"))
             {
-                taxStatusRadio.check(R.id.marriedSepRadio);
+                taxSpinner.setSelection(1);
             }
             else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_JOINTLY"))
             {
-                taxStatusRadio.check(R.id.marriedTogRadio);
+                taxSpinner.setSelection(2);
             }
             else
             {
-                taxStatusRadio.check(R.id.headRadio);
+                taxSpinner.setSelection(3);
             }
+
             taxStatus=freshProfile.getFilingStatus();
 
         }
@@ -278,26 +314,48 @@ public class UI_Fragment_Info extends Fragment {
         profileName.addTextChangedListener(watcher);
 
 
-        taxStatusRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
+        taxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                taxStatus= taxFilingOptions[position];
 
-                int value = 0;
-                int choice = taxStatusRadio.getCheckedRadioButtonId();
-                if (choice == R.id.marriedSepRadio) {
-                    value = 1;
-                } else if (choice == R.id.marriedTogRadio) {
-                    value = 2;
-                } else if (choice == R.id.headRadio) {
-                    value = 3;
+                if (position != 0)
+                {
+                    houseSizeLabel.setVisibility(View.VISIBLE);
+                    familysizeField.setVisibility(View.VISIBLE);
+//                    familysizeField.setText("");
+                    spouseIncomeLabel.setVisibility(View.VISIBLE);
+                    spouseIncomeInput.setVisibility(View.VISIBLE);
+
+                    if (spouseIncomeValue==0.0)
+                    {
+                                            spouseIncomeInput.setText("");
+                    }
+
+                    if (familysizeInput==0)
+                    {
+                        familysizeField.setText("");
+                    }
                 }
 
-                String[] taxFilingOptions = {"SINGLE", "MARRIED_FILING_SINGLY", "MARRIED_FILING_JOINTLY", "HEAD_OF_HOUSEHOLD"};
-                taxStatus = taxFilingOptions[value];
+                if (position==0)
+                {
+                    houseSizeLabel.setVisibility(View.INVISIBLE);
+                    familysizeField.setVisibility(View.INVISIBLE);
+                    familysizeInput=1;
+                    spouseIncomeLabel.setVisibility(View.INVISIBLE);
+                    spouseIncomeInput.setVisibility(View.INVISIBLE);
+                    spouseIncomeValue=0;
+                }
+
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
+
 
 
 

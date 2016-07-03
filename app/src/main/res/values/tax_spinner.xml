@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tax_status_array">
+        <item>Single</item>
+        <item>Married - Joint Filing</item>
+        <item>Married - Seperate Filing</item>
+        <item>Head of Household</item>
+    </string-array>
+</resources>
