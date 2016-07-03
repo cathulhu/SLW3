@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="annual_raise_array">
+        <item>No Annual Raise</item>
+        <item>1% Annual Raise</item>
+        <item>2% Annual Raise</item>
+        <item>3% Annual Raise</item>
+        <item>4% Annual Raise</item>
+        <item>5% Annual Raise</item>
+    </string-array>
+</resources>

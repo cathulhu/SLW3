@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="jobs_array">
+        <item>Private Sector</item>
+        <item>Government Agency (Fed, State, Tribal)</item>
+        <item>Public Education / Library</item>
+        <item>Public Interest Law</item>
+        <item>AmeriCorps / Peace Corps</item>
+        <item>Public Safety / Law Enforcement</item>
+        <item>Military / Coast Guard etc.</item>
+        <item>Public Healthcare</item>
+        <item>501(c)(3) Organization</item>
+    </string-array>
+</resources>

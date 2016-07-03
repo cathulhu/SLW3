@@ -183,7 +183,9 @@ public class UI_Fragment_Info extends Fragment {
         final EditText familysizeField = (EditText) view.findViewById(R.id.familySizeInput);
         final EditText incomeInput = (EditText) view.findViewById(R.id.incomeInput);
         final EditText spouseIncomeInput = (EditText) view.findViewById(R.id.spouseIncomeInput);
+
         final Button stateButton = (Button) view.findViewById(R.id.stateButton);
+        stateButton.setText("Select Filing State");
 
         final TextView houseSizeLabel = (TextView) view.findViewById(R.id.householdSizeLabel);
         final TextView spouseIncomeLabel = (TextView) view.findViewById(R.id.spouseIncomeLabel);
@@ -220,7 +222,7 @@ public class UI_Fragment_Info extends Fragment {
             incomeValue = freshProfile.getGrossIncome();
             spouseIncomeInput.setText( String.valueOf(freshProfile.getSpouseIncome()) );
             spouseIncomeValue = freshProfile.getSpouseIncome();
-            stateButton.setText("Tax Filing State: " + freshProfile.getFilingState());
+            stateButton.setText("Selected State: " + freshProfile.getFilingState());
             taxState=freshProfile.getFilingState();
 
             if (freshProfile.getFilingStatus().equals("SINGLE") )

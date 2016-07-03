@@ -124,6 +124,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.navDrawer_repayment) {
 
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            UI_Fragment_Repayment UIFragmentRepayment = new UI_Fragment_Repayment();
+            fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentRepayment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
         } else if (id == R.id.navDrawer_analysis) {
 
 //        } else if (id == R.id.nav_share) {
