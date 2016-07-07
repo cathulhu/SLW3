@@ -11,17 +11,34 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, UI_Fragment_Info.profileActivityLoader {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, UI_Fragment_Info.profileActivityLoader, UI_Fragment_Loan.loanActivityLoader {
 
-    String[] TaxOptions = {"Single", "Married Filing Jointly", "Married Filing Separately", "Head of Household"};
+
+
+    public static Object_Profile storedProfile;
+    public static Object_Loan storedLoan;
 
     @Override
-    public void sendProfile(Object_Profile inBoundProfile) {
+    public void profileFragToMainActivity(Object_Profile inBoundProfile) {
         storedProfile = inBoundProfile;
 
     }
 
-    public static Object_Profile storedProfile;
+    @Override
+    public void loanFragToMainActivity(Object_Loan inBoundLoan) {
+        storedLoan = inBoundLoan;
+
+    }
+
+    public static Object_Profile dispatchProfile () {
+        return storedProfile;
+    }
+
+    public static Object_Loan dispatchLoan () {
+        return storedLoan;
+    }
+
+
 
 
     @Override
@@ -145,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }

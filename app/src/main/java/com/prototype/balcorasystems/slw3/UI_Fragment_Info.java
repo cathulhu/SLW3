@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 public class UI_Fragment_Info extends Fragment {
 
     public interface profileActivityLoader {
-        public void sendProfile (Object_Profile outBoundProfile);
+        public void profileFragToMainActivity(Object_Profile outBoundProfile);
     }
 
     profileActivityLoader mCallback;
@@ -35,12 +34,15 @@ public class UI_Fragment_Info extends Fragment {
         super.onAttach(context);
 
         try {
-            mCallback = (profileActivityLoader) context;        //not sure if this is just a test or necessary for callback to work, will find out.
+            mCallback = (profileActivityLoader) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement profileActivityLoader");
         }
 
     }
+
+
+
 
     public boolean check_info_ready ()
     {
@@ -165,7 +167,7 @@ public class UI_Fragment_Info extends Fragment {
                 saveData(updatedProfile);
             }
 
-            mCallback.sendProfile(updatedProfile);
+            mCallback.profileFragToMainActivity(updatedProfile);
 
         }
     }

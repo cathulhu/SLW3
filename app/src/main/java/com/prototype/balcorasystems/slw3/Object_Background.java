@@ -4,18 +4,18 @@ package com.prototype.balcorasystems.slw3;
 import android.util.Log;
 
 public class Object_Background {
-    private float annualRaise;
+    private float annualRaise;      //
     private float[] annualSalaries;   //maybe ill make this array list, have to think about that
     private String owner;
-    private String employmentSector;
+    private String employmentSector;    //
     private int earliestActiveLoanDate;
-    private boolean employedFulltime;
+    private boolean employedFulltime;       //
     private boolean publicServiceForgivenessEligible;
-    private boolean collectingSsdi;
-    private boolean totalDisability;
-    private boolean teacherAtLowIncomeSchool;
-    private boolean militaryDisability;
-    private boolean deceasedChildParentLoan;
+    private boolean collectingSsdi;     //
+    private boolean totalDisability;    //
+    private boolean teacherAtLowIncomeSchool;   //
+    private boolean militaryDisability;     //
+    private boolean deceasedChildParentLoan;    //
 
     public Object_Background() {
 

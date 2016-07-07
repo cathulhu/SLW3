@@ -19,9 +19,33 @@ import android.widget.Toast;
 
 public class UI_Fragment_Loan extends Fragment {
 
-//    public static void loadProfile (Object_Profile inputProfile){
-//        selectedProfile = inputProfile;
-//    }
+
+
+    public static Object_Profile loadProfileFromMainActivity (){
+
+        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
+        return fetchedProfile;
+    }
+
+    public interface loanActivityLoader {
+        public void loanFragToMainActivity(Object_Loan outBoundLoan);
+    }
+
+    loanActivityLoader mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (loanActivityLoader) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement profileActivityLoader");
+        }
+
+    }
+
+
 
 
     public boolean check_info_ready ()
@@ -153,8 +177,15 @@ public class UI_Fragment_Loan extends Fragment {
 
 //        clearData();
 
-        selectedProfile = MainActivity.storedProfile;
+        selectedProfile = loadProfileFromMainActivity();
+
+
         TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);
+
+        if (selectedProfile!=null)
+        {
+            nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
+        }
 
 
         final TextView loanSelection = (TextView) view.findViewById(R.id.loanTypeField);
@@ -166,12 +197,6 @@ public class UI_Fragment_Loan extends Fragment {
 
         if (isSqlEmpty()==false)
         {
-
-            if (selectedProfile!=null)
-            {
-                nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
-            }
-
             fetchedLoan = getLast();
             loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
             aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));
@@ -300,8 +325,9 @@ public class UI_Fragment_Loan extends Fragment {
                         dataSource.createLoanDbEntry(loan);
                         Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
                         toast.show();
-
                     }
+                    
+                    mCallback.loanFragToMainActivity(loan);
                 }
                 else
                 {

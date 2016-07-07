@@ -76,7 +76,6 @@
         android:id="@+id/loanTypeField"
         android:hint="Select Loan Type"
         android:textAlignment="center"
-        android:editable="false"
         android:inputType="none"
         android:textSize="13dp"
         android:layout_below="@+id/editText"
