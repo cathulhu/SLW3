@@ -326,7 +326,7 @@ public class UI_Fragment_Loan extends Fragment {
                         Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
                         toast.show();
                     }
-                    
+
                     mCallback.loanFragToMainActivity(loan);
                 }
                 else
