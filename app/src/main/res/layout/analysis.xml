@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e1cf0f">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Debt Analysis"
+        android:id="@+id/textView19"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15dp"
+        android:padding="3dip"
+        android:layout_marginLeft="287dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:singleLine="false"
+        android:text="25 Year Estimated Average Annual Raise "
+        android:textSize="12dp"
+        android:layout_above="@+id/repaymentTypeSpinner"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/annualRaiseSpinner" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/annualRaiseSpinner"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/textView19"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView19"
+        android:layout_alignStart="@+id/textView19" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Would you like to minimize your monthly payments or the total sum repayed?"
+        android:id="@+id/textView20"
+
+        android:layout_marginLeft="0dp"
+        android:layout_alignBottom="@+id/repaymentTypeSpinner"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/repaymentTypeSpinner"
+        android:textSize="12dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/repaymentTypeSpinner"
+        android:layout_below="@+id/annualRaiseSpinner"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/textView21"
+        android:layout_alignEnd="@+id/repaymentTypeSpinner">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repayment Options"
+        android:id="@+id/textView21"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignStart="@+id/repaymentTypeSpinner"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recommended option is highlighted in green."
+        android:id="@+id/textView22"
+        android:textSize="12dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try to discharge loans"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/repaymentTypeSpinner"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/repaymentTypeSpinner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Optimize repayment for loan discharge if eligible?"
+        android:id="@+id/textView16"
+        android:textSize="12dp"
+        android:layout_above="@+id/textView21"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/checkBox" />
+
+
+</RelativeLayout>

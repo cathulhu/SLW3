@@ -11,8 +11,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -188,10 +191,19 @@ public class UI_Fragment_Loan extends Fragment {
         }
 
 
-        final TextView loanSelection = (TextView) view.findViewById(R.id.loanTypeField);
+
         final EditText loanInput = (EditText) view.findViewById(R.id.debtInput);
         final EditText aprInput = (EditText) view.findViewById(R.id.aprInput);
-        final EditText loanStatusText = (EditText) view.findViewById(R.id.loanStatusField);
+        final Spinner loanStatusSpinner = (Spinner) view.findViewById(R.id.loanStatusSpinner);
+        final Spinner loanTypeSpinner = (Spinner) view.findViewById(R.id.loanTypeSpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.loan_status_array, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        loanStatusSpinner.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(), R.array.loan_type_array, android.R.layout.simple_spinner_dropdown_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        loanTypeSpinner.setAdapter(adapter1);
 
         Object_Loan fetchedLoan = new Object_Loan();
 
@@ -200,8 +212,8 @@ public class UI_Fragment_Loan extends Fragment {
             fetchedLoan = getLast();
             loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
             aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));
-            loanSelection.setText(String.valueOf(fetchedLoan.getPrettyName()));
-            loanStatusText.setText(String.valueOf(fetchedLoan.getLoanStatus()));
+
+
         }
 
 
@@ -244,64 +256,32 @@ public class UI_Fragment_Loan extends Fragment {
             }
         };
 
+        loanStatusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        loanTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         aprInput.addTextChangedListener(watcher);
         loanInput.addTextChangedListener(watcher);
-
-        Button loanTypeButton = (Button) view.findViewById(R.id.loanSelectbutton);
-        loanTypeButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder stateBuilder = new AlertDialog.Builder(getContext());
-                stateBuilder.setTitle("Select Loan Type");
-                stateBuilder.setItems(prettyLoantypes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        loanChoiceCategory = loanCategory[which];
-                        loanChoiceCode = loanCodes[which];
-                        niceLoanName = prettyLoantypes[which];
-
-                        loanSelection.setText(niceLoanName);
-//                        loanSelection.invalidate();
-                    }
-                });
-                AlertDialog dialog = stateBuilder.create();
-                dialog.show();
-
-
-
-            }
-
-
-        });
-
-        Button loanStatusButton = (Button) view.findViewById(R.id.loanStatusButton);
-        loanStatusButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder statusBuilder = new AlertDialog.Builder(getContext());
-                statusBuilder.setTitle("Select Current Loan Status");
-                statusBuilder.setItems(loanStates, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        loanStatus=loanStates[which];
-
-                        loanStatusText.setText(loanStatus);
-//                        loanStatusText.invalidate();
-                    }
-                });
-                AlertDialog dialog = statusBuilder.create();
-                dialog.show();
-
-
-
-            }
-
-
-        });
 
         Button saveLoanButton = (Button) view.findViewById(R.id.addLoan);
         saveLoanButton.setOnClickListener(new View.OnClickListener() {

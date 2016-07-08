@@ -77,7 +77,7 @@ public class SQL_DataSource {
 
     public void updateProfileEntry(Object_Profile profile) {
         SQLiteDatabase db = open();
-        db.beginTransaction();
+//        db.beginTransaction();
 
         ContentValues profileValues = new ContentValues();
         profileValues.put(storageHandler.FAMILY_SIZE, profile.getFamilySize());
@@ -93,8 +93,8 @@ public class SQL_DataSource {
         db.update(storageHandler.TABLE_PROFILE, profileValues, condition, args);
 
         // CRAZY ERROR WHERE DATABASE CHANGES DISSAPEAR IF I CLOSE?! PROBLEM ON SIMULATOR AND REAL PHONES?! IS IT MODIFYING SOME OTHER DB FILE?? IS IT NOT SAVING/COMMITING CHANGES? NEEDS TO BE ASYNC(thread issue?!)
-        db.endTransaction();
-        close(db);
+//        db.endTransaction();
+//        close(db);
 //
 //
 //        Object_Profile checkResult = getLastProfileDbEntry();
@@ -115,7 +115,7 @@ public class SQL_DataSource {
 
         cursor.close();
         db.endTransaction();
-        db.close();
+//        db.close();
         return count;
     }
 
@@ -138,7 +138,7 @@ public class SQL_DataSource {
 
         cursor.close();
         db.endTransaction();
-        db.close();
+//        db.close();
         return unique;
 
     }
@@ -166,7 +166,7 @@ public class SQL_DataSource {
                 storedProfile.setProfileName(cursor.getString(6));
         cursor.close();
         db.endTransaction();
-        close(db);
+//        close(db);
         return storedProfile;
     }
 
@@ -196,7 +196,7 @@ public class SQL_DataSource {
 
         db.setTransactionSuccessful();
         db.endTransaction();
-        close(db);                                  //for some reason close works ok for inserting rows
+//        close(db);                                  //for some reason close works ok for inserting rows
 
     }
 

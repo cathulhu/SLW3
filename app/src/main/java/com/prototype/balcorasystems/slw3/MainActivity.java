@@ -11,12 +11,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, UI_Fragment_Info.profileActivityLoader, UI_Fragment_Loan.loanActivityLoader {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        UI_Fragment_Info.profileActivityLoader,
+        UI_Fragment_Loan.loanActivityLoader,
+        UI_Fragment_Background.backgroundActivityLoader
+{
 
 
 
     public static Object_Profile storedProfile;
     public static Object_Loan storedLoan;
+    public static Object_Background storedBackground;
+
+    @Override
+    public void loanFragToMainActivity(Object_Background inBoundBackground) {
+        storedBackground = inBoundBackground;
+    }
 
     @Override
     public void profileFragToMainActivity(Object_Profile inBoundProfile) {
@@ -135,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             UI_Fragment_Loan UIFragmentLoan = new UI_Fragment_Loan();
             fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentLoan);
-            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
 
@@ -145,10 +155,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             UI_Fragment_Background UIFragmentRepayment = new UI_Fragment_Background();
             fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentRepayment);
-            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
         } else if (id == R.id.navDrawer_analysis) {
+
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            UI_Fragment_Analysis UIFragmentAnalysis = new UI_Fragment_Analysis();
+            fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentAnalysis);
+            fragmentTransaction.commit();
 
 //        } else if (id == R.id.nav_share) {
 //

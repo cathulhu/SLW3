@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8906cb">
+    android:background="#b479d2">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,35 +16,16 @@
         android:layout_centerHorizontal="true"
         android:textSize="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:singleLine="false"
-        android:text="Estimated Average Annual Raise "
-        android:textSize="12dp"
-        android:layout_above="@+id/industrySpinner"
-        android:layout_alignParentStart="true" />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/annualRaiseSpinner"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="#d0c7c7"
-        android:background="#b2a6a5a5"
-        android:layout_toEndOf="@+id/textView4" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:id="@+id/industrySpinner"
-        android:layout_below="@+id/annualRaiseSpinner"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView4"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dialog"
+        android:layout_below="@+id/textView3"
+        android:layout_alignEnd="@+id/millitaryDisabilityRadioGroup"
+        android:layout_toEndOf="@+id/textView5" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -154,51 +135,15 @@
         android:layout_alignBottom="@+id/totalDisabilityRadioGroup"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Specifc Cicumstances"
-        android:id="@+id/textView15"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="171dp"
-        android:textSize="15dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/totalDisabilityRadioGroup" />
-
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:id="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_below="@+id/textView15"
-        android:layout_toEndOf="@+id/textView14">
+        android:layout_below="@+id/totalDisabilityRadioGroup">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"
-            android:id="@+id/radioButton7" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"
-            android:id="@+id/radioButton8" />
     </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView16"
-        android:singleLine="false"
-        android:textSize="12dp"
-        android:text="Are you a teacher at a low income public school or ESA?"
-        android:layout_alignTop="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView13" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -207,8 +152,31 @@
         android:gravity="center_horizontal"
         android:id="@+id/millitaryDisabilityRadioGroup"
         android:layout_below="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView14">
+        android:layout_alignParentEnd="true">
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView17"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="Armed Forces Veteran / Active?"
+        android:layout_alignBottom="@+id/radioGroup"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView3" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/radioGroup"
+        android:layout_below="@+id/lowIncomeTeacherRadioGroup"
+        android:layout_alignEnd="@+id/millitaryDisabilityRadioGroup"
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_alignStart="@+id/totalDisabilityRadioGroup">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -223,50 +191,16 @@
             android:id="@+id/radioButton6" />
     </RadioGroup>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView14"
-        android:singleLine="false"
-        android:textSize="12dp"
-        android:text="Do you have a military service connected disability rated 60%+?"
-        android:layout_below="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/millitaryDisabilityRadioGroup"
-        android:layout_toStartOf="@+id/totalDisabilityRadioGroup" />
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_below="@+id/textView17">-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView17"
-        android:singleLine="false"
-        android:textSize="12dp"
-        android:text="For Parent PLUS loans, has the child for this loan deceased?"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/millitaryDisabilityRadioGroup" />
+        <!--<include layout="@layout/specific_questions"/>-->
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:id="@+id/parentPlusDeceasedRadioGroup"
-        android:layout_below="@+id/millitaryDisabilityRadioGroup"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView14">
+    <!--</FrameLayout>-->
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yes"
-            android:id="@+id/radioButton9" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No"
-            android:id="@+id/radioButton10" />
-    </RadioGroup>
 
 </RelativeLayout>

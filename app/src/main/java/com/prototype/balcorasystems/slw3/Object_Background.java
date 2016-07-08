@@ -3,8 +3,7 @@ package com.prototype.balcorasystems.slw3;
 
 import android.util.Log;
 
-public class Object_Background {
-    private float annualRaise;      //
+public class Object_Background {//
     private float[] annualSalaries;   //maybe ill make this array list, have to think about that
     private String owner;
     private String employmentSector;    //
@@ -21,8 +20,7 @@ public class Object_Background {
 
     }
 
-    public Object_Background(float raise, String industry, boolean fulltime, boolean ssdi, boolean totallyDisabled, boolean lowIncomeSchoolTeacher, boolean vaDisability, boolean childDeceasedLoan) {
-        annualRaise=raise;
+    public Object_Background(String industry, boolean fulltime, boolean ssdi, boolean totallyDisabled, boolean lowIncomeSchoolTeacher, boolean vaDisability, boolean childDeceasedLoan) {
         employmentSector=industry;
         employedFulltime=fulltime;
         collectingSsdi=ssdi;
@@ -33,7 +31,7 @@ public class Object_Background {
 
         float fakeTestincome = 10000.00f;
 
-        annualSalaries=this.calculateFutureSalaries(fakeTestincome, annualRaise);
+//        annualSalaries=this.calculateFutureSalaries(fakeTestincome, annualRaise);
     }
 
     public float[] calculateFutureSalaries (float income, float raise) {
@@ -50,15 +48,6 @@ public class Object_Background {
         }
 
         return results;
-    }
-
-
-    public float getAnnualRaise() {
-        return annualRaise;
-    }
-
-    public void setAnnualRaise(int annualRaise) {
-        this.annualRaise = annualRaise;
     }
 
     public float[] getAnnualSalaries() {

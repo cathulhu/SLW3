@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="loan_status_array">
+        <item>Deferment</item>
+        <item>Grace Period</item>
+        <item>Forbearance</item>
+        <item>Repayment</item>
+        <item>Delinquent</item>
+        <item>Loan Rehab</item>
+        <item>1st Default</item>
+        <item>2nd Default</item>
+    </string-array>
+</resources>

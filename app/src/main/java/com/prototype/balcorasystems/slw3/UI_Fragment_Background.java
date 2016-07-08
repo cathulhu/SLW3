@@ -1,6 +1,7 @@
 package com.prototype.balcorasystems.slw3;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,30 @@ import android.widget.Spinner;
 
 public class UI_Fragment_Background extends Fragment{
 
+    public interface backgroundActivityLoader {
+        public void loanFragToMainActivity(Object_Background outBoundBackground);
+    }
+
+    public static Object_Profile loadProfileFromMainActivity (){
+
+        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
+        return fetchedProfile;
+    }
+
+    backgroundActivityLoader mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (backgroundActivityLoader) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement profileActivityLoader");
+        }
+
+    }
+
     float annualRaise;
     String industry;
     boolean fulltime;
@@ -23,13 +48,17 @@ public class UI_Fragment_Background extends Fragment{
     boolean lowIncomeTeacher;
     boolean millitarydisability;
     boolean deceasedChildParentLoan;
+    Object_Profile fetchedProfile = loadProfileFromMainActivity();
+    Object_Background savedBackground;  //will = retrieve background from SQl
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        Object_Background newBackground = new Object_Background(annualRaise, industry, fulltime, ssdi, totallydisabled, lowIncomeTeacher, millitarydisability, deceasedChildParentLoan);
+        Object_Background newBackground = new Object_Background(industry, fulltime, ssdi, totallydisabled, lowIncomeTeacher, millitarydisability, deceasedChildParentLoan);
+
+        //will put code in here to save to SQL (need to modify DB to contain proper tables
     }
 
     @Nullable
@@ -37,7 +66,7 @@ public class UI_Fragment_Background extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.background, container, false);
 
-        final Spinner raiseSpinner = (Spinner) view.findViewById(R.id.annualRaiseSpinner);
+
         final Spinner jobSpinner = (Spinner) view.findViewById(R.id.industrySpinner);
 
         final RadioGroup fulltimeGroup = (RadioGroup) view.findViewById(R.id.fulltimeRadioGroup);
@@ -45,33 +74,14 @@ public class UI_Fragment_Background extends Fragment{
         final RadioGroup totalDisabilityGroup = (RadioGroup) view.findViewById(R.id.totalDisabilityRadioGroup);
         final RadioGroup lowIncomeTeacherGroup = (RadioGroup) view.findViewById(R.id.lowIncomeTeacherRadioGroup);
         final RadioGroup militaryDisabilityGroup = (RadioGroup) view.findViewById(R.id.millitaryDisabilityRadioGroup);
-        final RadioGroup childDeceasedGroup = (RadioGroup) view.findViewById(R.id.parentPlusDeceasedRadioGroup);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(), R.array.annual_raise_array, android.R.layout.simple_spinner_dropdown_item);
-        // Specify the layout to use when the list of choices appears
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        raiseSpinner.setAdapter(adapter1);
+        //will put code in here that populates the fields with whatever it finds in SQL
+
+
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(), R.array.jobs_array, android.R.layout.simple_spinner_dropdown_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         jobSpinner.setAdapter(adapter2);
-
-
-        raiseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                annualRaise=position/100.0f;
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         jobSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,21 +168,6 @@ public class UI_Fragment_Background extends Fragment{
                 if (choice==0)
                 {
                     millitarydisability=true;
-                }
-            }
-        });
-
-        childDeceasedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                RadioButton checkedRadioButton = (RadioButton)childDeceasedGroup.findViewById(checkedId);
-
-                int choice = childDeceasedGroup.indexOfChild(checkedRadioButton);
-
-                if (choice==0)
-                {
-                    deceasedChildParentLoan=true;
                 }
             }
         });

@@ -17,10 +17,10 @@
         android:textAlignment="center"
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_below="@+id/whosLoans"
         android:layout_alignParentEnd="true"
         android:textSize="13dp"
-        android:layout_alignStart="@+id/whosLoans" />
+        android:layout_alignLeft="@+id/whosLoans"
+        android:layout_below="@+id/whosLoans" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,10 +32,10 @@
         android:hint="APR Percent"
         android:layout_row="1"
         android:layout_column="0"
-        android:layout_below="@+id/debtInput"
         android:layout_alignParentEnd="true"
         android:textSize="13dp"
-        android:layout_alignStart="@+id/debtInput" />
+        android:layout_below="@+id/debtInput"
+        android:layout_alignLeft="@+id/whosLoans" />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,19 +47,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/aprInput" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loan Type"
-        android:id="@+id/loanSelectbutton"
-        android:layout_row="3"
-        android:layout_column="0"
-        android:textSize="12dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/loanStatusButton"
-        android:layout_above="@+id/loanStatusButton" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,26 +57,14 @@
         android:layout_centerHorizontal="true"
         android:textSize="15dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loanTypeField"
-        android:hint="Select Loan Type"
-        android:textAlignment="center"
-        android:inputType="none"
-        android:textSize="13dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/aprInput"
-        android:layout_alignEnd="@+id/aprInput" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
         android:text="APR Rate %"
         android:textSize="12dp"
-        android:layout_alignBottom="@+id/aprInput"
-        android:layout_alignEnd="@+id/loanSelectbutton" />
+        android:layout_above="@+id/editText"
+        android:layout_alignEnd="@+id/textView14" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -100,28 +75,6 @@
         android:textSize="12dp"
         android:layout_above="@+id/aprInput"
         android:layout_alignEnd="@+id/editText2" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loan Status"
-        android:id="@+id/loanStatusButton"
-        android:layout_alignParentStart="true"
-        android:textSize="12dp"
-        android:layout_below="@+id/loanTypeField"
-        android:layout_alignBottom="@+id/loanStatusField" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loanStatusField"
-        android:hint="Current Loan Status"
-        android:textAlignment="center"
-        android:inputType="none"
-        android:textSize="13dp"
-        android:layout_below="@+id/loanTypeField"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/loanTypeField" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -134,9 +87,9 @@
         android:layout_row="1"
         android:layout_column="0"
         android:textSize="13dp"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/aprInput"
-        android:layout_alignStart="@+id/aprInput"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignLeft="@+id/whosLoans" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,8 +97,45 @@
         android:id="@+id/textView18"
         android:text="Loan Issue Date"
         android:textSize="12dp"
-        android:layout_above="@+id/loanSelectbutton"
-        android:layout_alignEnd="@+id/loanSelectbutton" />
+        android:layout_above="@+id/loanTypeSpinner"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/loanTypeSpinner"
+        android:layout_below="@+id/editText"
+        android:layout_alignLeft="@+id/whosLoans"
+        android:spinnerMode="dialog"
+        android:paddingTop="22dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/loanStatusSpinner"
+        android:outlineProvider="background"
+        android:spinnerMode="dialog"
+        android:layout_below="@+id/loanTypeSpinner"
+        android:layout_alignStart="@+id/loanTypeSpinner"
+        android:paddingTop="22dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView14"
+        android:text="Loan Type"
+        android:textSize="12dp"
+        android:layout_above="@+id/loanStatusSpinner"
+        android:layout_alignEnd="@+id/textView18" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:text="Loan Status"
+        android:textSize="12dp"
+        android:layout_alignBottom="@+id/loanStatusSpinner"
+        android:layout_alignEnd="@+id/textView14" />
 
 
 </RelativeLayout>

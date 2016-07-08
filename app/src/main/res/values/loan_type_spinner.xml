@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="loan_type_array">
+        <item>Direct Subsidized Loan</item>
+        <item>Direct Unsubsidized Loan</item>
+        <item>Subsidized Federal Stafford Loan</item>
+        <item>Unsubsidized Federal Stafford Loan</item>
+        <item>Direct Subsidized Consolidation Loan</item>
+        <item>Direct Unsubsidized Consolidation Loan</item>
+        <item>FFEL Consolidation Loan</item>
+        <item>Direct PLUS Loan for Graduate/Professional Students</item>
+        <item>FFEL PLUS Loan for Graduate/Professional Students</item>
+        <item>Direct PLUS Loan for Parents</item>
+        <item>FFEL PLUS Loan for Parents</item>
+        <item>Direct PLUS Consolidation Loan</item>
+        <item>Federal Perkins Loan</item>
+        <item>Private Loan</item>
+    </string-array>
+</resources>
