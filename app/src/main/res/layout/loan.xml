@@ -137,5 +137,14 @@
         android:layout_alignBottom="@+id/loanStatusSpinner"
         android:layout_alignEnd="@+id/textView14" />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loanListView"
+        android:layout_below="@+id/loanStatusSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/addLoan"
+        android:headerDividersEnabled="false" />
+
 
 </RelativeLayout>

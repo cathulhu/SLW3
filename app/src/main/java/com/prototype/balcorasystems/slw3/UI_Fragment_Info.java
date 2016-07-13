@@ -15,11 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UI_Fragment_Info extends Fragment {
 
@@ -142,7 +144,8 @@ public class UI_Fragment_Info extends Fragment {
     float spouseIncomeValue = -5;
     String taxState;
     String name;
-//    profileActivityLoader loader;
+    ProfileListAdapter profileAdapter;
+    ArrayList<Object_Profile> storedProfiles;
 
     @Override
     public void onDestroyView() {
@@ -179,6 +182,8 @@ public class UI_Fragment_Info extends Fragment {
 //        clearData();
 //        deleteWholeDb(getContext());
 
+        storedProfiles = getData();
+
         View view = inflater.inflate(R.layout.info, container, false);
 
         final EditText profileName = (EditText) view.findViewById(R.id.profileAssoc);
@@ -205,8 +210,11 @@ public class UI_Fragment_Info extends Fragment {
 // Apply the adapter to the spinner
         taxSpinner.setAdapter(adapter);
 
-//        final RadioGroup taxStatusRadio = (RadioGroup) view.findViewById(R.id.taxInput);
 
+        ListView profilesList = (ListView) view.findViewById(R.id.profileList);
+        profileAdapter = new ProfileListAdapter(getContext(), storedProfiles);
+        profilesList.setAdapter(profileAdapter);
+        //add on click listener
 
 
 

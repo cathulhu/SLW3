@@ -15,9 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class UI_Fragment_Loan extends Fragment {
@@ -68,6 +71,14 @@ public class UI_Fragment_Loan extends Fragment {
         Object_Loan savedLoan = dataSource.getLastLoanDbEntry();
 
         return savedLoan;
+    }
+
+    public ArrayList<Object_Loan> getAllLoans ()
+    {
+        ArrayList<Object_Loan> allLoans = new ArrayList<Object_Loan>();
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        allLoans = dataSource.readAllLoans();
+        return allLoans;
     }
 
     public void deleteWholeDb (Context context)
@@ -161,6 +172,7 @@ public class UI_Fragment_Loan extends Fragment {
 
     String[] loanCodes = {"D1", "D2", "SF", "SU","D6","D5", "CL", "D3", "GB", "D4", "PL", "D7", "PU", "PV"};
 
+    String loanType;
     String loanChoiceCategory;
     String loanStatus;
     String loanChoiceCode;
@@ -169,6 +181,7 @@ public class UI_Fragment_Loan extends Fragment {
     float apr =-5;
     boolean currentlyEditing=false;
     static Object_Profile selectedProfile;
+    ArrayList<Object_Loan> fetchedLoans;
 
 
 
@@ -181,6 +194,7 @@ public class UI_Fragment_Loan extends Fragment {
 //        clearData();
 
         selectedProfile = loadProfileFromMainActivity();
+        fetchedLoans = getAllLoans();
 
 
         TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);
@@ -204,6 +218,12 @@ public class UI_Fragment_Loan extends Fragment {
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(), R.array.loan_type_array, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         loanTypeSpinner.setAdapter(adapter1);
+
+        LoanListAdapter loanAdapter;
+        ListView loansList = (ListView) view.findViewById(R.id.loanListView);
+        loanAdapter = new LoanListAdapter(getContext(), fetchedLoans);
+        loansList.setAdapter(loanAdapter);
+        //add on click listener
 
         Object_Loan fetchedLoan = new Object_Loan();
 
@@ -260,6 +280,7 @@ public class UI_Fragment_Loan extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                loanStatus=loanStates[position];
             }
 
             @Override
@@ -272,6 +293,9 @@ public class UI_Fragment_Loan extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                loanType=prettyLoantypes[position];
+                loanChoiceCategory=loanCategory[position];
+                loanChoiceCode=loanCodes[position];
             }
 
             @Override
@@ -318,6 +342,8 @@ public class UI_Fragment_Loan extends Fragment {
             }
 
         });
+
+
 
         return view;
     }

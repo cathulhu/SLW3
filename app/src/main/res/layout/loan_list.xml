@@ -24,7 +24,7 @@
         android:layout_margin="5dp"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:text="Name" />
+        android:text="Balance" />
 
     <!-- Subtitle with profile attributes -->
     <TextView
@@ -32,16 +32,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="Income"
+        android:text="age/date"
         android:layout_below="@+id/loan_list_balance"
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:id="@+id/profile_spouse_income"
+        android:id="@+id/loan_list_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="spouse income"
+        android:text="loan status"
         android:layout_below="@+id/loan_list_date"
         android:layout_alignEnd="@+id/loan_list_date" />
 
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="tax filing status"
+        android:text="type"
         android:layout_below="@+id/loan_list_balance"
         android:layout_alignStart="@+id/loan_list_balance" />
 
@@ -59,17 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="family size"
+        android:text="apr"
         android:layout_below="@+id/loan_list_type"
         android:layout_alignStart="@+id/loan_list_type" />
-
-    <TextView
-        android:id="@+id/profile_filing_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="state"
-        android:layout_below="@+id/profile_icon"
-        android:layout_toEndOf="@+id/loan_list_apr" />
 
 </RelativeLayout>

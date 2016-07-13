@@ -207,6 +207,42 @@ public class SQL_DataSource {
 
 
 
+    public ArrayList<Object_Loan> readAllLoans() {
+
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+        String selectionQuery = "SELECT * FROM " + storageHandler.TABLE_LOAN;
+        ArrayList<Object_Loan> loans = new ArrayList<Object_Loan>();
+
+        Cursor cursor = db.rawQuery(selectionQuery, null);
+
+        if (cursor.moveToFirst()) {                //note using implicit positive if statement here
+            do {
+                Object_Loan loan = new Object_Loan();
+
+                loan.setSqlID(Integer.parseInt(cursor.getString(0)));
+                loan.setLoanOwner(cursor.getString(1));
+                loan.setLoanType(cursor.getString(2));
+                loan.setLoanCode(cursor.getString(3));
+                loan.setLoanPrincipal(Float.parseFloat(cursor.getString(4)));
+                loan.setLoanAPR(Float.parseFloat(cursor.getString(5)));
+                loan.setLoanBalance(Float.parseFloat(cursor.getString(6)));
+                loan.setLoanStatus(cursor.getString(7));
+//                loan.setStatusElapsedDays(Integer.parseInt(cursor.getString(8)));
+                loan.setPrettyName(cursor.getString(9));
+
+                loans.add(loan);
+            } while (cursor.moveToNext());
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+
+        return loans;
+    }
+
+//Integer.parseInt(cursor.getString(3))
 
 
     public void createLoanDbEntry (Object_Loan loan) {
