@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class UI_Fragment_Loan extends Fragment {
@@ -182,6 +184,7 @@ public class UI_Fragment_Loan extends Fragment {
     float apr =-5;
     boolean currentlyEditing=false;
     static Object_Profile selectedProfile;
+    long loanInceptionUnixTime;
     ArrayList<Object_Loan> fetchedLoans;
 
 
@@ -236,10 +239,20 @@ public class UI_Fragment_Loan extends Fragment {
                             {
 //                        Toast toast = Toast.makeText(getContext(), dayOfMonth + monthOfYear + year, Toast.LENGTH_SHORT);
                                 dateDialog.setText((monthOfYear + 1) + "-" + dayOfMonth + "-"+ year);
+
+                                Calendar calendarLoan = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+                                loanInceptionUnixTime = calendarLoan.getTimeInMillis()/1000;
                             }
 
                         }, mYear, mMonth, mDay);
                 dpd.show();
+
+
+
+//                Date current = new Date();
+//                Long unixTime = current.getTime()/1000;
+//                Toast toast = Toast.makeText(getContext(), unixTime.toString(), Toast.LENGTH_SHORT);
+//                toast.show();
 
             }
         });
