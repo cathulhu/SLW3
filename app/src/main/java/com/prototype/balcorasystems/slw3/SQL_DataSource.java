@@ -207,11 +207,11 @@ public class SQL_DataSource {
 
 
 
-    public ArrayList<Object_Loan> readAllLoans() {
+    public ArrayList<Object_Loan> readAllLoans(Object_Profile currentProfile) {
 
         SQLiteDatabase db = open();
         db.beginTransaction();
-        String selectionQuery = "SELECT * FROM " + storageHandler.TABLE_LOAN;
+        String selectionQuery = "SELECT * FROM " + storageHandler.TABLE_LOAN + " WHERE loanOwner == \"" + currentProfile.getProfileName() + "\"";
         ArrayList<Object_Loan> loans = new ArrayList<Object_Loan>();
 
         Cursor cursor = db.rawQuery(selectionQuery, null);

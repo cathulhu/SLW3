@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UI_Fragment_Info extends Fragment {
 
@@ -143,7 +144,6 @@ public class UI_Fragment_Info extends Fragment {
     float spouseIncomeValue = -5;
     String taxState;
     String name;
-    Adapter_ProfileList profileAdapter;
     ArrayList<Object_Profile> storedProfiles;
 
     @Override
@@ -210,16 +210,51 @@ public class UI_Fragment_Info extends Fragment {
         taxSpinner.setAdapter(adapter);
 
 
+        Adapter_ProfileList profileAdapter;
         ListView profilesList = (ListView) view.findViewById(R.id.profileList);
         profileAdapter = new Adapter_ProfileList(getContext(), storedProfiles);
         profilesList.setAdapter(profileAdapter);
-        //add on click listener
+        profilesList.setItemsCanFocus(true);
+
+        profilesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                profileName.setText(storedProfiles.get(position).getProfileName());
+                familysizeField.setText(String.valueOf(storedProfiles.get(position).getFamilySize()));
+                incomeInput.setText(String.valueOf(storedProfiles.get(position).getGrossIncome()));
+                spouseIncomeInput.setText(String.valueOf(storedProfiles.get(position).getSpouseIncome()));
+                stateButton.setText("Select Filing State: " + storedProfiles.get(position).getFilingState());
+                taxState=storedProfiles.get(position).getFilingState();
+
+                if (storedProfiles.get(position).getFilingStatus().equals("SINGLE") )
+                {
+                    taxSpinner.setSelection(0);
+                }
+                else if (storedProfiles.get(position).getFilingStatus().equals("MARRIED_FILING_SINGLY"))
+                {
+                    taxSpinner.setSelection(2);
+                }
+                else if (storedProfiles.get(position).getFilingStatus().equals("MARRIED_FILING_JOINTLY"))
+                {
+                    taxSpinner.setSelection(1);
+                }
+                else
+                {
+                    taxSpinner.setSelection(3);
+                }
+
+//                view.invalidate();
+//                Toast toast = Toast.makeText(getContext(), " on click triggered ", Toast.LENGTH_SHORT);
+//                toast.show();
+
+            }
+        });
 
 
 
         if (isSqlEmpty()== false)
         {
-            Object_Profile freshProfile = getLast();
+            Object_Profile freshProfile = getLast();    //should add functionality to SQL entry that marks which is currently/last selected profile and load THAT one by looking for that tag in sql querry
 
             profileName.setText(freshProfile.getProfileName());
             name = freshProfile.getProfileName();
@@ -240,11 +275,11 @@ public class UI_Fragment_Info extends Fragment {
             }
             else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_SINGLY"))
             {
-                taxSpinner.setSelection(1);
+                taxSpinner.setSelection(2);
             }
             else if (freshProfile.getFilingStatus().equals("MARRIED_FILING_JOINTLY"))
             {
-                taxSpinner.setSelection(2);
+                taxSpinner.setSelection(1);
             }
             else
             {

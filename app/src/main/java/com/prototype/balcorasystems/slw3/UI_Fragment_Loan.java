@@ -71,11 +71,11 @@ public class UI_Fragment_Loan extends Fragment {
         return savedLoan;
     }
 
-    public ArrayList<Object_Loan> getAllLoans ()
+    public ArrayList<Object_Loan> getAllLoans (Object_Profile selectedProfile)
     {
         ArrayList<Object_Loan> allLoans = new ArrayList<Object_Loan>();
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
-        allLoans = dataSource.readAllLoans();
+        allLoans = dataSource.readAllLoans(selectedProfile);
         return allLoans;
     }
 
@@ -192,7 +192,7 @@ public class UI_Fragment_Loan extends Fragment {
 //        clearData();
 
         selectedProfile = loadProfileFromMainActivity();
-        fetchedLoans = getAllLoans();
+        fetchedLoans = getAllLoans(selectedProfile);
 
 
         TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);

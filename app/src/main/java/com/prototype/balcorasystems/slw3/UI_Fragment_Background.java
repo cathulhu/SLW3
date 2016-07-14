@@ -83,6 +83,7 @@ public class UI_Fragment_Background extends Fragment{
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         jobSpinner.setAdapter(adapter2);
 
+
         jobSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
