@@ -1,5 +1,6 @@
 package com.prototype.balcorasystems.slw3;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class UI_Fragment_Loan extends Fragment {
@@ -208,6 +211,39 @@ public class UI_Fragment_Loan extends Fragment {
         final EditText aprInput = (EditText) view.findViewById(R.id.aprInput);
         final Spinner loanStatusSpinner = (Spinner) view.findViewById(R.id.loanStatusSpinner);
         final Spinner loanTypeSpinner = (Spinner) view.findViewById(R.id.loanTypeSpinner);
+
+        final TextView dateDialog = (TextView) view.findViewById(R.id.dates);
+
+        final Calendar c = Calendar.getInstance();
+
+
+
+
+        dateDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dpd = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener()
+                        {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                            {
+//                        Toast toast = Toast.makeText(getContext(), dayOfMonth + monthOfYear + year, Toast.LENGTH_SHORT);
+                                dateDialog.setText((monthOfYear + 1) + "-" + dayOfMonth + "-"+ year);
+                            }
+
+                        }, mYear, mMonth, mDay);
+                dpd.show();
+
+            }
+        });
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.loan_status_array, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

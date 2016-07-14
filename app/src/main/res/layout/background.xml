@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
         android:singleLine="false"
-        android:text="Industry of employment"
+        android:text="Employment category:"
         android:textSize="12dp"
         android:layout_alignBottom="@+id/industrySpinner"
         android:layout_alignParentStart="true" />

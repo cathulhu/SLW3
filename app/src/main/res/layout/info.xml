@@ -172,7 +172,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/profileList"
         android:layout_below="@+id/stateButton"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:listSelector="@android:color/darker_gray"
+        android:choiceMode="singleChoice" />
 
 
 </RelativeLayout>

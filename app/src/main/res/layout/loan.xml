@@ -63,7 +63,7 @@
         android:id="@+id/editText2"
         android:text="APR Rate %"
         android:textSize="12dp"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/dates"
         android:layout_alignEnd="@+id/textView14" />
 
     <TextView
@@ -76,14 +76,13 @@
         android:layout_above="@+id/aprInput"
         android:layout_alignEnd="@+id/editText2" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editText"
+        style="@android:style/Widget.Holo.Spinner"
+        android:id="@+id/dates"
         android:textAlignment="center"
-        android:hint="LOAN DATE NOTYET IMPLIMENTED"
+        android:hint="Select Date"
         android:layout_row="1"
         android:layout_column="0"
         android:textSize="13dp"
@@ -104,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:id="@+id/loanTypeSpinner"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/dates"
         android:layout_alignLeft="@+id/whosLoans"
         android:spinnerMode="dialog"
         android:paddingTop="22dp" />
@@ -144,7 +143,9 @@
         android:layout_below="@+id/loanStatusSpinner"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/addLoan"
-        android:headerDividersEnabled="false" />
+        android:headerDividersEnabled="false"
+        android:listSelector="@android:color/darker_gray"
+        android:choiceMode="singleChoice" />
 
     <Button
         android:layout_width="wrap_content"
