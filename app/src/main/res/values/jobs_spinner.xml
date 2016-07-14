@@ -2,7 +2,7 @@
 <resources>
     <string-array name="jobs_array">
         <item>Private Sector</item>
-        <item>Government Agency (Fed, State, Tribal)</item>
+        <item>Gov. Agency (Fed, State, Tribal, Local)</item>
         <item>Public Education / Library</item>
         <item>Public Interest Law</item>
         <item>AmeriCorps / Peace Corps</item>

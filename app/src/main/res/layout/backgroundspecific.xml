@@ -1,6 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_below="@+id/textView17"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="10dp"
+    android:background="#e9009f">
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Extra Details"
+        android:id="@+id/textView23"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="171dp"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#dd16c2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicQuestion1"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="hidden and dynmaically populated question"
+        android:layout_below="@+id/textView23"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/dynamicRadio1"
+        android:layout_below="@+id/dynamicQuestion1"
+        android:layout_centerHorizontal="true">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton9" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton10" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicQuestion2"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="hidden and dynmaically populated question"
+        android:layout_below="@+id/dynamicRadio1"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/dynamicRadio2"
+        android:layout_below="@+id/dynamicQuestion2"
+        android:layout_alignStart="@+id/dynamicRadio1">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton7" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton8" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicQuestion3"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="hidden and dynmaically populated question"
+        android:layout_below="@+id/dynamicRadio2"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/dynamicRadio3"
+        android:layout_below="@+id/dynamicQuestion3"
+        android:layout_alignStart="@+id/dynamicRadio2">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton11" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton12" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicQuestion4"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="hidden and dynmaically populated question"
+        android:layout_below="@+id/dynamicRadio3"
+        android:layout_alignStart="@+id/dynamicQuestion3" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/dynamicRadio4"
+        android:layout_below="@+id/dynamicQuestion4"
+        android:layout_alignStart="@+id/dynamicRadio3">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton13" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton14" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dynamicQuestion5"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="hidden and dynmaically populated question"
+        android:layout_below="@+id/dynamicRadio4"
+        android:layout_alignStart="@+id/dynamicQuestion4" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/dynamicRadio5"
+        android:layout_below="@+id/dynamicQuestion5"
+        android:layout_alignStart="@+id/dynamicRadio4">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton15" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton16" />
+    </RadioGroup>
+
+</RelativeLayout>

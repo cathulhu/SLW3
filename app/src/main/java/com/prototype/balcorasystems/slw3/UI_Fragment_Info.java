@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UI_Fragment_Info extends Fragment {
 
@@ -144,7 +143,7 @@ public class UI_Fragment_Info extends Fragment {
     float spouseIncomeValue = -5;
     String taxState;
     String name;
-    ProfileListAdapter profileAdapter;
+    Adapter_ProfileList profileAdapter;
     ArrayList<Object_Profile> storedProfiles;
 
     @Override
@@ -212,7 +211,7 @@ public class UI_Fragment_Info extends Fragment {
 
 
         ListView profilesList = (ListView) view.findViewById(R.id.profileList);
-        profileAdapter = new ProfileListAdapter(getContext(), storedProfiles);
+        profileAdapter = new Adapter_ProfileList(getContext(), storedProfiles);
         profilesList.setAdapter(profileAdapter);
         //add on click listener
 

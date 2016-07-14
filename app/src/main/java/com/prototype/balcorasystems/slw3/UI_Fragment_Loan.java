@@ -1,11 +1,9 @@
 package com.prototype.balcorasystems.slw3;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -219,9 +217,9 @@ public class UI_Fragment_Loan extends Fragment {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         loanTypeSpinner.setAdapter(adapter1);
 
-        LoanListAdapter loanAdapter;
+        Adapter_LoanList loanAdapter;
         ListView loansList = (ListView) view.findViewById(R.id.loanListView);
-        loanAdapter = new LoanListAdapter(getContext(), fetchedLoans);
+        loanAdapter = new Adapter_LoanList(getContext(), fetchedLoans);
         loansList.setAdapter(loanAdapter);
         //add on click listener
 
