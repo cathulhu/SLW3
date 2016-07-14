@@ -47,18 +47,29 @@
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/familySizeInput" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <!--<Spinner-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:id="@+id/stateButton"-->
+        <!--android:layout_column="0"-->
+        <!--android:layout_marginLeft="0dp"-->
+        <!--android:textSize="13dp"-->
+        <!--android:layout_below="@+id/spouseIncomeInput"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_toEndOf="@+id/infoTitle"-->
+        <!--android:layout_alignStart="@+id/spouseIncomeInput" />-->
+
+<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tax Filing State"
         android:id="@+id/stateButton"
         android:layout_column="0"
         android:layout_marginLeft="0dp"
-        android:textSize="13dp"
         android:layout_below="@+id/spouseIncomeInput"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/infoTitle"
+        style="?android:attr/spinnerStyle"
         android:layout_alignStart="@+id/spouseIncomeInput" />
 
     <EditText

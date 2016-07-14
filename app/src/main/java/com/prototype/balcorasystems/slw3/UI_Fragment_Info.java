@@ -256,6 +256,7 @@ public class UI_Fragment_Info extends Fragment {
         {
             Object_Profile freshProfile = getLast();    //should add functionality to SQL entry that marks which is currently/last selected profile and load THAT one by looking for that tag in sql querry
 
+//            profilesList.setSelection();  //highlight the current working profile (uncomment when current profile stays selected on view refresh instead of last item)
             profileName.setText(freshProfile.getProfileName());
             name = freshProfile.getProfileName();
 
@@ -290,13 +291,6 @@ public class UI_Fragment_Info extends Fragment {
 
         }
 
-
-
-
-
-
-//        final ListView profileList = (ListView) view.findViewById(R.id.listView2);
-//        profileList.setAdapter(new ArrayAdapter<String>(), );
 
         TextWatcher watcher = new TextWatcher() {
             @Override
