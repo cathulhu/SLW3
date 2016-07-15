@@ -207,7 +207,7 @@ public class SQL_DataSource {
 
 
 
-    public ArrayList<Object_Loan> readAllLoans(Object_Profile currentProfile) {
+    public ArrayList<Object_Loan> getAllOwnerLoans(Object_Profile currentProfile) {
 
         SQLiteDatabase db = open();
         db.beginTransaction();
@@ -242,7 +242,7 @@ public class SQL_DataSource {
         return loans;
     }
 
-//Integer.parseInt(cursor.getString(3))
+
 
 
     public void createLoanDbEntry (Object_Loan loan) {

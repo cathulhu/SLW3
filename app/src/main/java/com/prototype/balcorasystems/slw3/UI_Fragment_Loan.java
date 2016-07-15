@@ -21,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -80,7 +80,7 @@ public class UI_Fragment_Loan extends Fragment {
     {
         ArrayList<Object_Loan> allLoans = new ArrayList<Object_Loan>();
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
-        allLoans = dataSource.readAllLoans(selectedProfile);
+        allLoans = dataSource.getAllOwnerLoans(selectedProfile);
         return allLoans;
     }
 
@@ -266,11 +266,65 @@ public class UI_Fragment_Loan extends Fragment {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         loanTypeSpinner.setAdapter(adapter1);
 
-        Adapter_LoanList loanAdapter;
+
+        final Adapter_LoanList loanAdapter;
         ListView loansList = (ListView) view.findViewById(R.id.loanListView);
         loanAdapter = new Adapter_LoanList(getContext(), fetchedLoans);
         loansList.setAdapter(loanAdapter);
-        //add on click listener
+        loansList.setItemsCanFocus(true);
+
+        loansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                loanInput.setText(String.valueOf(fetchedLoans.get(position).getLoanBalance()));
+                aprInput.setText(String.valueOf(fetchedLoans.get(position).getLoanAPR()));
+                dateDialog.setText(String.valueOf(fetchedLoans.get(position).getStatusElapsedDays()));
+
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Deferment") )
+                {
+                    loanStatusSpinner.setSelection(0);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Grace Period"))
+                {
+                    loanStatusSpinner.setSelection(1);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Forebearance"))
+                {
+                    loanStatusSpinner.setSelection(2);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Repayment"))
+                {
+                    loanStatusSpinner.setSelection(3);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Delinquent"))
+                {
+                    loanStatusSpinner.setSelection(4);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("Loan Rehab"))
+                {
+                    loanStatusSpinner.setSelection(5);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("1st Default"))
+                {
+                    loanStatusSpinner.setSelection(6);
+                }
+                if ( fetchedLoans.get(position).getLoanStatus().equals("2nd Default"))
+                {
+                    loanStatusSpinner.setSelection(7);
+                }
+
+
+                String matchValue = fetchedLoans.get(position).getPrettyName(); //this should work on but pretty names aren't yet saved
+                int listCoord = Arrays.asList(prettyLoantypes).indexOf(matchValue);
+                loanTypeSpinner.setSelection(listCoord);
+
+
+            }
+        });
+
+
+
 
         Object_Loan fetchedLoan = new Object_Loan();
 
@@ -343,6 +397,7 @@ public class UI_Fragment_Loan extends Fragment {
                 loanType=prettyLoantypes[position];
                 loanChoiceCategory=loanCategory[position];
                 loanChoiceCode=loanCodes[position];
+                niceLoanName=prettyLoantypes[position];     //this should work now for saving pretty names to loan
             }
 
             @Override
