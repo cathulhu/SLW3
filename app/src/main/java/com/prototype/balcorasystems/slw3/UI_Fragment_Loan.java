@@ -187,7 +187,7 @@ public class UI_Fragment_Loan extends Fragment {
     boolean currentlyEditing=false;
     static Object_Profile selectedProfile;
     long loanInceptionUnixTime;
-    ArrayList<Object_Loan> fetchedLoans;
+    static ArrayList<Object_Loan> fetchedLoans = new ArrayList<>();
 
 
 
@@ -212,7 +212,7 @@ public class UI_Fragment_Loan extends Fragment {
 
         if (selectedProfile!=null)
         {
-            nameTitle.setText(selectedProfile.getProfileName() + "s Loans");
+            nameTitle.setText("Loans for " + selectedProfile.getProfileName());
         }
 
 
