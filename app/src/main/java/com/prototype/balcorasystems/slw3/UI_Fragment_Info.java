@@ -225,6 +225,12 @@ public class UI_Fragment_Info extends Fragment {
         profilesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+
+
+
                 profileName.setText(storedProfiles.get(position).getProfileName());
                 familysizeField.setText(String.valueOf(storedProfiles.get(position).getFamilySize()));
                 incomeInput.setText(String.valueOf(storedProfiles.get(position).getGrossIncome()));
@@ -248,6 +254,8 @@ public class UI_Fragment_Info extends Fragment {
                 {
                     taxSpinner.setSelection(3);
                 }
+
+                mCallback.profileFragToMainActivity(storedProfiles.get(position));
 
 //                view.invalidate();
 //                Toast toast = Toast.makeText(getContext(), " on click triggered ", Toast.LENGTH_SHORT);

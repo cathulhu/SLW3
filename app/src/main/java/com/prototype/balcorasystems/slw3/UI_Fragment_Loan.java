@@ -331,6 +331,8 @@ public class UI_Fragment_Loan extends Fragment {
 
 
 
+
+
 //
 //        Object_Loan fetchedLoan = new Object_Loan();
 

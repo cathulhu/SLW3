@@ -155,7 +155,8 @@
         android:spinnerMode="dropdown"
         android:textAlignment="center"
         android:clickable="false"
-        android:layout_alignStart="@+id/incomeInput" />
+        android:layout_alignStart="@+id/incomeInput"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
