@@ -202,9 +202,10 @@ public class UI_Fragment_Loan extends Fragment {
         if (loadProfileFromMainActivity()!=null)
         {
             selectedProfile = loadProfileFromMainActivity();
+            fetchedLoans = getAllLoans(selectedProfile);
         }
 
-        fetchedLoans = getAllLoans(selectedProfile);
+
 
 
         TextView nameTitle = (TextView) view.findViewById(R.id.whosLoans);

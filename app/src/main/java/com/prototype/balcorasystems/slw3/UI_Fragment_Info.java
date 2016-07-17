@@ -52,17 +52,6 @@ public class UI_Fragment_Info extends Fragment {
 
 
 
-    public boolean check_info_ready ()
-    {
-        boolean result = false;
-
-        if (familysizeInput != -5 && incomeValue != -5 && spouseIncomeValue != -5 && taxState != null && name!= null)
-        {
-            result=true;
-        }
-        return result;
-    }
-
     public void deleteWholeDb (Context context)
     {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());
@@ -136,21 +125,33 @@ public class UI_Fragment_Info extends Fragment {
         return result;
     }
 
+
+    public boolean check_info_ready ()
+    {
+        boolean result = false;
+
+        if (familysizeInput != -5 && incomeValue != -5 && spouseIncomeValue != -5 && taxState != null && name!= null)
+        {
+            result=true;
+        }
+        return result;
+    }
+
     String[] stateList = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI",
             "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT",
             "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC",
             "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
 
-    String[] taxFilingOptions = {"SINGLE", "MARRIED_FILING_SINGLY", "MARRIED_FILING_JOINTLY", "HEAD_OF_HOUSEHOLD"};
+    String[] taxFilingOptions = {"SINGLE", "MARRIED_FILING_JOINTLY", "MARRIED_FILING_SINGLY", "HEAD_OF_HOUSEHOLD"};
 
     //could make a special object to hold these values but as far as global variables go these are pretty safe
-    String taxStatus= "SINGLE";
-    int familysizeInput = -5;
-    float incomeValue = -5;
-    float spouseIncomeValue = -5;
-    String taxState;
-    String name;
-    ArrayList<Object_Profile> storedProfiles;
+    static String taxStatus= "SINGLE";
+    static int familysizeInput = -5;
+    static float incomeValue = -5;
+    static float spouseIncomeValue = -5;
+    static String taxState;
+    static String name;
+    static ArrayList<Object_Profile> storedProfiles;
 
 
 
@@ -164,7 +165,11 @@ public class UI_Fragment_Info extends Fragment {
             if (taxStatus.equals("SINGLE"))
             {
                 spouseIncomeValue=0;
-                familysizeInput=0;
+                familysizeInput=1;
+            }
+            else if (taxStatus.equals("HEAD_OF_HOUSEHOLD"))
+            {
+                spouseIncomeValue=0;
             }
 
             Object_Profile updatedProfile = new Object_Profile(familysizeInput, incomeValue, spouseIncomeValue, taxStatus, taxState, name);
@@ -232,11 +237,6 @@ public class UI_Fragment_Info extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-
-
-
                 profileName.setText(storedProfiles.get(position).getProfileName());
                 familysizeField.setText(String.valueOf(storedProfiles.get(position).getFamilySize()));
                 incomeInput.setText(String.valueOf(storedProfiles.get(position).getGrossIncome()));
@@ -285,7 +285,7 @@ public class UI_Fragment_Info extends Fragment {
                 freshProfile = getLast();
 
             }
-            
+
             mCallback.profileFragToMainActivity(freshProfile);
 
 //            profilesList.setSelection();  //highlight the current working profile (uncomment when current profile stays selected on view refresh instead of last item)
@@ -294,12 +294,14 @@ public class UI_Fragment_Info extends Fragment {
 
             familysizeField.setText( String.valueOf(freshProfile.getFamilySize()) );
             familysizeInput = freshProfile.getFamilySize();
+            familysizeField.setText(String.valueOf(familysizeInput));
 
             incomeInput.setText( String.valueOf(freshProfile.getGrossIncome()) );
             incomeValue = freshProfile.getGrossIncome();
             spouseIncomeInput.setText( String.valueOf(freshProfile.getSpouseIncome()) );
             spouseIncomeValue = freshProfile.getSpouseIncome();
-            stateButton.setText("Selected State: " + freshProfile.getFilingState());
+            spouseIncomeInput.setText(String.valueOf(spouseIncomeValue));
+            stateButton.setText("Selected Filing State: " + freshProfile.getFilingState());
             taxState=freshProfile.getFilingState();
 
             if (freshProfile.getFilingStatus().equals("SINGLE") )
@@ -314,7 +316,7 @@ public class UI_Fragment_Info extends Fragment {
             {
                 taxSpinner.setSelection(1);
             }
-            else
+            else if (freshProfile.getFilingStatus().equals("HEAD_OF_HOUSEHOLD"))
             {
                 taxSpinner.setSelection(3);
             }
@@ -371,10 +373,14 @@ public class UI_Fragment_Info extends Fragment {
                 {
                     spouseIncomeValue = Float.parseFloat(spouseIncomeInput.getText().toString());
                 }
-                else
+                else if (input3.equals("") == false && taxStatus.equals("MARRIED_FILING_SINGLY") || taxStatus.equals("MARRIED_FILING_JOINTLY"))
                 {
                     spouseIncomeValue= -5;
                 }
+//                else
+//                {
+//                    spouseIncomeValue= 0;
+//                }
 
             }
 
@@ -417,6 +423,13 @@ public class UI_Fragment_Info extends Fragment {
                     familysizeInput=1;
                     spouseIncomeLabel.setVisibility(View.INVISIBLE);
                     spouseIncomeInput.setVisibility(View.INVISIBLE);
+                    spouseIncomeValue=0;
+                }
+
+                if (position==3)
+                {
+                    spouseIncomeInput.setVisibility(View.INVISIBLE);
+                    spouseIncomeLabel.setVisibility(View.INVISIBLE);
                     spouseIncomeValue=0;
                 }
 
