@@ -29,6 +29,12 @@ public class UI_Fragment_Info extends Fragment {
         public void profileFragToMainActivity(Object_Profile outBoundProfile);
     }
 
+    public static Object_Profile loadProfileFromMainActivity (){
+
+        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
+        return fetchedProfile;
+    }
+
     profileActivityLoader mCallback;
 
     @Override
@@ -268,8 +274,18 @@ public class UI_Fragment_Info extends Fragment {
 
         if (isSqlEmpty()== false)
         {
-            Object_Profile freshProfile = getLast();    //should add functionality to SQL entry that marks which is currently/last selected profile and load THAT one by looking for that tag in sql querry
+            Object_Profile freshProfile = new Object_Profile();
 
+            if (loadProfileFromMainActivity()!=null)
+            {
+                freshProfile = loadProfileFromMainActivity();
+            }
+            else
+            {
+                freshProfile = getLast();
+
+            }
+            
             mCallback.profileFragToMainActivity(freshProfile);
 
 //            profilesList.setSelection();  //highlight the current working profile (uncomment when current profile stays selected on view refresh instead of last item)
