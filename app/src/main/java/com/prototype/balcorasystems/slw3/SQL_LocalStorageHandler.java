@@ -35,6 +35,7 @@ public class SQL_LocalStorageHandler extends SQLiteOpenHelper{
     public static String LOAN_STATUS = "loanStatus";
     public static String LOAN_STATUS_ELAPSED = "loanStatusElapsed"; //int
     public static String LOAN_NICE_NAME = "loanNiceName";
+    public static String LOAN_INCEPTION_DATE = "loanInceptionDate";
 
     public SQL_LocalStorageHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -48,7 +49,7 @@ public class SQL_LocalStorageHandler extends SQLiteOpenHelper{
                                     + SPOUSE_INCOME + " REAL," + FILING_STATUS + " TEXT," + FILING_STATE + " TEXT," + PROFILE_NAME + " TEXT" + ")";
 
         String CREATE_LOAN_TABLE = "CREATE TABLE " + TABLE_LOAN + " (" + LOAN_KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + LOAN_OWNER + " TEXT," + LOAN_CHOICE_CATEGORY + " TEXT," + LOAN_CHOICE_CODE + " TEXT,"
-                                    + LOAN_PRINCIPAL + " REAL," + LOAN_APR + " REAL," + LOAN_BALANCE + " REAL," + LOAN_STATUS + " TEXT," + LOAN_STATUS_ELAPSED + " INTEGER," + LOAN_NICE_NAME + " TEXT" +")";
+                                    + LOAN_PRINCIPAL + " REAL," + LOAN_APR + " REAL," + LOAN_BALANCE + " REAL," + LOAN_STATUS + " TEXT," + LOAN_STATUS_ELAPSED + " INTEGER," + LOAN_NICE_NAME + " TEXT," + LOAN_INCEPTION_DATE +  " INTEGER" + ")";
 
         db.execSQL(CREATE_PROFILE_TABLE);
         db.execSQL(CREATE_LOAN_TABLE);

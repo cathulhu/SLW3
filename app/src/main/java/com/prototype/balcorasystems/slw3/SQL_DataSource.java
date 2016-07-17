@@ -230,6 +230,7 @@ public class SQL_DataSource {
                 loan.setLoanStatus(cursor.getString(7));
 //                loan.setStatusElapsedDays(Integer.parseInt(cursor.getString(8)));
                 loan.setPrettyName(cursor.getString(9));
+                loan.setInceptionDate(cursor.getInt(10));
 
                 loans.add(loan);
             } while (cursor.moveToNext());
@@ -258,6 +259,7 @@ public class SQL_DataSource {
         loanValues.put(storageHandler.LOAN_BALANCE, loan.getLoanBalance());
         loanValues.put(storageHandler.LOAN_STATUS, loan.getLoanStatus());
         loanValues.put(storageHandler.LOAN_NICE_NAME, loan.getPrettyName());
+        loanValues.put(storageHandler.LOAN_INCEPTION_DATE, loan.getInceptionDate());
         db.insert(SQL_LocalStorageHandler.TABLE_LOAN, null, loanValues);
 
 
@@ -287,6 +289,7 @@ public class SQL_DataSource {
         storedLoan.setLoanBalance(Float.parseFloat(cursor.getString(6)));
         storedLoan.setLoanStatus(cursor.getString(7));
         storedLoan.setPrettyName(cursor.getString(9));
+        storedLoan.setInceptionDate(cursor.getInt(10));
 
         cursor.close();
         db.endTransaction();

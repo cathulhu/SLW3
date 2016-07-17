@@ -146,6 +146,9 @@ public class UI_Fragment_Info extends Fragment {
     String name;
     ArrayList<Object_Profile> storedProfiles;
 
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -174,6 +177,9 @@ public class UI_Fragment_Info extends Fragment {
         }
     }
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -191,7 +197,7 @@ public class UI_Fragment_Info extends Fragment {
         final EditText spouseIncomeInput = (EditText) view.findViewById(R.id.spouseIncomeInput);
 
         final Button stateButton = (Button) view.findViewById(R.id.stateButton);
-        stateButton.setText("Select Filing State");
+        stateButton.setText("Selected Filing State");
 
         final TextView houseSizeLabel = (TextView) view.findViewById(R.id.householdSizeLabel);
         final TextView spouseIncomeLabel = (TextView) view.findViewById(R.id.spouseIncomeLabel);
@@ -223,7 +229,7 @@ public class UI_Fragment_Info extends Fragment {
                 familysizeField.setText(String.valueOf(storedProfiles.get(position).getFamilySize()));
                 incomeInput.setText(String.valueOf(storedProfiles.get(position).getGrossIncome()));
                 spouseIncomeInput.setText(String.valueOf(storedProfiles.get(position).getSpouseIncome()));
-                stateButton.setText("Select Filing State: " + storedProfiles.get(position).getFilingState());
+                stateButton.setText("Selected Filing State: " + storedProfiles.get(position).getFilingState());
                 taxState=storedProfiles.get(position).getFilingState();
 
                 if (storedProfiles.get(position).getFilingStatus().equals("SINGLE") )
@@ -255,6 +261,8 @@ public class UI_Fragment_Info extends Fragment {
         if (isSqlEmpty()== false)
         {
             Object_Profile freshProfile = getLast();    //should add functionality to SQL entry that marks which is currently/last selected profile and load THAT one by looking for that tag in sql querry
+
+            mCallback.profileFragToMainActivity(freshProfile);
 
 //            profilesList.setSelection();  //highlight the current working profile (uncomment when current profile stays selected on view refresh instead of last item)
             profileName.setText(freshProfile.getProfileName());

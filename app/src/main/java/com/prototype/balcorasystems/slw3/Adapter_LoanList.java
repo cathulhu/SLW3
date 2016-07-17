@@ -2,6 +2,7 @@ package com.prototype.balcorasystems.slw3;
 
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -46,10 +47,12 @@ public class Adapter_LoanList extends BaseAdapter{
         TextView status = (TextView) v.findViewById(R.id.loan_list_status);
 
         balance.setText("Balance: $"+ String.valueOf(loanList.get(position).getLoanBalance()));
-        type.setText("Type: " + loanList.get(position).getLoanType());
-        apr.setText("APR: "+ String.valueOf(loanList.get(position).getLoanAPR()));
-        date.setText("Date: " + String.valueOf(loanList.get(position).getStatusElapsedDays()));
-        status.setText(String.valueOf(loanList.get(position).getLoanStatus()));
+        type.setText("Type: " + loanList.get(position).getPrettyName());
+        apr.setText("APR: "+ String.valueOf(loanList.get(position).getLoanAPR()) + "%");
+
+        date.setText("Date: " + DateFormat.format("M-d-yyyy", loanList.get(position).getInceptionDate()*1000));
+
+        status.setText("Status: " + String.valueOf(loanList.get(position).getLoanStatus()));
 
 //        v.setTag(profileList.get(position).get);
 

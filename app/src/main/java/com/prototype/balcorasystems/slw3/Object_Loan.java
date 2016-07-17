@@ -16,12 +16,13 @@ public class Object_Loan {
     private boolean isPrivateLoan;
     private boolean inGracePeriod;
     private int repaymentMonth;
+    private long inceptionDate;
     private int statusElapsedDays;
     private int sqlID;
 
     //many of these variables not implemented in SQLdb yet
 
-    public Object_Loan(float principal, float apr, String type, String code, String owner, String niceName, String status) {
+    public Object_Loan(float principal, float apr, String type, String code, String owner, String niceName, String status, long date) {
 
         loanPrincipal = principal;
         loanAPR = apr;
@@ -31,6 +32,7 @@ public class Object_Loan {
         loanOwner = owner;
         prettyName = niceName;
         loanStatus = status;
+        inceptionDate = date;
 
 
     }
@@ -39,6 +41,13 @@ public class Object_Loan {
 
     }
 
+    public long getInceptionDate() {
+        return inceptionDate;
+    }
+
+    public void setInceptionDate(int inceptionDate) {
+        this.inceptionDate = inceptionDate;
+    }
 
     public float getLoanPrincipal() {
         return loanPrincipal;

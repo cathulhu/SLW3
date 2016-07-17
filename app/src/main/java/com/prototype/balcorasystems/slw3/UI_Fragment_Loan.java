@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -61,7 +63,7 @@ public class UI_Fragment_Loan extends Fragment {
     {
         boolean result = false;
 
-        if (loanPrincipal != -5 && apr != -5 && loanChoiceCategory != null && loanChoiceCode != null && loanStatus != null)
+        if (loanPrincipal != -5 && apr != -5 && loanChoiceCategory != null && loanChoiceCode != null && loanStatus != null && loanInceptionUnixTime!= 0)
         {
             result=true;
         }
@@ -197,7 +199,11 @@ public class UI_Fragment_Loan extends Fragment {
 
 //        clearData();
 
-        selectedProfile = loadProfileFromMainActivity();
+        if (loadProfileFromMainActivity()!=null)
+        {
+            selectedProfile = loadProfileFromMainActivity();
+        }
+
         fetchedLoans = getAllLoans(selectedProfile);
 
 
@@ -268,7 +274,7 @@ public class UI_Fragment_Loan extends Fragment {
 
 
         final Adapter_LoanList loanAdapter;
-        ListView loansList = (ListView) view.findViewById(R.id.loanListView);
+        final ListView loansList = (ListView) view.findViewById(R.id.loanListView);
         loanAdapter = new Adapter_LoanList(getContext(), fetchedLoans);
         loansList.setAdapter(loanAdapter);
         loansList.setItemsCanFocus(true);
@@ -319,23 +325,23 @@ public class UI_Fragment_Loan extends Fragment {
                 int listCoord = Arrays.asList(prettyLoantypes).indexOf(matchValue);
                 loanTypeSpinner.setSelection(listCoord);
 
-
+                dateDialog.setText(DateFormat.format("M-d-yyyy", fetchedLoans.get(position).getInceptionDate()*1000));
             }
         });
 
 
 
+//
+//        Object_Loan fetchedLoan = new Object_Loan();
 
-        Object_Loan fetchedLoan = new Object_Loan();
-
-        if (isSqlEmpty()==false)
-        {
-            fetchedLoan = getLast();
-            loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
-            aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));
-
-
-        }
+//        if (isSqlEmpty()==false)
+//        {
+//            fetchedLoan = getLast();
+//
+//            loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
+//            aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));
+//            dateDialog.setText(DateFormat.format("M-d-yyyy", fetchedLoan.getInceptionDate()*1000));
+//        }
 
 
 
@@ -417,7 +423,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                 if (check_info_ready())
                 {
-                    Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus);
+                    Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus, loanInceptionUnixTime);
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
                     if (currentlyEditing==true)   //will put condition here to detect if entry is being edited or added but for now just do new loan functionality
