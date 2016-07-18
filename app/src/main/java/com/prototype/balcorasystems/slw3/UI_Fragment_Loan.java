@@ -1,7 +1,9 @@
 package com.prototype.balcorasystems.slw3;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,45 @@ import java.util.GregorianCalendar;
 
 public class UI_Fragment_Loan extends Fragment {
 
+    private AlertDialog AskOption(final Integer deleteId)
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
+                //set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete this Loan?")
+                .setIcon(R.drawable.banknotes)
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        deleteLoan(deleteId);
+
+                        dialog.dismiss();
+                    }
+
+                })
+
+
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
+
+    public void deleteLoan (Integer Id) {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        dataSource.deleteLoanDbEntry(Id);
+
+    }
 
 
     public static Object_Profile loadProfileFromMainActivity (){
@@ -254,13 +295,6 @@ public class UI_Fragment_Loan extends Fragment {
                         }, mYear, mMonth, mDay);
                 dpd.show();
 
-
-
-//                Date current = new Date();
-//                Long unixTime = current.getTime()/1000;
-//                Toast toast = Toast.makeText(getContext(), unixTime.toString(), Toast.LENGTH_SHORT);
-//                toast.show();
-
             }
         });
 
@@ -280,7 +314,38 @@ public class UI_Fragment_Loan extends Fragment {
         loansList.setAdapter(loanAdapter);
         loansList.setItemsCanFocus(true);
 
+        loansList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Integer selectedSqlId=fetchedLoans.get(position).getSqlID();
+                AlertDialog diaBox = AskOption(selectedSqlId);
+                diaBox.show();
+
+                //must remember that since this is a dialog box, a different window it runs on a different threads, updating UI elements not in main UI thread == bad!
+
+                diaBox.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+
+                                loanAdapter.notifyDataSetChanged();
+                                fetchedLoans=getAllLoans(selectedProfile);
+                                loanAdapter.notifyDataSetChanged(fetchedLoans);
+                                loansList.setAdapter(loanAdapter);      //I'm pretty sure this is safe, may want to check again later though, this was the only way I could find to clear selection highlight after delete
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            }
+        });
+
         loansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -329,22 +394,6 @@ public class UI_Fragment_Loan extends Fragment {
                 dateDialog.setText(DateFormat.format("M-d-yyyy", fetchedLoans.get(position).getInceptionDate()*1000));
             }
         });
-
-
-
-
-
-//
-//        Object_Loan fetchedLoan = new Object_Loan();
-
-//        if (isSqlEmpty()==false)
-//        {
-//            fetchedLoan = getLast();
-//
-//            loanInput.setText(String.valueOf(fetchedLoan.getLoanPrincipal()));
-//            aprInput.setText(String.valueOf(fetchedLoan.getLoanAPR()));
-//            dateDialog.setText(DateFormat.format("M-d-yyyy", fetchedLoan.getInceptionDate()*1000));
-//        }
 
 
 
@@ -448,6 +497,12 @@ public class UI_Fragment_Loan extends Fragment {
                 {
                     Toast toast = Toast.makeText(getContext(), "Input fields not ready, no changes saved", Toast.LENGTH_SHORT);
                     toast.show();
+                }
+
+                if (loadProfileFromMainActivity()!=null)
+                {
+                    fetchedLoans = getAllLoans(selectedProfile);
+                    loanAdapter.notifyDataSetChanged(fetchedLoans);
                 }
 
             }

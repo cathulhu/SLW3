@@ -275,6 +275,20 @@ public class SQL_DataSource {
         close(db);
     }
 
+    public void deleteLoanDbEntry (int id) {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+
+        String condition = storageHandler.LOAN_KEY_ID + "= ?";
+        String[] args ={String.valueOf(id)};
+
+        db.delete(SQL_LocalStorageHandler.TABLE_LOAN, condition, args);
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+    }
+
     public Object_Loan getLastLoanDbEntry () {
 
         SQLiteDatabase db = open();

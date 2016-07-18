@@ -20,6 +20,12 @@ public class Adapter_LoanList extends BaseAdapter{
         this.loanList = loans;
     }
 
+    public void notifyDataSetChanged(List<Object_Loan> newLoanList) {
+        super.notifyDataSetChanged();
+
+        this.loanList = newLoanList;
+    }
+
     @Override
     public int getCount() {
         return loanList.size();

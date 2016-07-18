@@ -212,6 +212,7 @@ public class UI_Fragment_Info extends Fragment {
 
         final TextView houseSizeLabel = (TextView) view.findViewById(R.id.householdSizeLabel);
         final TextView spouseIncomeLabel = (TextView) view.findViewById(R.id.spouseIncomeLabel);
+        final TextView primaryIncomeLabel = (TextView) view.findViewById(R.id.primaryIncomeLabel);
 
         houseSizeLabel.setVisibility(View.INVISIBLE);
         spouseIncomeLabel.setVisibility(View.INVISIBLE);
@@ -373,14 +374,16 @@ public class UI_Fragment_Info extends Fragment {
                 {
                     spouseIncomeValue = Float.parseFloat(spouseIncomeInput.getText().toString());
                 }
-                else if (input3.equals("") == false && taxStatus.equals("MARRIED_FILING_SINGLY") || taxStatus.equals("MARRIED_FILING_JOINTLY"))
+                else
                 {
                     spouseIncomeValue= -5;
                 }
-//                else
-//                {
-//                    spouseIncomeValue= 0;
-//                }
+
+                if (taxStatus.equals("MARRIED_FILING_JOINTLY"))
+                {
+                    spouseIncomeValue= 0;
+                }
+
 
             }
 
@@ -426,11 +429,25 @@ public class UI_Fragment_Info extends Fragment {
                     spouseIncomeValue=0;
                 }
 
+                if (position==1)
+                {
+                    primaryIncomeLabel.setText("Joint Filing Income");
+                    spouseIncomeLabel.setVisibility(View.INVISIBLE);
+                    spouseIncomeInput.setVisibility(View.INVISIBLE);
+                    spouseIncomeValue=0;
+
+                }
+
                 if (position==3)
                 {
                     spouseIncomeInput.setVisibility(View.INVISIBLE);
                     spouseIncomeLabel.setVisibility(View.INVISIBLE);
                     spouseIncomeValue=0;
+                }
+
+                if (position!=1)
+                {
+                    primaryIncomeLabel.setText("Filing Income");
                 }
 
             }
