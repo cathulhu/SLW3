@@ -250,6 +250,20 @@ public class SQL_DataSource {
         return loans;
     }
 
+    public void deleteProfileDbEntry (int id) {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+
+        String condition = storageHandler.PROFILE_KEY_ID + "= ?";
+        String[] args ={String.valueOf(id)};
+
+        db.delete(SQL_LocalStorageHandler.TABLE_PROFILE, condition, args);
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+    }
+
 
 
 

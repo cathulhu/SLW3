@@ -19,6 +19,12 @@ public class Adapter_ProfileList extends BaseAdapter{
         this.profileList = profiles;
     }
 
+    public void notifyDataSetChanged(List<Object_Profile> newProfileList) {
+        super.notifyDataSetChanged();
+
+        this.profileList = newProfileList;
+    }
+
     @Override
     public int getCount() {
         return profileList.size();

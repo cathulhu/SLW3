@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UI_Fragment_Info extends Fragment {
 
@@ -50,6 +49,47 @@ public class UI_Fragment_Info extends Fragment {
     }
 
 
+    private android.app.AlertDialog AskOption(final Integer deleteId)
+    {
+        android.app.AlertDialog myQuittingDialogBox =new android.app.AlertDialog.Builder(getContext())
+                //set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete this Profile?")
+                .setIcon(R.drawable.idno)
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        deleteProfile(deleteId);
+
+                        dialog.dismiss();
+                    }
+
+                })
+
+
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+
+    }
+
+
+    public void deleteProfile (Integer Id) {
+        SQL_DataSource dataSource = new SQL_DataSource(getContext());
+        dataSource.deleteProfileDbEntry(Id);
+
+    }
+
+
 
 
     public void deleteWholeDb (Context context)
@@ -66,7 +106,7 @@ public class UI_Fragment_Info extends Fragment {
         return lastProfile;
     }
 
-    public ArrayList<Object_Profile> getData ()
+    public ArrayList<Object_Profile> getAllProfiles()
     {
         SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
         ArrayList<Object_Profile> resultsArrayList = new ArrayList<>();
@@ -198,7 +238,7 @@ public class UI_Fragment_Info extends Fragment {
 //        clearData();
 //        deleteWholeDb(getContext());
 
-        storedProfiles = getData();
+        storedProfiles = getAllProfiles();
 
         View view = inflater.inflate(R.layout.info, container, false);
 
@@ -228,8 +268,8 @@ public class UI_Fragment_Info extends Fragment {
         taxSpinner.setAdapter(adapter);
 
 
-        Adapter_ProfileList profileAdapter;
-        ListView profilesList = (ListView) view.findViewById(R.id.profileList);
+        final Adapter_ProfileList profileAdapter;
+        final ListView profilesList = (ListView) view.findViewById(R.id.profileList);
         profileAdapter = new Adapter_ProfileList(getContext(), storedProfiles);
         profilesList.setAdapter(profileAdapter);
         profilesList.setItemsCanFocus(true);
@@ -270,6 +310,40 @@ public class UI_Fragment_Info extends Fragment {
 
             }
         });
+
+
+
+
+        profilesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Integer selectedSqlId=storedProfiles.get(position).getSqlID();
+                android.app.AlertDialog diaBox = AskOption(selectedSqlId);
+                diaBox.show();
+
+                //must remember that since this is a dialog box, a different window it runs on a different threads, updating UI elements not in main UI thread == bad!
+
+                diaBox.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+
+                                profileAdapter.notifyDataSetChanged();
+                                storedProfiles=getAllProfiles();
+                                profileAdapter.notifyDataSetChanged(storedProfiles);
+                                profilesList.setAdapter(profileAdapter);      //I'm pretty sure this is safe, may want to check again later though, this was the only way I could find to clear selection highlight after delete
+                            }
+                        });
+                    }
+                });
+
+                return false;
+            }
+        });
+
 
 
 

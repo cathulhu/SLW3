@@ -32,6 +32,7 @@ import java.util.GregorianCalendar;
 
 public class UI_Fragment_Loan extends Fragment {
 
+
     private AlertDialog AskOption(final Integer deleteId)
     {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
