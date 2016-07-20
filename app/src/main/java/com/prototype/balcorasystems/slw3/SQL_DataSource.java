@@ -200,6 +200,20 @@ public class SQL_DataSource {
 
     }
 
+    public void deleteProfileDbEntry (int id) {
+        SQLiteDatabase db = open();
+        db.beginTransaction();
+
+        String condition = storageHandler.PROFILE_KEY_ID + "= ?";
+        String[] args ={String.valueOf(id)};
+
+        db.delete(SQL_LocalStorageHandler.TABLE_PROFILE, condition, args);
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        close(db);
+    }
+
 
 
 
@@ -250,22 +264,31 @@ public class SQL_DataSource {
         return loans;
     }
 
-    public void deleteProfileDbEntry (int id) {
+    public void editLoan (Object_Loan targetLoan)
+    {
         SQLiteDatabase db = open();
         db.beginTransaction();
 
-        String condition = storageHandler.PROFILE_KEY_ID + "= ?";
-        String[] args ={String.valueOf(id)};
+        String condition = storageHandler.LOAN_KEY_ID + "= ?";
+        String[] args ={String.valueOf(targetLoan.getSqlID())};
 
-        db.delete(SQL_LocalStorageHandler.TABLE_PROFILE, condition, args);
+        ContentValues loanValues = new ContentValues();
+        loanValues.put(storageHandler.LOAN_CHOICE_CATEGORY, targetLoan.getLoanType());
+        loanValues.put(storageHandler.LOAN_CHOICE_CODE, targetLoan.getLoanCode());
+        loanValues.put(storageHandler.LOAN_PRINCIPAL, targetLoan.getLoanPrincipal());
+        loanValues.put(storageHandler.LOAN_APR, targetLoan.getLoanAPR());
+        loanValues.put(storageHandler.LOAN_OWNER, targetLoan.getLoanOwner());
+        loanValues.put(storageHandler.LOAN_BALANCE, targetLoan.getLoanBalance());
+        loanValues.put(storageHandler.LOAN_STATUS, targetLoan.getLoanStatus());
+        loanValues.put(storageHandler.LOAN_NICE_NAME, targetLoan.getPrettyName());
+        loanValues.put(storageHandler.LOAN_INCEPTION_DATE, targetLoan.getInceptionDate());
+        db.update(SQL_LocalStorageHandler.TABLE_LOAN, loanValues, condition, args);
 
         db.setTransactionSuccessful();
         db.endTransaction();
         close(db);
+
     }
-
-
-
 
     public void createLoanDbEntry (Object_Loan loan) {
         SQLiteDatabase db = open();

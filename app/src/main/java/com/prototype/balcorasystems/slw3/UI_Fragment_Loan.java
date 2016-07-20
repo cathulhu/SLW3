@@ -105,7 +105,7 @@ public class UI_Fragment_Loan extends Fragment {
     {
         boolean result = false;
 
-        if (loanPrincipal != -5 && apr != -5 && loanChoiceCategory != null && loanChoiceCode != null && loanStatus != null && loanInceptionUnixTime!= 0)
+        if (loanPrincipal != -5 && apr != -5 && loanChoiceCategory != null && loanChoiceCode != null && loanStatus != null && loanInceptionUnixTime!= -5)
         {
             result=true;
         }
@@ -224,11 +224,12 @@ public class UI_Fragment_Loan extends Fragment {
     String loanStatus;
     String loanChoiceCode;
     String niceLoanName;
+    static Integer currentLoanListPosition=-5;
     float loanPrincipal =-5;
     float apr =-5;
     boolean currentlyEditing=false;
     static Object_Profile selectedProfile;
-    long loanInceptionUnixTime;
+    long loanInceptionUnixTime=-5;
     static ArrayList<Object_Loan> fetchedLoans = new ArrayList<>();
 
 
@@ -265,39 +266,7 @@ public class UI_Fragment_Loan extends Fragment {
         final Spinner loanTypeSpinner = (Spinner) view.findViewById(R.id.loanTypeSpinner);
 
         final TextView dateDialog = (TextView) view.findViewById(R.id.dates);
-
         final Calendar c = Calendar.getInstance();
-
-
-
-
-        dateDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dpd = new DatePickerDialog(getContext(),
-                        new DatePickerDialog.OnDateSetListener()
-                        {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-                            {
-//                        Toast toast = Toast.makeText(getContext(), dayOfMonth + monthOfYear + year, Toast.LENGTH_SHORT);
-                                dateDialog.setText((monthOfYear + 1) + "-" + dayOfMonth + "-"+ year);
-
-                                Calendar calendarLoan = new GregorianCalendar(year, monthOfYear, dayOfMonth);
-                                loanInceptionUnixTime = calendarLoan.getTimeInMillis()/1000;
-                            }
-
-                        }, mYear, mMonth, mDay);
-                dpd.show();
-
-            }
-        });
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.loan_status_array, android.R.layout.simple_spinner_dropdown_item);
@@ -319,6 +288,7 @@ public class UI_Fragment_Loan extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                currentLoanListPosition=position;
                 Integer selectedSqlId=fetchedLoans.get(position).getSqlID();
                 AlertDialog diaBox = AskOption(selectedSqlId);
                 diaBox.show();
@@ -345,10 +315,62 @@ public class UI_Fragment_Loan extends Fragment {
             }
         });
 
+
+        dateDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                final DatePickerDialog dpd = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener()
+                        {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+                            {
+                                dateDialog.setText((monthOfYear + 1) + "-" + dayOfMonth + "-"+ year);
+
+                                Calendar calendarLoan = new GregorianCalendar(year, monthOfYear, dayOfMonth);
+                                loanInceptionUnixTime = calendarLoan.getTimeInMillis()/1000;
+
+
+                                if (check_info_ready() && currentLoanListPosition != -5)
+                                {
+                                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+
+                                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
+                                    loan.setLoanBalance(loanPrincipal);
+                                    loan.setLoanAPR(apr);
+                                    loan.setInceptionDate(loanInceptionUnixTime);
+                                    loan.setLoanType(loanType);
+                                    loan.setLoanStatus(loanStatus);
+
+                                    dataSource.editLoan(loan);
+                                    loanAdapter.notifyDataSetChanged();
+                                    fetchedLoans=getAllLoans(selectedProfile);
+                                    loanAdapter.notifyDataSetChanged(fetchedLoans);
+                                    loansList.setAdapter(loanAdapter);
+                                }
+
+                            }
+
+                        }, mYear, mMonth, mDay);
+                dpd.show();
+
+            }
+        });
+
+
+
         loansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                currentLoanListPosition=position;
 
                 loanInput.setText(String.valueOf(fetchedLoans.get(position).getLoanBalance()));
                 aprInput.setText(String.valueOf(fetchedLoans.get(position).getLoanAPR()));
@@ -393,6 +415,7 @@ public class UI_Fragment_Loan extends Fragment {
                 loanTypeSpinner.setSelection(listCoord);
 
                 dateDialog.setText(DateFormat.format("M-d-yyyy", fetchedLoans.get(position).getInceptionDate()*1000));
+                loanInceptionUnixTime=fetchedLoans.get(position).getInceptionDate();
             }
         });
 
@@ -422,7 +445,7 @@ public class UI_Fragment_Loan extends Fragment {
                 }
                 else
                 {
-                    loanPrincipal = 0;
+                    loanPrincipal = -5;
                 }
 
                 if (input1.equals("") == false)
@@ -431,8 +454,33 @@ public class UI_Fragment_Loan extends Fragment {
                 }
                 else
                 {
-                    apr = 0;
+                    apr = -5;
                 }
+
+                if (check_info_ready() && currentLoanListPosition != -5)
+                {
+                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+
+
+
+                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
+                    loan.setLoanBalance(loanPrincipal);
+                    loan.setLoanAPR(apr);
+                    loan.setInceptionDate(loanInceptionUnixTime);
+                    loan.setLoanType(loanType);
+                    loan.setLoanStatus(loanStatus);
+
+                    dataSource.editLoan(loan);
+                    loanAdapter.notifyDataSetChanged();
+                    fetchedLoans=getAllLoans(selectedProfile);
+                    loanAdapter.notifyDataSetChanged(fetchedLoans);
+                    loansList.setAdapter(loanAdapter);
+
+
+                    Toast toast = Toast.makeText(getContext(), "attempted to save changes to SQL", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }
         };
 
@@ -441,6 +489,26 @@ public class UI_Fragment_Loan extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 loanStatus=loanStates[position];
+
+                if (check_info_ready() && currentLoanListPosition != -5)
+                {
+                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+
+                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
+                    loan.setLoanBalance(loanPrincipal);
+                    loan.setLoanAPR(apr);
+                    loan.setInceptionDate(loanInceptionUnixTime);
+                    loan.setLoanType(loanType);
+                    loan.setLoanStatus(loanStatus);
+
+                    dataSource.editLoan(loan);
+                    loanAdapter.notifyDataSetChanged();
+                    fetchedLoans=getAllLoans(selectedProfile);
+                    loanAdapter.notifyDataSetChanged(fetchedLoans);
+                    loansList.setAdapter(loanAdapter);
+                }
+
+
             }
 
             @Override
@@ -457,6 +525,28 @@ public class UI_Fragment_Loan extends Fragment {
                 loanChoiceCategory=loanCategory[position];
                 loanChoiceCode=loanCodes[position];
                 niceLoanName=prettyLoantypes[position];     //this should work now for saving pretty names to loan
+
+
+                if (check_info_ready() && currentLoanListPosition != -5)
+                {
+                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+
+                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
+                    loan.setLoanBalance(loanPrincipal);
+                    loan.setLoanAPR(apr);
+                    loan.setInceptionDate(loanInceptionUnixTime);
+                    loan.setLoanType(loanType);
+                    loan.setLoanCode(loanChoiceCode);
+                    loan.setPrettyName(niceLoanName);
+                    loan.setLoanStatus(loanStatus);
+
+                    dataSource.editLoan(loan);
+                    loanAdapter.notifyDataSetChanged();
+                    fetchedLoans=getAllLoans(selectedProfile);
+                    loanAdapter.notifyDataSetChanged(fetchedLoans);
+                    loansList.setAdapter(loanAdapter);
+                }
+
             }
 
             @Override
@@ -479,18 +569,11 @@ public class UI_Fragment_Loan extends Fragment {
                     Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus, loanInceptionUnixTime);
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
-                    if (currentlyEditing==true)   //will put condition here to detect if entry is being edited or added but for now just do new loan functionality
-                    {
 
-                        Toast toast = Toast.makeText(getContext(), "attempted to save changes to SQL", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                    else
-                    {
-                        dataSource.createLoanDbEntry(loan);
-                        Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
+                    dataSource.createLoanDbEntry(loan);
+                    Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
+                    toast.show();
+
 
                     mCallback.loanFragToMainActivity(loan);
                 }

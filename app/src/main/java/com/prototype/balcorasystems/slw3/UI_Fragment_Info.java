@@ -357,13 +357,15 @@ public class UI_Fragment_Info extends Fragment {
             }
             else
             {
-                freshProfile = getLast();
+                if (freshProfile != null)
+                {
+                    freshProfile = getLast();   //should make this behaviour more sophisticated eventually
+                }
 
             }
 
             mCallback.profileFragToMainActivity(freshProfile);
 
-//            profilesList.setSelection();  //highlight the current working profile (uncomment when current profile stays selected on view refresh instead of last item)
             profileName.setText(freshProfile.getProfileName());
             name = freshProfile.getProfileName();
 

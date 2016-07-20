@@ -45,7 +45,7 @@ public class Object_Loan {
         return inceptionDate;
     }
 
-    public void setInceptionDate(int inceptionDate) {
+    public void setInceptionDate(long inceptionDate) {
         this.inceptionDate = inceptionDate;
     }
 
