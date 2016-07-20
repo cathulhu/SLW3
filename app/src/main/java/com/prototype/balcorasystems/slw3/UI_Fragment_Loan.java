@@ -35,7 +35,7 @@ public class UI_Fragment_Loan extends Fragment {
 
     private AlertDialog AskOption(final Integer deleteId)
     {
-        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
+        final AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getContext())
                 //set message, title, and icon
                 .setTitle("Delete")
                 .setMessage("Do you want to Delete this Loan?")
@@ -46,7 +46,6 @@ public class UI_Fragment_Loan extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         deleteLoan(deleteId);
-
                         dialog.dismiss();
                     }
 
@@ -154,24 +153,6 @@ public class UI_Fragment_Loan extends Fragment {
         toast.show();
     }
 
-//    public void saveData (Object_Profile profile) {
-//        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
-//        dataSource.createProfileDbEntry(profile);
-//        Toast toast = Toast.makeText(getContext(), "populating profile object and saving to SQL", Toast.LENGTH_SHORT);
-//        toast.show();
-//    }
-
-//    public void updateData (Object_Profile updatedProfile)
-//    {
-//        SQL_DataSource dataSource = new SQL_DataSource(getContext());   //check to make sure getContext is correct vs get activity since this is fragment called from main
-//        dataSource.updateProfileEntry(updatedProfile);
-//
-//
-//        Toast toast = Toast.makeText(getContext(), "tried to edit " + updatedProfile.getProfileName(), Toast.LENGTH_SHORT);
-//        toast.show();
-//
-//    }
-//
     String[] loanStates =
         {           "Deferment",
                     "Grace Period",
@@ -288,6 +269,7 @@ public class UI_Fragment_Loan extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                final Integer beforeSize = fetchedLoans.size();
                 currentLoanListPosition=position;
                 Integer selectedSqlId=fetchedLoans.get(position).getSqlID();
                 AlertDialog diaBox = AskOption(selectedSqlId);
@@ -297,7 +279,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                 diaBox.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialog) {
+                    public void onDismiss(final DialogInterface dialog) {
 
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
@@ -306,6 +288,16 @@ public class UI_Fragment_Loan extends Fragment {
                                 fetchedLoans=getAllLoans(selectedProfile);
                                 loanAdapter.notifyDataSetChanged(fetchedLoans);
                                 loansList.setAdapter(loanAdapter);      //I'm pretty sure this is safe, may want to check again later though, this was the only way I could find to clear selection highlight after delete
+
+                                if (fetchedLoans.size() < beforeSize)
+                                {
+                                    loanInput.setText("");
+                                    aprInput.setText("");
+                                    dateDialog.setText("");
+                                    loanStatusSpinner.setSelection(0);
+                                    loanTypeSpinner.setSelection(0);
+                                }
+
                             }
                         });
                     }
@@ -337,7 +329,7 @@ public class UI_Fragment_Loan extends Fragment {
                                 loanInceptionUnixTime = calendarLoan.getTimeInMillis()/1000;
 
 
-                                if (check_info_ready() && currentLoanListPosition != -5)
+                                if (check_info_ready() && currentLoanListPosition != -5 && fetchedLoans.size()!=0)
                                 {
                                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
@@ -457,7 +449,7 @@ public class UI_Fragment_Loan extends Fragment {
                     apr = -5;
                 }
 
-                if (check_info_ready() && currentLoanListPosition != -5)
+                if (check_info_ready() && currentLoanListPosition != -5 && fetchedLoans.size()!=0)
                 {
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
@@ -490,7 +482,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                 loanStatus=loanStates[position];
 
-                if (check_info_ready() && currentLoanListPosition != -5)
+                if (check_info_ready() && currentLoanListPosition != -5 && fetchedLoans.size()!=0)
                 {
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
@@ -527,7 +519,7 @@ public class UI_Fragment_Loan extends Fragment {
                 niceLoanName=prettyLoantypes[position];     //this should work now for saving pretty names to loan
 
 
-                if (check_info_ready() && currentLoanListPosition != -5)
+                if (check_info_ready() && currentLoanListPosition != -5 && fetchedLoans.size()!=0)
                 {
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
@@ -560,7 +552,6 @@ public class UI_Fragment_Loan extends Fragment {
 
         Button saveLoanButton = (Button) view.findViewById(R.id.addLoan);
         saveLoanButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
@@ -569,18 +560,51 @@ public class UI_Fragment_Loan extends Fragment {
                     Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus, loanInceptionUnixTime);
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
+                    if (fetchedLoans.size()==0)
+                    {
+                        currentLoanListPosition=0;
+                    }
+                    else
+                    {
+                        currentLoanListPosition++;
+                    }
+
+                    currentLoanListPosition=0;
 
                     dataSource.createLoanDbEntry(loan);
                     Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
                     toast.show();
 
-
-                    mCallback.loanFragToMainActivity(loan);
+                    mCallback.loanFragToMainActivity(loan); //do I actually need this? does main activity actually need to know the current loan?
                 }
-                else
+
+
+                if (check_info_ready()==false)
                 {
-                    Toast toast = Toast.makeText(getContext(), "Input fields not ready, no changes saved", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "Input fields not ready, creating blank loan", Toast.LENGTH_SHORT);
                     toast.show();
+
+                    Object_Loan loan = new Object_Loan(0,0, loanCategory[0], loanCodes[0], selectedProfile.getProfileName(), "Blank", "Blank", 0);
+
+                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+                    dataSource.createLoanDbEntry(loan);
+
+                    if (fetchedLoans.size()==0)
+                    {
+                        currentLoanListPosition=0;
+                    }
+                    else
+                    {
+                        currentLoanListPosition++;
+                    }
+
+                    loanInput.setText("");
+                    aprInput.setText("");
+                    dateDialog.setText("");
+                    loanStatusSpinner.setSelection(0);
+                    loanTypeSpinner.setSelection(0);
+
+                    //not sure if I really need the callback, will add if I do
                 }
 
                 if (loadProfileFromMainActivity()!=null)
