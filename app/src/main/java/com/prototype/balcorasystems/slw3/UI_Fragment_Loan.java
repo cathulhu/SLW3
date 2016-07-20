@@ -206,8 +206,8 @@ public class UI_Fragment_Loan extends Fragment {
     String loanChoiceCode;
     String niceLoanName;
     static Integer currentLoanListPosition=-5;
-    float loanPrincipal =-5;
-    float apr =-5;
+    static float loanPrincipal =-5;
+    static float apr =-5;
     boolean currentlyEditing=false;
     static Object_Profile selectedProfile;
     long loanInceptionUnixTime=-5;
@@ -566,6 +566,16 @@ public class UI_Fragment_Loan extends Fragment {
                     currentLoanListPosition=0;
                     loansList.setSelection(currentLoanListPosition);
 
+                }
+                else if(check_info_ready()==false && fetchedLoans.size()==0 && loadProfileFromMainActivity()!=null)
+                {
+                    Object_Loan loan;
+                    SQL_DataSource dataSource = new SQL_DataSource(getContext());
+
+                    loan = new Object_Loan(0,0, loanCategory[0], loanCodes[0], selectedProfile.getProfileName(), "Blank", "Blank", 0);
+                    dataSource.createLoanDbEntry(loan);
+                    currentLoanListPosition=0;
+                    loansList.setSelection(currentLoanListPosition);
                 }
                 else
                 {
