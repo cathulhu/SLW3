@@ -338,6 +338,7 @@ public class UI_Fragment_Loan extends Fragment {
                                     loan.setLoanAPR(apr);
                                     loan.setInceptionDate(loanInceptionUnixTime);
                                     loan.setLoanType(loanType);
+                                    loan.setPrettyName(niceLoanName);
                                     loan.setLoanStatus(loanStatus);
 
                                     dataSource.editLoan(loan);
@@ -453,13 +454,12 @@ public class UI_Fragment_Loan extends Fragment {
                 {
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
-
-
                     Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
                     loan.setLoanBalance(loanPrincipal);
                     loan.setLoanAPR(apr);
                     loan.setInceptionDate(loanInceptionUnixTime);
                     loan.setLoanType(loanType);
+                    loan.setPrettyName(niceLoanName);
                     loan.setLoanStatus(loanStatus);
 
                     dataSource.editLoan(loan);
@@ -492,6 +492,7 @@ public class UI_Fragment_Loan extends Fragment {
                     loan.setInceptionDate(loanInceptionUnixTime);
                     loan.setLoanType(loanType);
                     loan.setLoanStatus(loanStatus);
+                    loan.setPrettyName(niceLoanName);
 
                     dataSource.editLoan(loan);
                     loanAdapter.notifyDataSetChanged();
@@ -555,63 +556,38 @@ public class UI_Fragment_Loan extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (check_info_ready())
+                if (check_info_ready() && fetchedLoans.size()==0 && loadProfileFromMainActivity()!=null)
                 {
-                    Object_Loan loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus, loanInceptionUnixTime);
+                    Object_Loan loan;
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
-                    if (fetchedLoans.size()==0)
-                    {
-                        currentLoanListPosition=0;
-                    }
-                    else
-                    {
-                        currentLoanListPosition++;
-                    }
-
+                    loan = new Object_Loan(loanPrincipal, apr, loanChoiceCategory, loanChoiceCode, selectedProfile.getProfileName(), niceLoanName, loanStatus, loanInceptionUnixTime);
+                    dataSource.createLoanDbEntry(loan);
                     currentLoanListPosition=0;
+                    loansList.setSelection(currentLoanListPosition);
 
-                    dataSource.createLoanDbEntry(loan);
-                    Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    mCallback.loanFragToMainActivity(loan); //do I actually need this? does main activity actually need to know the current loan?
                 }
-
-
-                if (check_info_ready()==false)
+                else
                 {
-                    Toast toast = Toast.makeText(getContext(), "Input fields not ready, creating blank loan", Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    Object_Loan loan = new Object_Loan(0,0, loanCategory[0], loanCodes[0], selectedProfile.getProfileName(), "Blank", "Blank", 0);
-
+                    Object_Loan loan;
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
+                    loan = new Object_Loan(0,0, loanCategory[0], loanCodes[0], selectedProfile.getProfileName(), "Blank", "Blank", 0);
                     dataSource.createLoanDbEntry(loan);
-
-                    if (fetchedLoans.size()==0)
-                    {
-                        currentLoanListPosition=0;
-                    }
-                    else
-                    {
-                        currentLoanListPosition++;
-                    }
-
-                    loanInput.setText("");
-                    aprInput.setText("");
-                    dateDialog.setText("");
-                    loanStatusSpinner.setSelection(0);
-                    loanTypeSpinner.setSelection(0);
-
-                    //not sure if I really need the callback, will add if I do
+                    currentLoanListPosition++;
+                    loansList.setSelection(currentLoanListPosition);
                 }
 
-                if (loadProfileFromMainActivity()!=null)
-                {
-                    fetchedLoans = getAllLoans(selectedProfile);
-                    loanAdapter.notifyDataSetChanged(fetchedLoans);
-                }
+                loanInput.setText("");
+                aprInput.setText("");
+                dateDialog.setText("");
+                loanStatusSpinner.setSelection(0);
+                loanTypeSpinner.setSelection(0);
+
+                Toast toast = Toast.makeText(getContext(), "attempted to create new loan entry in SQL", Toast.LENGTH_SHORT);
+                toast.show();
+
+                fetchedLoans = getAllLoans(selectedProfile);
+                loanAdapter.notifyDataSetChanged(fetchedLoans);
 
             }
 
