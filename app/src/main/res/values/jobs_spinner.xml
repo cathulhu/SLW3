@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="jobs_array">
-        <item>Private Sector</item>
+        <item>Private Sector - For Profit</item>
         <item>Gov. Agency (Fed, State, Tribal, Local)</item>
-        <item>Public Education / Library</item>
-        <item>Public Interest Law</item>
-        <item>AmeriCorps / Peace Corps</item>
-        <item>Public Safety / Law Enforcement</item>
+        <item>Public or Tribal Education/ Library/ Univ.</item>
+        <item>Public Interest/Community Law</item>
+        <item>Peace Corps or AmericCorps-VISTA</item>
+        <item>Public Safety/ L.E.O/ Corrections</item>
         <item>Armed Forces (incl. Coastguard)</item>
-        <item>Public Healthcare</item>
-        <item>501c3 Organization</item>
+        <item>Public Healthcare (Nursing/Med Tech)</item>
+        <item>501c3 Tax Exempt Organization</item>
     </string-array>
 </resources>

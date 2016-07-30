@@ -23,8 +23,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static Object_Loan storedLoan;
     public static Object_Background storedBackground;
 
+//    @Override
+//    public void detailFragToMainActivity(Object_Background inBoundBackground) {
+//        storedBackground = inBoundBackground;
+//    }
+
     @Override
-    public void loanFragToMainActivity(Object_Background inBoundBackground) {
+    public void backgroundFragToMainActivity(Object_Background inBoundBackground) {
         storedBackground = inBoundBackground;
     }
 
@@ -44,9 +49,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return storedProfile;
     }
 
-    public static Object_Loan dispatchLoan () {
-        return storedLoan;
+    public static Object_Background dispatchBackground () {
+        return storedBackground;
     }
+
+//    public static Object_Loan dispatchLoan () {
+//        return storedLoan;
+//    }
 
 
 
@@ -131,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        if (id == R.id.navDrawer_info) {
+        if (id == R.id.navDrawer_info)
+        {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -139,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.main_fragment_box, fragmentInfo);
             fragmentTransaction.commit();
 
-        } else if (id == R.id.navDrawer_loan) {
+        }
+        else if (id == R.id.navDrawer_loan)
+        {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -149,7 +161,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commit();
 
 
-        } else if (id == R.id.navDrawer_repayment) {
+        }
+        else if (id == R.id.navDrawer_background)
+        {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -158,7 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-        } else if (id == R.id.navDrawer_analysis) {
+        }
+        else if (id == R.id.navDrawer_analysis)
+        {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -166,12 +182,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.main_fragment_box, UIFragmentAnalysis);
             fragmentTransaction.commit();
 
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-
-
-
+        }
+        else if (id == R.id.navDrawer_Details)
+        {
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            UI_Fragment_Details UIFragment_Details = new UI_Fragment_Details();
+            fragmentTransaction.replace(R.id.main_fragment_box, UIFragment_Details);
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -11,9 +11,13 @@
             android:icon="@drawable/bank"
             android:title="Loan Details" />
         <item
-            android:id="@+id/navDrawer_repayment"
+            android:id="@+id/navDrawer_background"
             android:icon="@drawable/multchoice"
             android:title="Background" />
+        <item
+            android:id="@+id/navDrawer_Details"
+            android:icon="@drawable/multchoice"
+            android:title="Background - Details" />
         <item
             android:id="@+id/navDrawer_analysis"
             android:icon="@drawable/stocks"

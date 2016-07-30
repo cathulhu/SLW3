@@ -3,6 +3,10 @@ package com.prototype.balcorasystems.slw3;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Object_Background {//
     private float[] annualSalaries;   //maybe ill make this array list, have to think about that
     private String owner;
@@ -10,11 +14,15 @@ public class Object_Background {//
     private int earliestActiveLoanDate;
     private boolean employedFulltime;       //
     private boolean publicServiceForgivenessEligible;
+    public String publicServiceForgivenessEligibleReason;
     private boolean collectingSsdi;     //
     private boolean totalDisability;    //
     private boolean teacherAtLowIncomeSchool;   //
     private boolean militaryDisability;     //
     private boolean deceasedChildParentLoan;    //
+    private boolean hasPerkinsLoans;
+    private boolean hasDirectLoans;
+    private List<String> customQuestion = new ArrayList<String>() {{ add("blank"); }};
 
     public Object_Background() {
 
@@ -48,6 +56,47 @@ public class Object_Background {//
         }
 
         return results;
+    }
+
+    public String getPublicServiceForgivenessEligibleReason() {
+        return publicServiceForgivenessEligibleReason;
+    }
+
+    public void setPublicServiceForgivenessEligibleReason(String publicServiceForgivenessEligibleReason) {
+        this.publicServiceForgivenessEligibleReason = publicServiceForgivenessEligibleReason;
+    }
+
+    public List<String> getCustomQuestion() {
+        return customQuestion;
+    }
+
+    public void setCustomQuestion(List<String> customQuestion) {
+        this.customQuestion = customQuestion;
+    }
+
+    public void setCustomQuestion(String command)
+    {
+        if (command.equals("clear"))
+        {
+            this.customQuestion.clear();
+        }
+
+    }
+
+    public boolean isHasPerkinsLoans() {
+        return hasPerkinsLoans;
+    }
+
+    public void setHasPerkinsLoans(boolean hasPerkinsLoans) {
+        this.hasPerkinsLoans = hasPerkinsLoans;
+    }
+
+    public boolean isHasDirectLoans() {
+        return hasDirectLoans;
+    }
+
+    public void setHasDirectLoans(boolean hasDirectLoans) {
+        this.hasDirectLoans = hasDirectLoans;
     }
 
     public float[] getAnnualSalaries() {

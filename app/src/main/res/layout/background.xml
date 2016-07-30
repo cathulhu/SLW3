@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="#b479d2">
 
@@ -19,13 +19,12 @@
 
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:id="@+id/industrySpinner"
         android:spinnerMode="dialog"
-        android:layout_below="@+id/textView3"
-        android:layout_alignEnd="@+id/millitaryDisabilityRadioGroup"
-        android:layout_toEndOf="@+id/textView5" />
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,18 +33,17 @@
         android:singleLine="false"
         android:text="Employment category:"
         android:textSize="12dp"
-        android:layout_alignBottom="@+id/industrySpinner"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/industrySpinner"
-        android:layout_toEndOf="@+id/textView5"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
         android:id="@+id/fulltimeRadioGroup"
-        android:layout_alignStart="@+id/industrySpinner">
+        android:layout_below="@+id/industrySpinner"
+        android:layout_alignEnd="@+id/millitaryDisabilityRadioGroup">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -57,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
-            android:id="@+id/no" />
+            android:id="@+id/no"
+            android:checked="true" />
     </RadioGroup>
 
     <TextView
@@ -66,19 +65,19 @@
         android:id="@+id/textView10"
         android:singleLine="false"
         android:textSize="12dp"
-        android:text="Fulltime Employment?"
+        android:text="Current Fulltime Employment?"
         android:layout_alignBottom="@+id/fulltimeRadioGroup"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/fulltimeRadioGroup" />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:id="@+id/ssdiRadioGroup"
         android:layout_below="@+id/fulltimeRadioGroup"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/fulltimeRadioGroup">
+        android:layout_toEndOf="@+id/textView12">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -90,29 +89,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
-            android:id="@+id/radioButton2" />
+            android:id="@+id/radioButton2"
+            android:checked="true" />
     </RadioGroup>
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:id="@+id/totalDisabilityRadioGroup"
         android:layout_below="@+id/ssdiRadioGroup"
-        android:layout_alignStart="@+id/ssdiRadioGroup">
+        android:layout_toEndOf="@+id/textView13">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Yes"
-            android:id="@+id/radioButton3" />
+            android:id="@+id/radioButton3"
+            android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
-            android:id="@+id/radioButton4" />
+            android:id="@+id/radioButton4"
+            android:checked="true" />
     </RadioGroup>
 
     <TextView
@@ -123,7 +125,8 @@
         android:textSize="12dp"
         android:text="Do You Collect SSDI?"
         android:layout_above="@+id/totalDisabilityRadioGroup"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/fulltimeRadioGroup" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,17 +136,8 @@
         android:textSize="12dp"
         android:text="Permanent and Total Disability?"
         android:layout_alignBottom="@+id/totalDisabilityRadioGroup"
-        android:layout_alignParentStart="true" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:id="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_below="@+id/totalDisabilityRadioGroup">
-
-    </RadioGroup>
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/ssdiRadioGroup" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -151,8 +145,8 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:id="@+id/millitaryDisabilityRadioGroup"
-        android:layout_below="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/totalDisabilityRadioGroup">
 
     </RadioGroup>
 
@@ -165,18 +159,17 @@
         android:text="Armed Forces Veteran / Active?"
         android:layout_alignBottom="@+id/radioGroup"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_toStartOf="@+id/radioGroup"
+        android:layout_alignEnd="@+id/textView13" />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:id="@+id/radioGroup"
-        android:layout_below="@+id/lowIncomeTeacherRadioGroup"
-        android:layout_alignEnd="@+id/millitaryDisabilityRadioGroup"
-        android:layout_toEndOf="@+id/textView5"
-        android:layout_alignStart="@+id/totalDisabilityRadioGroup">
+        android:layout_below="@+id/millitaryDisabilityRadioGroup"
+        android:layout_toEndOf="@+id/textView13">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -188,7 +181,74 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No"
-            android:id="@+id/radioButton6" />
+            android:id="@+id/radioButton6"
+            android:checked="true" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/radioGroup2"
+        android:layout_below="@+id/radioGroup3"
+        android:layout_alignStart="@+id/radioGroup3">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton17" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton18"
+            android:checked="true" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="Spouse or parent of a 9/11 victim?"
+        android:layout_alignBottom="@+id/radioGroup2"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView22"
+        android:singleLine="false"
+        android:textSize="12dp"
+        android:text="Americorp-Vista or Peaceorps service?"
+        android:layout_alignBottom="@+id/radioGroup3"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/radioGroup3"
+        android:layout_below="@+id/radioGroup"
+        android:layout_alignStart="@+id/radioGroup">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yes"
+            android:id="@+id/radioButton19" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:id="@+id/radioButton20"
+            android:checked="true" />
     </RadioGroup>
 
     <!--<FrameLayout-->
