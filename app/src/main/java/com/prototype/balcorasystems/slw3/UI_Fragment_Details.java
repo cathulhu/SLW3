@@ -3,6 +3,7 @@ package com.prototype.balcorasystems.slw3;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,20 +26,29 @@ import java.util.List;
 
 public class UI_Fragment_Details extends Fragment{
 
-    public static Object_Profile loadProfileFromMainActivity (){
+    //need to add SQL saving and loading of background object stuff to keep persistence between sessions.
+    //need to add second question spawner for the spinner questions.
 
-        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
-        return fetchedProfile;
+    public interface detailActivityLoader {
+        public void detailFragToMainActivity(Object_Background outBoundBackground);
     }
 
-    public static Object_Background loadBackgroundFromMainActivity (){
+    detailActivityLoader mCallback;
+
+//    public static Object_Profile loadProfileFromMainActivity() {
+//
+//        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
+//        return fetchedProfile;
+//    }
+
+    public static Object_Background loadBackgroundFromMainActivity() {
 
         Object_Background fetchedBackground = MainActivity.dispatchBackground();
         return fetchedBackground;
     }
 
 
-    static Object_Profile fetchedProfile = loadProfileFromMainActivity();
+//    static Object_Profile fetchedProfile = loadProfileFromMainActivity();
     static Object_Background savedBackground = loadBackgroundFromMainActivity(); //will = retrieve background from SQl
     //should have a list containing all owner loans here so background object can scan for important details or get a copy of the loans
 
@@ -46,6 +57,11 @@ public class UI_Fragment_Details extends Fragment{
     public void onAttach(Context context) {
         super.onAttach(context);
 
+        try {
+            mCallback = (detailActivityLoader) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement detailActivityLoader");
+        }
 
     }
 
@@ -54,41 +70,73 @@ public class UI_Fragment_Details extends Fragment{
         super.onDestroyView();
 
 
-
         //will put code in here to save to SQL (need to modify DB to contain proper tables
     }
+
+    static int index = 0;
+    private Handler mHandler;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.background_questionnaire, container, false);
+        final View view = inflater.inflate(R.layout.background_questionnaire, container, false);
 
         savedBackground = loadBackgroundFromMainActivity();
 
         LinearLayout questionSpace = (LinearLayout) view.findViewById(R.id.dynamic_questions);
         final int N = savedBackground.getCustomQuestion().size(); // total number of textviews to add
         final TextView[] myTextViews = new TextView[N]; // create an empty array;
+        final List<String> questions = savedBackground.getCustomQuestion();
+        final List<Boolean> answers = savedBackground.getCustomAnswers();
 
-        for (int i = 0; i < N; i++) {
-            // create a new textview
-            final TextView rowTextView = new TextView(getContext());
-            final TextView emptySpace = new TextView(getContext());
+        final TextView rowTextView = new TextView(getContext());
+        final TextView emptySpace = new TextView(getContext());
+        final RadioGroup answer = new RadioGroup(getContext());
+        final RadioButton yes = new RadioButton(getContext());
+        final RadioButton no = new RadioButton(getContext());
+        rowTextView.setText(questions.get(index));
+        yes.setText("Yes");
+        no.setText("No");
 
-            final List<String> questions = savedBackground.getCustomQuestion();
+        questionSpace.addView(rowTextView);
+        answer.addView(yes);
+        answer.addView(no);
+        questionSpace.addView(answer);
+        questionSpace.addView(emptySpace);
+        answer.setOrientation(LinearLayout.HORIZONTAL);
 
-            // set some properties of rowTextView or something
-            rowTextView.setText(questions.get(i));
+        answer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            // add the textview to the linearlayout
-            questionSpace.addView(rowTextView);
-            questionSpace.addView(emptySpace);
+                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+                int choice = group.indexOfChild(checkedRadioButton);
+                index++;
 
-            // save a reference to the textview for later
-            myTextViews[i] = rowTextView;
-        }
+                if (index <= questions.size()-1)
+                {
+                    if (choice == 0) {
+                        answers.set(index, true);
+
+                    } else {
+                        answers.set(index, false);
+                    }
+
+
+                    rowTextView.setText(questions.get(index));
+                    //eventually would like to add animations in here
+                    savedBackground.setCustomAnswers(answers);
+                    mCallback.detailFragToMainActivity(savedBackground);
+                }
+
+                yes.setChecked(false);
+                no.setChecked(false);
+
+            }
+
+        });
 
         return view;
-
     }
-
 }
+

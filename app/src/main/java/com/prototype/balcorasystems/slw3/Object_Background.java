@@ -23,6 +23,8 @@ public class Object_Background {//
     private boolean hasPerkinsLoans;
     private boolean hasDirectLoans;
     private List<String> customQuestion = new ArrayList<String>() {{ add("blank"); }};
+    private List<Boolean> customAnswers = new ArrayList<>();
+//    private List<Boolean> customAnswers = new ArrayList<Boolean>() {{ add(Boolean.FALSE); }};
 
     public Object_Background() {
 
@@ -56,6 +58,14 @@ public class Object_Background {//
         }
 
         return results;
+    }
+
+    public List<Boolean> getCustomAnswers() {
+        return customAnswers;
+    }
+
+    public void setCustomAnswers(List<Boolean> customAnswers) {
+        this.customAnswers = customAnswers;
     }
 
     public String getPublicServiceForgivenessEligibleReason() {

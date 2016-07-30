@@ -26,6 +26,8 @@ public class UI_Fragment_Background extends Fragment{
         public void backgroundFragToMainActivity(Object_Background outBoundBackground);
     }
 
+    backgroundActivityLoader mCallback;
+
     public static Object_Profile loadProfileFromMainActivity (){
 
         Object_Profile fetchedProfile = MainActivity.dispatchProfile();
@@ -190,13 +192,19 @@ public class UI_Fragment_Background extends Fragment{
             detailedQuestions.add(item);
         }
 
+        ArrayList<Boolean> defaultAnswers = new ArrayList<>();
+
+        for (String item: detailedQuestions)
+        {
+            defaultAnswers.add(Boolean.FALSE);
+        }
+
+        background.setCustomAnswers(defaultAnswers);
 
         background.setCustomQuestion(detailedQuestions);
 
         return background;
     }
-
-    backgroundActivityLoader mCallback;
 
     @Override
     public void onAttach(Context context) {

@@ -11,22 +11,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
         UI_Fragment_Info.profileActivityLoader,
         UI_Fragment_Loan.loanActivityLoader,
-        UI_Fragment_Background.backgroundActivityLoader
+        UI_Fragment_Background.backgroundActivityLoader,
+        UI_Fragment_Details.detailActivityLoader
 {
-
 
 
     public static Object_Profile storedProfile;
     public static Object_Loan storedLoan;
     public static Object_Background storedBackground;
 
-//    @Override
-//    public void detailFragToMainActivity(Object_Background inBoundBackground) {
-//        storedBackground = inBoundBackground;
-//    }
+    @Override
+    public void detailFragToMainActivity(Object_Background inBoundBackground) {
+        storedBackground = inBoundBackground;
+    }
 
     @Override
     public void backgroundFragToMainActivity(Object_Background inBoundBackground) {
