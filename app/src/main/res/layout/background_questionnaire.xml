@@ -24,7 +24,36 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:id="@+id/dynamic_questions"
-        android:padding="5dp"></LinearLayout>
+        android:padding="5dp">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dynamic_questions"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/dynamic_spinner">
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next Question"
+        android:id="@+id/nextQuestionButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finishText"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/dynamic_questions"
+        android:layout_alignStart="@+id/textView3" />
 
 
     <!--<FrameLayout-->

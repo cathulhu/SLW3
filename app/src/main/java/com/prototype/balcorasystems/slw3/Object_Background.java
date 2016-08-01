@@ -1,10 +1,7 @@
 package com.prototype.balcorasystems.slw3;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Object_Background {//
@@ -22,9 +19,10 @@ public class Object_Background {//
     private boolean deceasedChildParentLoan;    //
     private boolean hasPerkinsLoans;
     private boolean hasDirectLoans;
-    private List<String> customQuestion = new ArrayList<String>() {{ add("blank"); }};
-    private List<Boolean> customAnswers = new ArrayList<>();
-//    private List<Boolean> customAnswers = new ArrayList<Boolean>() {{ add(Boolean.FALSE); }};
+    private List<String> customQuestionYN = new ArrayList<String>() {{ add("blank"); }};
+    private List<String> customQuestionMulti = new ArrayList<String>() {{ add("blank"); }};
+    private List<Boolean> customAnswersYN = new ArrayList<>();
+    private List<Long> customAnswersMulti = new ArrayList<>();  //long to store time stamps and regular ints for # of years.
 
     public Object_Background() {
 
@@ -60,12 +58,28 @@ public class Object_Background {//
         return results;
     }
 
-    public List<Boolean> getCustomAnswers() {
-        return customAnswers;
+    public List<String> getCustomQuestionMulti() {
+        return customQuestionMulti;
     }
 
-    public void setCustomAnswers(List<Boolean> customAnswers) {
-        this.customAnswers = customAnswers;
+    public void setCustomQuestionMulti(List<String> customQuestionMulti) {
+        this.customQuestionMulti = customQuestionMulti;
+    }
+
+    public List<Long> getCustomAnswersMulti() {
+        return customAnswersMulti;
+    }
+
+    public void setCustomAnswersMulti(List<Long> customAnswersMulti) {
+        this.customAnswersMulti = customAnswersMulti;
+    }
+
+    public List<Boolean> getCustomAnswersYN() {
+        return customAnswersYN;
+    }
+
+    public void setCustomAnswersYN(List<Boolean> customAnswersYN) {
+        this.customAnswersYN = customAnswersYN;
     }
 
     public String getPublicServiceForgivenessEligibleReason() {
@@ -76,19 +90,19 @@ public class Object_Background {//
         this.publicServiceForgivenessEligibleReason = publicServiceForgivenessEligibleReason;
     }
 
-    public List<String> getCustomQuestion() {
-        return customQuestion;
+    public List<String> getCustomQuestionYN() {
+        return customQuestionYN;
     }
 
-    public void setCustomQuestion(List<String> customQuestion) {
-        this.customQuestion = customQuestion;
+    public void setCustomQuestionYN(List<String> customQuestionYN) {
+        this.customQuestionYN = customQuestionYN;
     }
 
     public void setCustomQuestion(String command)
     {
         if (command.equals("clear"))
         {
-            this.customQuestion.clear();
+            this.customQuestionYN.clear();
         }
 
     }

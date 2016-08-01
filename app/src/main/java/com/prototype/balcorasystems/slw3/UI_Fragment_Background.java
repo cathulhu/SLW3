@@ -14,10 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class UI_Fragment_Background extends Fragment{
@@ -36,19 +33,21 @@ public class UI_Fragment_Background extends Fragment{
 
     public Object_Background extraQuestions (Object_Background background)
     {
-        if (background.getCustomQuestion().isEmpty()==false)
+        if (background.getCustomQuestionYN().isEmpty()==false)
         {
             background.setCustomQuestion("clear");
         }
 
 
-        String[] vaDisabilityQuestions = {"Do you have 1 or more service connected disability rated at least 60% disabling?",
+        String[] vaDisabilityQuestionsYN = {"Do you have 1 or more service connected disability rated at least 60% disabling?",
                                       "Do you have 2+ service connected disabilities totaling 70%+ (with at least one at 40%+)?",
                                       "Regardless of rating, do any service connected disabilities prevent you from maintaining gainful employment?"};
 
-        String[] militaryQuestions= {
+        String[] militaryQuestionsMulti= {
                                     "Between 10/1998 and 8/2008, How many full years (12 consecutive month periods) of your military service were in a hostile fire or imminent danger area?",
-                                    "Starting August 2008, How many years of your military service has been in a hostile fire or imminent danger area?\""};   //national direct student loan or perkins loan    //for the National Defense Student Loan Discharge Program
+                                    "Starting August 2008, How many years of your military service has been in a hostile fire or imminent danger area?\""};
+
+                                    //national direct student loan or perkins loan    //for the National Defense Student Loan Discharge Program
                                     //HAZARDOUS DUTY PAY (is this the same is immenet danger?   //military.com has cool table of qualifying hot zones.
                                     //very hard to find info, cancelation is 12.5% per year up to 50% until 8/14/2008, after 8/14/2008 it follows scheme below @ (15/15/20/20/30%)
                                     //source says 15%+interest acrued during year for first and second years, 20% + interest for third and fourth year, 30% + interest for the 5th year
@@ -56,33 +55,39 @@ public class UI_Fragment_Background extends Fragment{
 
         //should put something into the program to check for interest rates >6% while serving, so they can invoke SCRA to lower those for military
 
-        String[] disabilityQuestions = {"Is the permanent and total disability expected to last at least 60 months (5 years) or end in death?"};
+        String[] disabilityQuestionsYN = {"Is the permanent and total disability expected to last at least 60 months (5 years) or end in death?"};
 
-        String[] parentPlusloan = {"Is the child for which this loan was intended deceased?",
+        String[] parentPlusloanYN = {"Is the child for which this loan was intended deceased?",
                                     "Is the child for which this loan was intended permanently and totally disabled?"};
 
-        String[] publicHealthQuestions = {"Are you a certified/licensed nurse or medical technician that provides services directly to patients (LPN/RN, hygienist, PT, etc...)?"};
+        String[] publicHealthQuestionsYN = {"Are you a certified/licensed nurse or medical technician that provides services directly to patients (LPN/RN, hygienist, PT, etc...)?"};
         //nurse, or medical technician are valid for this
         //check against state residency because alaska, arizona, california, colorado, florida, illinois, iowa, kansas, kentucky, louisiana, maryland, massachusetts, michigan, minnesota,
         // montana, nebraska, new jersey, new mexico, new york, ohio, oregon, pennsylvania, rhode island, tennessee, texas, vermont, virginia, washington, west virginia, wisconsin and wyoming
         // all have their own additional state programs.
         // perkins loan 5 year graduated forgiveness (15/15/20/20/30%)
 
-        String[] generalQuestions = {"Since [perkins date 10-1998], how many years have you worked fulltime, in this industry?",
-                                    "Since [pub service date 8-2007], how many full and on time loan payments have you made WHILE working fulltime in this industry?",
+        String[] generalQuestionsMulti = {"Since [perkins date 10-1998], how many years have you worked fulltime, in this industry?",
+                                    "Since [pub service date 10-2007], how many full and on time loan payments have you made WHILE working fulltime in this industry?",
                                     };
 
 //        "Which repayment method are you currently repaying your loans under? (Select Standard if repayment has not begun, you are in deferment, or you don't know.)"
 
-        String[] publicSafetyPoliceQuestions = {
+        String[] publicSafetyPoliceQuestionsYN = {
                                             "Are you a sworn officer? (Sheriff, Officer, Probation/Parole, Special Agent, DA, Marshal, Fire Marshal, Detective, Coast Guard Officer, etc...)?",  //not sure what im gonna do about coast guard
                                             "Are you a prosecuting attorney, public defender, or community defender working on behalf of public law agency?",
-                                            "Are your duties essential to the execution of your agencies mandate to prevent/control/reduce/enforce criminal law?",
-                                            "Since August 2008, How many years have you been working full time in a capacity of criminal prevention, control, reduction, enforcement, or defense/prosecution?"};
+                                            "Are your duties essential to the execution of your agencies mandate to prevent/control/reduce/enforce criminal law?"};
+
+        String[] publicSafetyPoliceQuestionsMulti = {"Since August 2008, How many years have you been working full time in a capacity of criminal prevention, control, reduction, enforcement, or defense/prosecution?"};
                                         //law enforcement, corrections, public defender/community attorney, firefighter, courts, probation/parole
 
-        String[] teacherQuestions= {
-                                    "Do you teach/serve at a federally designated low income school?",
+        String[] teacherQuestionsYN= {
+                                    "Are you a teacher who provides direct classroom teaching (including Special Education and speech pathology)? at a public primary or secondary school?",
+                                    "Are you a teacher employed at an educational service agency?",
+                                    "Are you a full time teacher of mathematics, science or another state declared shortage area, at a public secondary school?",
+                                    "Are you a teacher who has obtained full state teaching certification/and or passed the state teacher licensing examination and current license holder?",
+                                    "Are you a teacher who has attained a bachelors degree or higher in the area of their instruction?",
+                                    "Do you teach/serve at a federally designated low income school? (Title/Chapter 1 Status)",
                                     "Do you teach/serve at a 501c3 tax exempt not for profit private school?",
                                     "Do you teach/serve at a tribal or BIA administered university or school?"};    //is that the same as title/chapter 1?
 
@@ -117,7 +122,8 @@ public class UI_Fragment_Background extends Fragment{
 
 
 
-        List<String> detailedQuestions = new ArrayList<String>();
+        List<String> detailedYesNoQuestions = new ArrayList<String>();
+        List<String> detailedMultiChoiceQuestions = new ArrayList<>();
 
 
         if (background.getEmploymentSector().equals("Gov. Agency (Fed, State, Tribal, Local)"))
@@ -129,54 +135,64 @@ public class UI_Fragment_Background extends Fragment{
         }
         else if (background.getEmploymentSector().equals("Public Interest/Community Law"))
         {
-            for (String item: publicSafetyPoliceQuestions)
+            for (String item: publicSafetyPoliceQuestionsYN)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
+            }
+
+            for (String item: publicSafetyPoliceQuestionsMulti)
+            {
+                detailedMultiChoiceQuestions.add(item);
             }
         }
         else if (background.getEmploymentSector().equals("Public or Tribal Education/ Library/ Univ."))
         {
-            for (String item: teacherQuestions)
+            for (String item: teacherQuestionsYN)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
             }
         }
-        else if (background.getEmploymentSector().equals("Peace Corps or AmericCorps-VISTA"))
+        else if (background.getEmploymentSector().equals("Peace Corps or AmeriCorps-VISTA"))
         {
             for (String item: peaceCorpQuestions)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
             }
             //Peace corp/Americorp also qualifies for both perkins and PLSF cancellation
         }
         else if (background.getEmploymentSector().equals("Public Safety/ L.E.O/ Corrections"))
         {
-            for (String item: publicSafetyPoliceQuestions)
+            for (String item: publicSafetyPoliceQuestionsYN)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
+            }
+
+            for (String item: publicSafetyPoliceQuestionsMulti)
+            {
+                detailedMultiChoiceQuestions.add(item);
             }
             //public safety and law enforcement eligible for both PLSF and Perkins cancellation
         }
         else if (background.getEmploymentSector().equals("Armed Forces (incl. Coastguard)"))
         {
 
-            for (String item: militaryQuestions)
+            for (String item: militaryQuestionsMulti)
             {
-                detailedQuestions.add(item);
+                detailedMultiChoiceQuestions.add(item);
             }
 
-            for (String item: vaDisabilityQuestions)
+            for (String item: vaDisabilityQuestionsYN)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
             }
             //armed forces fall under the government service so quallify for direct loan PLSF forgiveness
             //armed forces also quallify for up to 100% perkins forgiveness for number of years served in area of hostility
         }
         else if (background.getEmploymentSector().equals("Public Healthcare (Nursing/Med Tech)"))
         {
-            for (String item: publicHealthQuestions)
+            for (String item: publicHealthQuestionsYN)
             {
-                detailedQuestions.add(item);
+                detailedYesNoQuestions.add(item);
             }
             //(nurses, nurse practioner, and med tech people) qualifies for public service direct loan forgiveness
         }
@@ -187,21 +203,29 @@ public class UI_Fragment_Background extends Fragment{
             background.setPublicServiceForgivenessEligibleReason("501c3");
         }
 
-        for (String item: generalQuestions)
+        for (String item: generalQuestionsMulti)
         {
-            detailedQuestions.add(item);
+            detailedMultiChoiceQuestions.add(item);
         }
 
         ArrayList<Boolean> defaultAnswers = new ArrayList<>();
+        ArrayList<Long> defaultMultiAnswers = new ArrayList<>();
 
-        for (String item: detailedQuestions)
+        for (String item: detailedYesNoQuestions)
         {
             defaultAnswers.add(Boolean.FALSE);
         }
 
-        background.setCustomAnswers(defaultAnswers);
+        for (String item: detailedMultiChoiceQuestions)
+        {
+            defaultMultiAnswers.add(Long.MIN_VALUE);
+        }
 
-        background.setCustomQuestion(detailedQuestions);
+        background.setCustomAnswersYN(defaultAnswers);
+        background.setCustomAnswersMulti(defaultMultiAnswers);
+
+        background.setCustomQuestionYN(detailedYesNoQuestions);
+        background.setCustomQuestionMulti(detailedMultiChoiceQuestions);
 
         return background;
     }
