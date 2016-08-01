@@ -40,12 +40,6 @@ public class UI_Fragment_Details extends Fragment{
 
     detailActivityLoader mCallback;
 
-//    public static Object_Profile loadProfileFromMainActivity() {
-//
-//        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
-//        return fetchedProfile;
-//    }
-
     public static Object_Background loadBackgroundFromMainActivity() {
 
         Object_Background fetchedBackground = MainActivity.dispatchBackground();
@@ -80,7 +74,6 @@ public class UI_Fragment_Details extends Fragment{
     }
 
     static int index = 0;
-    private Handler mHandler;
 
     @Nullable
     @Override
@@ -90,8 +83,6 @@ public class UI_Fragment_Details extends Fragment{
         savedBackground = loadBackgroundFromMainActivity();
 
         final LinearLayout questionSpace = (LinearLayout) view.findViewById(R.id.dynamic_questions);
-        final int numQuestions = savedBackground.getCustomQuestionYN().size(); // total number of textviews to add
-//        final TextView[] myTextViews = new TextView[numQuestions]; // create an empty array;
         final List<String> questionsYn = savedBackground.getCustomQuestionYN();
         final List<Boolean> answersYn = savedBackground.getCustomAnswersYN();
 
@@ -100,6 +91,8 @@ public class UI_Fragment_Details extends Fragment{
         final RadioGroup answer = new RadioGroup(getContext());
         final RadioButton yes = new RadioButton(getContext());
         final RadioButton no = new RadioButton(getContext());
+
+        answer.setOrientation(LinearLayout.HORIZONTAL);
         yes.setText("Yes");
         no.setText("No");
 
@@ -111,12 +104,6 @@ public class UI_Fragment_Details extends Fragment{
             answer.addView(no);
             questionSpace.addView(answer);
         }
-
-
-
-
-//        questionSpace.addView(emptySpace);
-        answer.setOrientation(LinearLayout.HORIZONTAL);
 
         answer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -147,7 +134,6 @@ public class UI_Fragment_Details extends Fragment{
 
         final TextView MultiQuestionTextView = new TextView(getContext());
         final TextView disclaimerTextView = new TextView(getContext());
-        final TextView emptyMultiSpace2 = new TextView(getContext());
         final TextView emptyMultiSpace1 = new TextView(getContext());
 
         final List<String> questionsMulti = savedBackground.getCustomQuestionMulti();
@@ -163,7 +149,6 @@ public class UI_Fragment_Details extends Fragment{
         spinnerSpace.addView(MultiQuestionTextView);
         spinnerSpace.addView(emptyMultiSpace1);
         spinnerSpace.addView(disclaimerTextView);
-//        spinnerSpace.addView(emptyMultiSpace2);
         spinnerSpace.addView(numericalMultiChoice);
 
         nextQuestion.setOnClickListener(new View.OnClickListener() {
@@ -217,25 +202,11 @@ public class UI_Fragment_Details extends Fragment{
                     savedBackground.setCustomAnswersYN(answersYn);
                     savedBackground.setCustomAnswersMulti(answersMulti);
                     mCallback.detailFragToMainActivity(savedBackground);
+                    //will eventually create a matrix (probably in analysis fragment but perhaps here or a trigger inside Object_Background) to decode both sets of answers and assign eligibility to various programs.
 
                 }
             }
         });
-
-
-//        ArrayList<String> spinnerArray = new ArrayList<>();
-//        spinnerArray.add(questionsMulti.get(0));
-//        Spinner dynamicSpinner = new Spinner(getContext());
-//        spinnerSpace.addView(dynamicSpinner);
-//        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
-//        dynamicSpinner.setAdapter(spinnerArrayAdapter);
-
-        int numMultiChoiceQuestions = savedBackground.getCustomQuestionMulti().size();
-
-
-
-
-
 
         return view;
     }
