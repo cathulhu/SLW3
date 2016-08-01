@@ -39,13 +39,15 @@ public class UI_Fragment_Background extends Fragment{
         }
 
 
-        String[] vaDisabilityQuestionsYN = {"Do you have 1 or more service connected disability rated at least 60% disabling?",
-                                      "Do you have 2+ service connected disabilities totaling 70%+ (with at least one at 40%+)?",
-                                      "Regardless of rating, do any service connected disabilities prevent you from maintaining gainful employment?"};
+        String[] vaDisabilityQuestionsYN = {"Do you have 1 or more service connected disabilities rated at least 60% disabling?",
+                                      "Do you have 2+ service connected disabilities totaling 70% disabling or more, with at least one injury at 40%+?",
+                                      "Regardless of rating, do any service connected disabilities prevent you from acquiring or maintaining gainful employment?"};
 
         String[] militaryQuestionsMulti= {
-                                    "Between 10/1998 and 8/2008, How many full years (12 consecutive month periods) of your military service were in a hostile fire or imminent danger area?",
-                                    "Starting August 2008, How many years of your military service has been in a hostile fire or imminent danger area?\""};
+                                    "Between October 1st 1998 and August 1st 2008, How many full years (12 consecutive month periods) of your military service were in a hostile fire or imminent danger pay area?"+
+                                    "\n(Any amount of time spent in a hostile fire or imminent danger area counts that entire calendar month as 1 month of hostile fire/imminent danger service)",
+                                    "Between August 1st 2008 and today, How many full years (12 consecutive month periods) of your military service were in a hostile fire or imminent danger pay area?"+
+                                    "\n(Any amount of time spent in a hostile fire or imminent danger area counts that entire calendar month as 1 month of hostile fire/imminent danger service)"};
 
                                     //national direct student loan or perkins loan    //for the National Defense Student Loan Discharge Program
                                     //HAZARDOUS DUTY PAY (is this the same is immenet danger?   //military.com has cool table of qualifying hot zones.
@@ -67,25 +69,32 @@ public class UI_Fragment_Background extends Fragment{
         // all have their own additional state programs.
         // perkins loan 5 year graduated forgiveness (15/15/20/20/30%)
 
-        String[] generalQuestionsMulti = {"Since [perkins date 10-1998], how many years have you worked fulltime, in this industry?",
-                                    "Since [pub service date 10-2007], how many full and on time loan payments have you made WHILE working fulltime in this industry?",
-                                    };
+        String[] generalQuestionsMulti = {"Between October 1st 1998 and today, how many years have you worked fulltime, in this industry?", //perkins date
+                                            "Between October 1st 2007 and today, how many full and on time loan payments have you made WHILE BOTH:\n" +  //public service date
+                                            "Working fulltime in this industry?\n"+
+                                            "And making repayments under the fixed 10 year plan OR one of the income based repayment plans?"
+
+                                        };
 
 //        "Which repayment method are you currently repaying your loans under? (Select Standard if repayment has not begun, you are in deferment, or you don't know.)"
 
         String[] publicSafetyPoliceQuestionsYN = {
                                             "Are you a sworn officer? (Sheriff, Officer, Probation/Parole, Special Agent, DA, Marshal, Fire Marshal, Detective, Coast Guard Officer, etc...)?",  //not sure what im gonna do about coast guard
                                             "Are you a prosecuting attorney, public defender, or community defender working on behalf of public law agency?",
-                                            "Are your duties essential to the execution of your agencies mandate to prevent/control/reduce/enforce criminal law?"};
+                                            "Even if you are not a sworn officer, are your duties essential to the execution of your agencies mandate to prevent/control/reduce/enforce criminal law (Forensics, 911 Dispatcher, etc)?",
+                                            "Are you an EMT/fire-fighter/first responder (public or private), or a provider of emergency management services?"
+                                            };
 
-        String[] publicSafetyPoliceQuestionsMulti = {"Since August 2008, How many years have you been working full time in a capacity of criminal prevention, control, reduction, enforcement, or defense/prosecution?"};
+        String[] publicSafetyPoliceQuestionsMulti = {"Since August 1st 2008 and today, how many years have you been working full time in a capacity of criminal prevention, control, reduction, enforcement, or defense/prosecution?",
+                                                    "Since August 1st 2008 and today, how many years have you been working full time in a public or private service/safety capacity (EMT/Fire/Dispatcher etc...)?"
+                                                    };
                                         //law enforcement, corrections, public defender/community attorney, firefighter, courts, probation/parole
 
         String[] teacherQuestionsYN= {
                                     "Are you a teacher who provides direct classroom teaching (including Special Education and speech pathology)? at a public primary or secondary school?",
                                     "Are you a teacher employed at an educational service agency?",
                                     "Are you a full time teacher of mathematics, science or another state declared shortage area, at a public secondary school?",
-                                    "Are you a teacher who has obtained full state teaching certification/and or passed the state teacher licensing examination and current license holder?",
+                                    "Are you a teacher who has obtained full state teaching certification/and or passed the state teacher licensing examination and are therefore a current license holder?",
                                     "Are you a teacher who has attained a bachelors degree or higher in the area of their instruction?",
                                     "Do you teach/serve at a federally designated low income school? (Title/Chapter 1 Status)",
                                     "Do you teach/serve at a 501c3 tax exempt not for profit private school?",

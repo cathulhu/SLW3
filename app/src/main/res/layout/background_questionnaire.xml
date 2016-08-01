@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Background Detail Questions"
+        android:text="Employment Questions"
         android:id="@+id/textView3"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="171dp"
@@ -53,7 +53,7 @@
         android:id="@+id/finishText"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/dynamic_questions"
-        android:layout_alignStart="@+id/textView3" />
+        android:textAlignment="center" />
 
 
     <!--<FrameLayout-->

@@ -100,17 +100,21 @@ public class UI_Fragment_Details extends Fragment{
         final RadioGroup answer = new RadioGroup(getContext());
         final RadioButton yes = new RadioButton(getContext());
         final RadioButton no = new RadioButton(getContext());
-
-        rowTextView.setText(questionsYn.get(index));
-
         yes.setText("Yes");
         no.setText("No");
-//        no.setSelected(true);
 
-        questionSpace.addView(rowTextView);
-        answer.addView(yes);
-        answer.addView(no);
-        questionSpace.addView(answer);
+        if (questionsYn.size()>0)
+        {
+            rowTextView.setText(questionsYn.get(index));
+            questionSpace.addView(rowTextView);
+            answer.addView(yes);
+            answer.addView(no);
+            questionSpace.addView(answer);
+        }
+
+
+
+
 //        questionSpace.addView(emptySpace);
         answer.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -159,17 +163,16 @@ public class UI_Fragment_Details extends Fragment{
         spinnerSpace.addView(MultiQuestionTextView);
         spinnerSpace.addView(emptyMultiSpace1);
         spinnerSpace.addView(disclaimerTextView);
-        spinnerSpace.addView(emptyMultiSpace2);
+//        spinnerSpace.addView(emptyMultiSpace2);
         spinnerSpace.addView(numericalMultiChoice);
 
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //&& ((index <= questionsYn.size()-1) || (index < questionsMulti.size()-1))
                 if (!numericalMultiChoice.getText().toString().equals("")  )
                 {
-                    if (((index <= questionsYn.size()-1) || (index < questionsMulti.size()-1)))
+                    if (index < questionsMulti.size())
                     {
                         answersMulti.set(index, Long.parseLong (numericalMultiChoice.getText().toString()) );
 
@@ -177,7 +180,7 @@ public class UI_Fragment_Details extends Fragment{
 
                     index++;
 
-                    if (index <= questionsYn.size()-1)
+                    if (index < questionsYn.size())
                     {
                         rowTextView.setText(questionsYn.get(index));
                         yes.setChecked(false);
@@ -188,7 +191,7 @@ public class UI_Fragment_Details extends Fragment{
                         questionSpace.removeAllViews();
                     }
 
-                    if (index < questionsMulti.size()-1)
+                    if (index < questionsMulti.size())
                     {
                         MultiQuestionTextView.setText(questionsMulti.get(index));
                         questionsMulti.clear();
