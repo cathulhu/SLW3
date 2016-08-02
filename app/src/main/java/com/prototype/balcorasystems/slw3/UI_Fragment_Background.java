@@ -3,6 +3,7 @@ package com.prototype.balcorasystems.slw3;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -142,6 +143,13 @@ public class UI_Fragment_Background extends Fragment{
             background.setPublicServiceForgivenessEligibleReason("Government Employee");
 
         }
+//        else if (background.getEmploymentSector().equals("Private Sector - For Profit"))
+//        {
+//            for (String item: generalQuestionsMulti)
+//            {
+//                detailedMultiChoiceQuestions.add(item);
+//            }
+//        }
         else if (background.getEmploymentSector().equals("Public Interest/Community Law"))
         {
             for (String item: publicSafetyPoliceQuestionsYN)
@@ -163,10 +171,14 @@ public class UI_Fragment_Background extends Fragment{
         }
         else if (background.getEmploymentSector().equals("Peace Corps or AmeriCorps-VISTA"))
         {
-            for (String item: peaceCorpQuestions)
+            if (background.isPeaceCorpTypeService()==false) //prevent repeat loading of questions if past peacecorp service button is checked
             {
-                detailedYesNoQuestions.add(item);
+                for (String item: peaceCorpQuestions)
+                {
+                    detailedYesNoQuestions.add(item);
+                }
             }
+
             //Peace corp/Americorp also qualifies for both perkins and PLSF cancellation
         }
         else if (background.getEmploymentSector().equals("Public Safety/ L.E.O/ Corrections"))
@@ -185,15 +197,19 @@ public class UI_Fragment_Background extends Fragment{
         else if (background.getEmploymentSector().equals("Armed Forces (incl. Coastguard)"))
         {
 
-            for (String item: militaryQuestionsMulti)
+            if (background.isMilitaryService()==false)  //so that military questions aren't loaded twice if military vet is checked and military job is selected
             {
-                detailedMultiChoiceQuestions.add(item);
+                for (String item: militaryQuestionsMulti)
+                {
+                    detailedMultiChoiceQuestions.add(item);
+                }
+
+                for (String item: vaDisabilityQuestionsYN)
+                {
+                    detailedYesNoQuestions.add(item);
+                }
             }
 
-            for (String item: vaDisabilityQuestionsYN)
-            {
-                detailedYesNoQuestions.add(item);
-            }
             //armed forces fall under the government service so quallify for direct loan PLSF forgiveness
             //armed forces also quallify for up to 100% perkins forgiveness for number of years served in area of hostility
         }
@@ -230,6 +246,27 @@ public class UI_Fragment_Background extends Fragment{
             defaultMultiAnswers.add(Long.MIN_VALUE);
         }
 
+        if (background.isPeaceCorpTypeService())
+        {
+            for (String item: peaceCorpQuestions)
+            {
+                detailedYesNoQuestions.add(item);
+            }
+        }
+
+        if (background.isMilitaryService())
+        {
+            for (String item: militaryQuestionsMulti)
+            {
+                detailedMultiChoiceQuestions.add(item);
+            }
+
+            for (String item: vaDisabilityQuestionsYN)
+            {
+                detailedYesNoQuestions.add(item);
+            }
+        }
+
         background.setCustomAnswersYN(defaultAnswers);
         background.setCustomAnswersMulti(defaultMultiAnswers);
 
@@ -251,25 +288,30 @@ public class UI_Fragment_Background extends Fragment{
 
     }
 
-    String[] extraQuestions;
+//    String[] extraQuestions;
     String industry="Private Sector - For Profit";
     boolean fulltime=false;
     boolean ssdi=false;
     boolean totallydisabled=false;
     boolean lowIncomeTeacher=false;
     boolean millitarydisability=false;
-    boolean deceasedChildParentLoan=false;
+//    boolean deceasedChildParentLoan=false;
+    boolean nineElevenStatus = false;
+    boolean peaceCorps = false;
+    boolean exMilitary = false;
+    String profileOwner;
     Object_Profile fetchedProfile = loadProfileFromMainActivity();
     Object_Background savedBackground;  //will = retrieve background from SQl
     //should have a list containing all owner loans here so background object can scan for important details or get a copy of the loans
-
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-
+        savedBackground = new Object_Background(profileOwner, industry, fulltime, ssdi, totallydisabled, lowIncomeTeacher, millitarydisability, nineElevenStatus, peaceCorps, exMilitary);
+        mCallback.backgroundFragToMainActivity(savedBackground);
+        savedBackground=extraQuestions(savedBackground);
         //will put code in here to save to SQL (need to modify DB to contain proper tables
     }
 
@@ -278,14 +320,21 @@ public class UI_Fragment_Background extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.background, container, false);
 
-        savedBackground = new Object_Background(industry, fulltime, ssdi, totallydisabled, lowIncomeTeacher, millitarydisability, deceasedChildParentLoan);
-        savedBackground.setOwner(fetchedProfile.getProfileName());
+        if (fetchedProfile!=null)
+        {
+            profileOwner = fetchedProfile.getProfileName();
+        }
+
+        savedBackground = new Object_Background(profileOwner, industry, fulltime, ssdi, totallydisabled, lowIncomeTeacher, millitarydisability, nineElevenStatus, peaceCorps, exMilitary);
 
         final Spinner jobSpinner = (Spinner) view.findViewById(R.id.industrySpinner);
         final RadioGroup fulltimeGroup = (RadioGroup) view.findViewById(R.id.fulltimeRadioGroup);
         final RadioGroup ssdiGroup = (RadioGroup) view.findViewById(R.id.ssdiRadioGroup);
         final RadioGroup totalDisabilityGroup = (RadioGroup) view.findViewById(R.id.totalDisabilityRadioGroup);
         final RadioGroup militaryDisabilityGroup = (RadioGroup) view.findViewById(R.id.millitaryDisabilityRadioGroup);
+        final RadioGroup exMilitaryGroup = (RadioGroup) view.findViewById(R.id.exMilitary);
+        final RadioGroup peaceCorpGroup = (RadioGroup) view.findViewById(R.id.peaceCorpGroup);
+        final RadioGroup nine11VictimGroup = (RadioGroup) view.findViewById(R.id.nine11Group);
 
         //will put code in here that populates the fields with whatever it finds in SQL
 
@@ -324,15 +373,11 @@ public class UI_Fragment_Background extends Fragment{
                 {
                     fulltime=true;
                 }
+                else
+                {
+                    fulltime=false;
+                }
 
-//                if (choice==0)
-//                {
-//                    savedBackground.setEmployedFulltime(true);
-//                }
-//                else
-//                {
-//                    savedBackground.setEmployedFulltime(false);
-//                }
             }
         });
 
@@ -347,6 +392,10 @@ public class UI_Fragment_Background extends Fragment{
                 if (choice==0)
                 {
                     ssdi=true;
+                }
+                else
+                {
+                    ssdi=false;
                 }
             }
         });
@@ -363,6 +412,10 @@ public class UI_Fragment_Background extends Fragment{
                 {
                     totallydisabled=true;
                 }
+                else
+                {
+                    totallydisabled=false;
+                }
             }
         });
 
@@ -378,8 +431,73 @@ public class UI_Fragment_Background extends Fragment{
                 {
                     millitarydisability=true;
                 }
+                else
+                {
+                    millitarydisability=false;
+                }
             }
         });
+
+        peaceCorpGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton checkedRadioButton = (RadioButton)peaceCorpGroup.findViewById(checkedId);
+
+                int choice = peaceCorpGroup.indexOfChild(checkedRadioButton);
+
+                if (choice==0)
+                {
+                    peaceCorps=true;
+                }
+                else
+                {
+                    peaceCorps=false;
+                }
+
+            }
+        });
+
+        exMilitaryGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton checkedRadioButton = (RadioButton)exMilitaryGroup.findViewById(checkedId);
+
+                int choice = exMilitaryGroup.indexOfChild(checkedRadioButton);
+
+                if (choice==0)
+                {
+                    exMilitary=true;
+                }
+                else
+                {
+                    exMilitary=false;
+                }
+
+            }
+        });
+
+        nine11VictimGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton checkedRadioButton = (RadioButton)nine11VictimGroup.findViewById(checkedId);
+
+                int choice = nine11VictimGroup.indexOfChild(checkedRadioButton);
+
+                if (choice==0)
+                {
+                    nineElevenStatus=true;
+                }
+                else
+                {
+                    nineElevenStatus=false;
+                }
+
+            }
+        });
+
 
 
 

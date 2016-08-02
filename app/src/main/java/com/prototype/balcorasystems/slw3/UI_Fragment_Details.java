@@ -112,18 +112,18 @@ public class UI_Fragment_Details extends Fragment{
                 RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
                 int choice = group.indexOfChild(checkedRadioButton);
 
+                    if (index < questionsYn.size()-1 && answersYn.size()!=0)
+                    {
+                        if (choice == 0)
+                        {
+                            answersYn.set(index, true);
+                        }
+                        else
+                        {
+                            answersYn.set(index, false);
+                        }
+                    }
 
-                if (index < questionsYn.size()-1)
-                {
-                    if (choice == 0)
-                    {
-                        answersYn.set(index, true);
-                    }
-                    else
-                    {
-                        answersYn.set(index, false);
-                    }
-                }
 
                     //eventually would like to add animations in here
             }

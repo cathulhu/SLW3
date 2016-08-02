@@ -17,8 +17,11 @@ public class Object_Background {//
     private boolean teacherAtLowIncomeSchool;   //
     private boolean militaryDisability;     //
     private boolean deceasedChildParentLoan;    //
+    private boolean spouseOrParentof911Victim;
     private boolean hasPerkinsLoans;
     private boolean hasDirectLoans;
+    private boolean peaceCorpTypeService;
+    private boolean militaryService;
     private List<String> customQuestionYN = new ArrayList<String>() {{ add("blank"); }};
     private List<String> customQuestionMulti = new ArrayList<String>() {{ add("blank"); }};
     private List<Boolean> customAnswersYN = new ArrayList<>();
@@ -28,14 +31,17 @@ public class Object_Background {//
 
     }
 
-    public Object_Background(String industry, boolean fulltime, boolean ssdi, boolean totallyDisabled, boolean lowIncomeSchoolTeacher, boolean vaDisability, boolean childDeceasedLoan) {
+    public Object_Background(String profileOwner, String industry, boolean fulltime, boolean ssdi, boolean totallyDisabled, boolean lowIncomeSchoolTeacher, boolean vaDisability, boolean nine11Victim, boolean peaceCorps, boolean exMilitary) {
+        owner=profileOwner;
         employmentSector=industry;
         employedFulltime=fulltime;
         collectingSsdi=ssdi;
         totalDisability=totallyDisabled;
         teacherAtLowIncomeSchool=lowIncomeSchoolTeacher;
         militaryDisability=vaDisability;
-        deceasedChildParentLoan=childDeceasedLoan;
+        spouseOrParentof911Victim=nine11Victim;
+        militaryService=exMilitary;
+        peaceCorpTypeService=peaceCorps;
 
         float fakeTestincome = 10000.00f;
 
@@ -56,6 +62,32 @@ public class Object_Background {//
         }
 
         return results;
+    }
+
+
+
+    public boolean isSpouseOrParentof911Victim() {
+        return spouseOrParentof911Victim;
+    }
+
+    public void setSpouseOrParentof911Victim(boolean spouseOrParentof911Victim) {
+        this.spouseOrParentof911Victim = spouseOrParentof911Victim;
+    }
+
+    public boolean isPeaceCorpTypeService() {
+        return peaceCorpTypeService;
+    }
+
+    public void setPeaceCorpTypeService(boolean peaceCorpTypeService) {
+        this.peaceCorpTypeService = peaceCorpTypeService;
+    }
+
+    public boolean isMilitaryService() {
+        return militaryService;
+    }
+
+    public void setMilitaryService(boolean militaryService) {
+        this.militaryService = militaryService;
     }
 
     public List<String> getCustomQuestionMulti() {
