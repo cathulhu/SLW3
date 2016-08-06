@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         UI_Fragment_Info.profileActivityLoader,
@@ -21,29 +23,25 @@ public class MainActivity extends AppCompatActivity implements
 
 
     public static Object_Profile storedProfile;
-    public static Object_Loan storedLoan;
+    public static List<Object_Loan> storedLoanList;
     public static Object_Background storedBackground;
 
-    @Override
     public void detailFragToMainActivity(Object_Background inBoundBackground) {
         storedBackground = inBoundBackground;
     }
 
-    @Override
     public void backgroundFragToMainActivity(Object_Background inBoundBackground) {
         storedBackground = inBoundBackground;
     }
 
-    @Override
     public void profileFragToMainActivity(Object_Profile inBoundProfile) {
         storedProfile = inBoundProfile;
 
     }
 
-    @Override
-    public void loanFragToMainActivity(Object_Loan inBoundLoan) {
-        storedLoan = inBoundLoan;
-
+    public void loanFragToMainActivity (List<Object_Loan> inBoundLoanList)////
+    {
+        storedLoanList = inBoundLoanList;
     }
 
     public static Object_Profile dispatchProfile () {
@@ -54,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements
         return storedBackground;
     }
 
-//    public static Object_Loan dispatchLoan () {
-//        return storedLoan;
-//    }
-
+    public static List<Object_Loan> dispatchLoans() ////
+    {
+        return storedLoanList;
+    }
 
 
 
@@ -197,7 +195,5 @@ public class MainActivity extends AppCompatActivity implements
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 
 }

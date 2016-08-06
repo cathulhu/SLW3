@@ -28,9 +28,16 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 public class UI_Fragment_Loan extends Fragment {
+
+    public interface loanActivityLoader {
+        public void loanFragToMainActivity(List<Object_Loan> outBoundLoan);
+    }
+
+    loanActivityLoader mCallback;
 
 
     private AlertDialog AskOption(final Integer deleteId)
@@ -78,12 +85,6 @@ public class UI_Fragment_Loan extends Fragment {
         Object_Profile fetchedProfile = MainActivity.dispatchProfile();
         return fetchedProfile;
     }
-
-    public interface loanActivityLoader {
-        public void loanFragToMainActivity(Object_Loan outBoundLoan);
-    }
-
-    loanActivityLoader mCallback;
 
     @Override
     public void onAttach(Context context) {
@@ -454,7 +455,7 @@ public class UI_Fragment_Loan extends Fragment {
                 {
                     SQL_DataSource dataSource = new SQL_DataSource(getContext());
 
-                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);
+                    Object_Loan loan = fetchedLoans.get(currentLoanListPosition);   //getting crashes here
                     loan.setLoanBalance(loanPrincipal);
                     loan.setLoanAPR(apr);
                     loan.setInceptionDate(loanInceptionUnixTime);
@@ -471,6 +472,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                     Toast toast = Toast.makeText(getContext(), "attempted to save changes to SQL", Toast.LENGTH_SHORT);
                     toast.show();
+                    mCallback.loanFragToMainActivity(fetchedLoans);
                 }
 
             }
@@ -598,6 +600,7 @@ public class UI_Fragment_Loan extends Fragment {
 
                 fetchedLoans = getAllLoans(selectedProfile);
                 loanAdapter.notifyDataSetChanged(fetchedLoans);
+                mCallback.loanFragToMainActivity(fetchedLoans);
 
             }
 

@@ -55,51 +55,227 @@
         android:layout_below="@+id/annualRaiseSpinner"
         android:layout_toEndOf="@+id/textView4" />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/linearLayout"-->
+        <!--android:layout_below="@+id/textView21"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true">-->
+
+        <!--<com.github.mikephil.charting.charts.LineChart-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:id="@+id/repayChart1" />-->
+
+    <!--</LinearLayout>-->
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_below="@+id/textView21"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/repayChart1" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Repayment Options"
-        android:id="@+id/textView21"
-        android:layout_below="@+id/checkBox"
-        android:layout_centerHorizontal="true" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Try to discharge loans"
-        android:id="@+id/checkBox"
+        android:layout_height="fill_parent"
+        android:stretchColumns="1"
         android:layout_below="@+id/repaymentTypeSpinner"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/repaymentTypeSpinner"
-        android:layout_marginTop="5dp"
-        android:checked="true" />
+        android:layout_alignEnd="@+id/repaymentTypeSpinner"
+        android:layout_marginTop="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Optimiz for loan discharge if eligible?"
-        android:id="@+id/textView16"
-        android:textSize="12dp"
-        android:layout_above="@+id/textView21"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/checkBox"
-        android:layout_marginTop="5dp" />
+        <TableRow>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="Standard Repayment"
+                android:padding="3dip"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow>
+
+
+
+            <TextView
+                android:layout_column="0"
+                android:text="Standard monthly payment"
+                android:padding="3dip" />
+
+            <TextView
+                android:layout_column="1"
+                android:text="$653"
+                android:gravity="right"
+                android:padding="3dip"
+                android:elegantTextHeight="false"
+                android:id="@+id/standardPayment" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="0"
+                android:text="Loan lifetime total payment"
+                android:padding="3dip" />
+
+            <TextView
+                android:text="$57,500"
+                android:gravity="right"
+                android:padding="3dip"
+                android:id="@+id/standardtotalpaid" />
+        </TableRow>
+
+        <TableRow>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_height="2dip"
+                android:background="#FF909090"
+                android:layout_column="0"
+                android:layout_span="2" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="Optimized Repayment"
+                android:padding="3dip"
+                android:id="@+id/textView37"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_height="2dip"
+                android:background="#FF909090"
+                android:layout_column="0"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="New monthly payment"
+                android:padding="3dip"
+                android:id="@+id/textView38" />
+
+            <TextView
+                android:text="$57,500"
+                android:gravity="right"
+                android:padding="3dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView42"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="Potential loan forgiveness"
+                android:padding="3dip"
+                android:id="@+id/textView39" />
+
+            <TextView
+                android:text="$57,500"
+                android:gravity="right"
+                android:padding="3dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView43"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="New lifetime total repayment"
+                android:padding="3dip"
+                android:id="@+id/textView40" />
+
+            <TextView
+                android:text="$57,500"
+                android:gravity="right"
+                android:padding="3dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView44"
+                android:layout_column="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v4.widget.Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/view"
+                android:layout_column="0"
+                android:layout_span="2" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_column="0"
+                android:text="Total possible savings"
+                android:padding="3dip"
+                android:id="@+id/textView45"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text="$57,500"
+                android:gravity="right"
+                android:padding="3dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView16"
+                android:layout_column="1" />
+        </TableRow>
+
+
+    </TableLayout>
 
 
 </RelativeLayout>

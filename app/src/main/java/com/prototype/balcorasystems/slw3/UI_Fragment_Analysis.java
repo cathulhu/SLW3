@@ -26,10 +26,9 @@ import java.util.Random;
 
 public class UI_Fragment_Analysis extends Fragment {
 
-    static public int[] colors = {92, 16, 220};
+//    static public int[] colors = {92, 16, 220};
 
-//    PaymentCalc newCalc = new PaymentCalc();  //will spawn a new calculator object to get data for the graph, I think it makes to have this in the purview of this fragment
-
+//    List<Object_Loan> fetchedLoans= MainActivity.dispatchLoans();
 
     @Nullable
     @Override
@@ -37,8 +36,24 @@ public class UI_Fragment_Analysis extends Fragment {
 
         View view = inflater.inflate(R.layout.analysis, container, false);
 
+        PaymentCalculator calculator = new PaymentCalculator();
+        ArrayList<Double> PaymentsList = calculator.standardCalc();
+        float totalStandardPayment = 0;
+
+        for (Double payment: PaymentsList)
+        {
+            totalStandardPayment+=payment;
+        }
+        
+        float totalSumPayed = totalStandardPayment*120;
+
         final Spinner raiseSpinner = (Spinner) view.findViewById(R.id.annualRaiseSpinner);
         final Spinner paymentTypeSpinner = (Spinner) view.findViewById(R.id.repaymentTypeSpinner);
+        TextView stdPaymentField = (TextView) view.findViewById(R.id.standardPayment);
+        TextView stdTotalPaymentField = (TextView) view.findViewById(R.id.standardtotalpaid);
+
+        stdPaymentField.setText( String.format( "$ %.2f", totalStandardPayment ) );
+        stdTotalPaymentField.setText( String.format( "$ %.2f", totalSumPayed ) );
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.annual_raise_array, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -48,6 +63,13 @@ public class UI_Fragment_Analysis extends Fragment {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         paymentTypeSpinner.setAdapter(adapter1);
 
+        return view;
+    }
+}
+
+/*
+
+graph code - currently unused
 
         List<Float> standard10results = new ArrayList<>();
         List<Float> IBRresults = new ArrayList<>();
@@ -161,98 +183,4 @@ public class UI_Fragment_Analysis extends Fragment {
         return colors;
     }
 
-
-}
-
-
-//old graph code
-
-//        List<RepayPlan> allPlans = RepayPlan.GetList();   //forget how this was used, but don't think it's required since im not using government server data
-
-
-//        int months = 0;
-//        String testRE = "RE";
-//        for (RepayPlan plan : allPlans) {
-//            if (plan.plantype.equals(testRE))        //slightly flawed time frame since months is based on assumptions my model doesn't make but ok for now
-//            {
-//                months = plan.loanTime;
-//
-//                for (int j = 0; j <= months; j++) {
-//                    yvals3.add(new Entry(IBRresults.get(0), j));
-//                    //                      xvals1.add("");
-//                }
-//
-//            }
-//        }
-//
-//        months = 0;
-//        String testPA = "PA";
-//        for (RepayPlan plan : allPlans) {
-//            if (plan.plantype.equals(testPA))        //slightly flawed time frame since months is based on assumptions my model doesn't make but ok for now
-//            {
-//                months = plan.loanTime;
-//
-//                for (int j = 0; j <= months; j++) {
-//                    yvals4.add(new Entry(IBRresults.get(1), j));
-//                    //                      xvals1.add("");
-//                }
-//
-//            }
-//        }
-//
-//        months = 0;
-//        String testIB = "IB";
-//        for (RepayPlan plan : allPlans) {
-//            if (plan.plantype.equals(testIB))        //slightly flawed time frame since months is based on assumptions my model doesn't make but ok for now
-//            {
-//                months = plan.loanTime;
-//
-//                for (int j = 0; j <= months; j++) {
-//                    yvals5.add(new Entry(IBRresults.get(2), j));
-//                    //                      xvals1.add("");
-//                }
-//
-//            }
-//        }
-//
-//        months = 0;
-//        String testNB = "NB";
-//        for (RepayPlan plan : allPlans) {
-//            if (plan.plantype.equals(testNB))        //slightly flawed time frame since months is based on assumptions my model doesn't make but ok for now
-//            {
-//                months = plan.loanTime;
-//
-//                for (int j = 0; j <= months; j++) {
-//                    yvals6.add(new Entry(IBRresults.get(3), j));
-//                    //                      xvals1.add("");
-//                }
-//
-//            }
-//        }
-//
-//
-//        months = 0;
-//        String testC3 = "C3";
-//        for (RepayPlan plan : allPlans) {
-//            if (plan.plantype.equals(testC3))        //slightly flawed time frame since months is based on assumptions my model doesn't make but ok for now
-//            {
-//                months = plan.loanTime;
-//
-//                for (int j = 0; j <= months; j++) {
-//
-//                    List<Float> ICRresult = aCalc.ICR();
-//                    float populate;
-//
-//                    if (ICRresult.get(0) < ICRresult.get(1)) {
-//                        populate = ICRresult.get(0);
-//                    } else {
-//                        populate = ICRresult.get(1);
-//                    }
-//
-//
-//                    yvals7.add(new Entry(populate, j));
-//                    //                      xvals1.add("");
-//                }
-//
-//            }
-//        }
+ */
