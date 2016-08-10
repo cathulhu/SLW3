@@ -165,21 +165,21 @@ public class UI_Fragment_Loan extends Fragment {
                     "2nd Default"
         };
 
-    String[] prettyLoantypes =
-            {       "Direct Subsidized Loan",
-                    "Direct Unsubsidized Loan",
-                    "Subsidized Federal Stafford Loan",
-                    "Unsubsidized Federal Stafford Loan",
-                    "Direct Subsidized Consolidation Loan",
-                    "Direct Unsubsidized Consolidation Loan",
-                    "FFEL Consolidation Loan",
-                    "Direct PLUS Loan for Graduate/Professional Students",
-                    "FFEL PLUS Loan for Graduate/Professional Students",
-                    "Direct PLUS Loan for Parents",
-                    "FFEL PLUS Loan for Parents",
-                    "Direct PLUS Consolidation Loan",
-                    " **NOT IMPLIMENTED** Federal Perkins Loan",
-                    " **NOT IMPLIMENTED** Private Loan"};
+    String[] prettyLoantypes =                                              // repayment plan eligibility
+            {       "Direct Subsidized Loan",                               // ibr
+                    "Direct Unsubsidized Loan",                             // ibr
+                    "Subsidized Federal Stafford Loan",                     // ibr
+                    "Unsubsidized Federal Stafford Loan",                   // ibr
+                    "Direct Subsidized Consolidation Loan",                 // ibr
+                    "Direct Unsubsidized Consolidation Loan",               // ibr
+                    "FFEL Consolidation Loan",                              // ibr
+                    "Direct PLUS Loan for Graduate/Professional Students",  // ibr
+                    "FFEL PLUS Loan for Graduate/Professional Students",    // ibr
+                    "Direct PLUS Loan for Parents",                         // consolidation to direct loan
+                    "FFEL PLUS Loan for Parents",                           // consolidation to direct loan
+                    "Direct PLUS Consolidation Loan",                       // ibr
+                    "Federal Perkins Loan",
+                    "Private Loan"};
 
     String[] loanCategory =
             {

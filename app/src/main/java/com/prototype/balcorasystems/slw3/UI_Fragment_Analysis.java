@@ -26,9 +26,13 @@ import java.util.Random;
 
 public class UI_Fragment_Analysis extends Fragment {
 
-//    static public int[] colors = {92, 16, 220};
+    public static Object_Profile loadProfileFromMainActivity (){
 
-//    List<Object_Loan> fetchedLoans= MainActivity.dispatchLoans();
+        Object_Profile fetchedProfile = MainActivity.dispatchProfile();
+        return fetchedProfile;
+    }
+
+    Object_Profile fetchedProfile;
 
     @Nullable
     @Override
@@ -36,15 +40,19 @@ public class UI_Fragment_Analysis extends Fragment {
 
         View view = inflater.inflate(R.layout.analysis, container, false);
 
+        fetchedProfile = loadProfileFromMainActivity();
+
         PaymentCalculator calculator = new PaymentCalculator();
         ArrayList<Double> PaymentsList = calculator.standardCalc();
+        ArrayList<Double> ibrPaymentsList = calculator.IBRpayments(fetchedProfile);
+
         float totalStandardPayment = 0;
 
         for (Double payment: PaymentsList)
         {
             totalStandardPayment+=payment;
         }
-        
+
         float totalSumPayed = totalStandardPayment*120;
 
         final Spinner raiseSpinner = (Spinner) view.findViewById(R.id.annualRaiseSpinner);
@@ -54,6 +62,7 @@ public class UI_Fragment_Analysis extends Fragment {
 
         stdPaymentField.setText( String.format( "$ %.2f", totalStandardPayment ) );
         stdTotalPaymentField.setText( String.format( "$ %.2f", totalSumPayed ) );
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.annual_raise_array, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
